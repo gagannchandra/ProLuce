@@ -48,6 +48,7 @@ export function Footer() {
                 type="email" 
                 placeholder="Email address" 
                 className="bg-transparent border-b border-foreground/30 px-0 py-3 text-sm focus:outline-none focus:border-accent transition-all duration-300 w-full hover:border-foreground/60 text-foreground placeholder:text-foreground/40"
+                suppressHydrationWarning
               />
               <button 
                 type="submit"

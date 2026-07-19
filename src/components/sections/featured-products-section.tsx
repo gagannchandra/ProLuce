@@ -20,13 +20,13 @@ export function FeaturedProductsSection() {
     target: targetRef,
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["10%", "-60%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
 
   return (
-    <section ref={targetRef} className="h-[200vh] bg-background relative">
-      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden py-24">
+    <section ref={targetRef} className="h-[200vh] bg-background relative mb-24 md:mb-32">
+      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden py-12 md:py-24">
         
-        <div className="container mx-auto px-6 md:px-12 mb-12 md:mb-20 flex justify-between items-end">
+        <div className="container mx-auto px-6 md:px-12 mb-6 md:mb-20 flex justify-between items-end">
           <div className="max-w-2xl">
             <h2 className="font-serif text-5xl md:text-6xl lg:text-7xl text-foreground font-light tracking-wide leading-tight">
               Featured Series
