@@ -35,6 +35,10 @@
 }
 
 @layer base {
+  html {
+    font-size: 90%; /* Scales everything down proportionally (mimicking 90% browser zoom) */
+  }
+
   body {
     @apply bg-background text-foreground font-sans antialiased selection:bg-accent selection:text-charcoal;
   }
