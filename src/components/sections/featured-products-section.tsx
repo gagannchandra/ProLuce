@@ -7,11 +7,11 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 
 const products = [
-  { id: "p1", name: "Aura Pendant", category: "Residential", price: "From $1,200", image: "/images/residential.png" },
-  { id: "p2", name: "Linea Profile", category: "Architectural", price: "Custom quote", image: "/images/architectural.png" },
-  { id: "p3", name: "Lumina Sconce", category: "Hospitality", price: "From $850", image: "/images/hospitality.png" },
-  { id: "p4", name: "Zenith Spotlight", category: "Commercial", price: "From $450", image: "/images/commercial.png" },
-  { id: "p5", name: "Halo Ring", category: "Architectural", price: "From $2,100", image: "/images/architectural.png" },
+  { id: "p1", name: "Aura Pendant", category: "Residential", image: "/images/residential.png" },
+  { id: "p2", name: "Linea Profile", category: "Architectural", image: "/images/architectural.png" },
+  { id: "p3", name: "Lumina Sconce", category: "Hospitality", image: "/images/hospitality.png" },
+  { id: "p4", name: "Zenith Spotlight", category: "Commercial", image: "/images/commercial.png" },
+  { id: "p5", name: "Halo Ring", category: "Architectural", image: "/images/architectural.png" },
 ];
 
 export function FeaturedProductsSection() {
@@ -62,7 +62,6 @@ export function FeaturedProductsSection() {
                   <p className="text-[10px] md:text-xs font-sans tracking-[0.2em] uppercase text-foreground/50 mb-3">{product.category}</p>
                   <h3 className="font-serif text-3xl md:text-4xl text-foreground group-hover:text-accent transition-colors duration-300 tracking-wide">{product.name}</h3>
                 </div>
-                <p className="font-sans text-xs md:text-sm text-foreground/70 tracking-wider">{product.price}</p>
               </div>
             </div>
           ))}
