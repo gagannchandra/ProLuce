@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 const products = [
   { id: "p1", name: "Aura Pendant", category: "Residential", image: "/images/residential.png" },
@@ -12,7 +12,7 @@ const products = [
   { id: "p6", name: "Vela Wall", category: "Hospitality", image: "/images/hospitality.png" },
 ];
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -23,7 +23,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 30 },
   show: { 
     opacity: 1, 
