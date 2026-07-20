@@ -4,34 +4,21 @@
   --color-sand: #EAE6DF;
   --color-champagne: #E4DACD;
   --color-ivory: #F9F7F4;
-  --color-charcoal: #161514;
-  --color-brass: #C6A87C;
-  --color-stone: #8E8A84;
+  --color-charcoal: #141414;
+  --color-brass: #d4af37;
+  --color-stone: #a3a3a3;
 
-  /* Light Theme Defaults */
-  --color-background: var(--color-ivory);
-  --color-foreground: var(--color-charcoal);
-  --color-primary: var(--color-charcoal);
-  --color-secondary: var(--color-champagne);
-  --color-muted: var(--color-sand);
-  --color-accent: #C6A87C; /* Brass in light mode */
-  --color-border: #E0DDD6;
+  /* Premium Dark Theme */
+  --color-background: #0a0a0a;
+  --color-foreground: #f2f2f2;
+  --color-primary: #f2f2f2;
+  --color-secondary: #141414;
+  --color-muted: #1e1e1e;
+  --color-accent: #d4af37; /* Cinematic Gold */
+  --color-border: #262626;
 
   --font-sans: "Inter", "Outfit", sans-serif;
   --font-serif: "Playfair Display", serif;
-}
-
-@layer base {
-  .dark {
-    /* Premium Dark Theme */
-    --color-background: #121815;
-    --color-foreground: #ffffff;
-    --color-primary: #ffffff;
-    --color-secondary: #1a221d;
-    --color-muted: #1e2822;
-    --color-accent: #e0ea48; /* Vibrant yellow/green in dark mode */
-    --color-border: #2a352e;
-  }
 }
 
 @layer base {

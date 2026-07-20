@@ -14,9 +14,9 @@ export function HeroSection() {
     setMounted(true);
   }, []);
 
-  // Determine colors based on theme, fallback to dark mode colors if not mounted
-  const strokeColor = mounted && theme === 'light' ? '#161514' : '#ffffff';
-  const glowColor = mounted && theme === 'light' ? 'rgba(198,168,124,0.15)' : 'rgba(224,234,72,0.12)';
+  // Cinematic static colors
+  const strokeColor = '#f2f2f2';
+  const glowColor = 'rgba(212,175,55,0.12)';
 
   return (
     <section className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden bg-background pt-24 pb-12 transition-colors duration-700">
@@ -93,9 +93,9 @@ export function HeroSection() {
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
           className="mt-10"
         >
-          <Link href="/collections" className="inline-flex items-center justify-center gap-3 bg-accent hover:bg-foreground text-background px-8 py-4 rounded-full font-bold tracking-[0.15em] uppercase text-xs transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105 group">
+          <Link href="/collections" className="inline-flex items-center justify-center gap-3 bg-transparent border border-accent/50 hover:bg-accent/10 hover:border-accent text-accent px-8 py-4 rounded-full font-sans tracking-[0.15em] uppercase text-xs transition-all duration-500 shadow-[0_0_15px_rgba(212,175,55,0.05)] hover:shadow-[0_0_20px_rgba(212,175,55,0.2)] group">
             Explore Collection
-            <span className="bg-background/10 group-hover:bg-background/5 rounded-full w-6 h-6 flex items-center justify-center transition-colors">
+            <span className="text-accent/70 group-hover:text-accent transition-colors">
               →
             </span>
           </Link>

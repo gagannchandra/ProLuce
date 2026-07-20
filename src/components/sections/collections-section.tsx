@@ -58,9 +58,9 @@ export function CollectionsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: index * 0.15 }}
-              className={`group relative aspect-[3/4] md:aspect-square overflow-hidden cursor-pointer rounded-sm ${index % 2 !== 0 ? 'md:mt-32' : ''}`}
+              className={`group relative aspect-[3/4] md:aspect-square overflow-hidden cursor-pointer rounded-sm border border-border/10 hover:border-accent/30 shadow-none hover:shadow-[0_0_30px_rgba(212,175,55,0.15)] transition-all duration-700 ${index % 2 !== 0 ? 'md:mt-32' : ''}`}
             >
-              <div className={`absolute inset-0 transition-transform duration-1000 ease-[0.16,1,0.3,1] group-hover:scale-[1.03]`}>
+              <div className={`absolute inset-0 transition-transform duration-1000 ease-[0.16,1,0.3,1] group-hover:scale-[1.05]`}>
                 <Image 
                   src={item.image} 
                   alt={item.title} 
@@ -70,13 +70,15 @@ export function CollectionsSection() {
                 />
               </div>
               
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-700 ease-in-out"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-700 ease-in-out"></div>
               
               <div className="absolute bottom-0 left-0 right-0 p-8 md:p-14 transform translate-y-6 group-hover:translate-y-0 transition-transform duration-700 ease-[0.16,1,0.3,1]">
-                <h3 className="font-serif text-3xl md:text-5xl font-light text-foreground mb-4 tracking-wide">{item.title}</h3>
-                <p className="text-foreground/80 font-sans text-sm md:text-base tracking-[0.05em] leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-150">
-                  {item.desc}
-                </p>
+                <div className="relative z-10 p-6 md:p-8 rounded-lg bg-background/5 backdrop-blur-sm border border-border/5 group-hover:bg-background/20 group-hover:backdrop-blur-md group-hover:border-accent/20 transition-all duration-700">
+                  <h3 className="font-serif text-3xl md:text-5xl font-light text-foreground mb-4 tracking-wide group-hover:text-accent transition-colors duration-700">{item.title}</h3>
+                  <p className="text-foreground/80 font-sans text-sm md:text-base tracking-[0.05em] leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-150">
+                    {item.desc}
+                  </p>
+                </div>
               </div>
             </motion.div>
           ))}
