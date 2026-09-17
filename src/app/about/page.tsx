@@ -1,91 +1,146 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Download, ArrowRight, Eye, Cpu, ShieldCheck, Layers } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "About Pro-Luce | Architectural Lighting Systems",
-  description: "Pro-Luce engineers precision architectural luminaires for commercial, cultural, and hospitality spaces.",
+  title: "About Pro-Luce | Architectural Lighting Systems & Engineering",
+  description:
+    "Pro-Luce engineers precision architectural luminaires, 48V magnetic track channels, and micro-faceted optical systems for architects, lighting designers, and specifiers worldwide.",
   alternates: { canonical: "/about" },
 };
+
+const PILLARS = [
+  {
+    icon: Eye,
+    title: "Spectral Fidelity (Ra ≥ 98 / R9 > 94)",
+    desc: "Color precision is critical in cultural museums, luxury retail, and high-end residential interiors. We specify premium COB and SMD emitters binned strictly within a 2-step MacAdam ellipse (SDCM ≤ 2).",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Deep Dark-Light Cutoff (UGR < 12)",
+    desc: "Engineered with 45° physical shielding angles and specular micro-faceted TIR reflectors to eliminate stray light and ocular fatigue for WELL and LEED Platinum certified spaces.",
+  },
+  {
+    icon: Cpu,
+    title: "48V Low-Voltage Modularity",
+    desc: "Ultra-compact magnetic track extrusions allow tool-free hot-swapping of directional spots, linear diffusers, and wall-wash modules without electrical shutdown.",
+  },
+  {
+    icon: Layers,
+    title: "CNC 6063-T5 Thermal Architecture",
+    desc: "Milled aerospace-grade aluminum housings provide superior passive convective heat dissipation, ensuring a tested L80/B10 lifespan exceeding 50,000 operational hours.",
+  },
+];
 
 export default function AboutPage() {
   return (
     <div className="py-12 md:py-20">
       <div className="container-site">
+        
+        {/* Header Section */}
         <div className="max-w-3xl space-y-4 border-b border-border pb-10">
-          <p className="text-xs font-mono font-semibold uppercase tracking-widest text-muted">
-            About Pro-Luce
-          </p>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 font-display">
+          <Badge variant="outline" className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground border-border/80">
+            Studio & Engineering Philosophy
+          </Badge>
+          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-light tracking-tight text-foreground font-display leading-[1.06]">
             Precision Optics & Architectural Integrity
           </h1>
-          <p className="text-base sm:text-lg text-muted leading-relaxed">
-            Founded with an uncompromising focus on optical precision and thermal engineering, Pro-Luce manufactures architectural lighting fixtures that integrate seamlessly into modern built environments.
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed font-sans font-light">
+            Founded with an uncompromising focus on optical physics, thermal thermodynamics, and architectural minimalism, Pro-Luce designs lighting instruments that quietly elevate the built environment.
           </p>
         </div>
 
-        {/* Engineering Philosophy */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 py-16">
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-neutral-900 font-display">
-              Light as an Architectural Material
+        {/* Philosophy & Craftsmanship */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 py-16 border-b border-border/80">
+          <div className="lg:col-span-6 space-y-6">
+            <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-light text-foreground font-display leading-snug">
+              Light as an Inherent Architectural Material
             </h2>
-            <p className="text-sm text-neutral-700 leading-relaxed">
-              We believe true architectural illumination should reveal spaces rather than call attention to itself. Our fixtures are designed with zero-bezel trimless housings, deep anti-glare baffles (UGR &lt; 19), and minimalist profiles that disappear into ceiling planes and facades.
+            <p className="text-sm text-muted-foreground leading-relaxed font-sans font-light">
+              We believe true architectural illumination should reveal materiality, geometry, and space rather than call attention to the fixture itself. Our luminaires are engineered with trimless plaster-in housings, ultra-narrow bezels, and deep-recessed baffles that dissolve into ceiling planes.
             </p>
-            <p className="text-sm text-neutral-700 leading-relaxed">
-              Every luminaire in our architectural portfolio is crafted from CNC-machined and extruded 6063-T5 aluminum, maximizing thermal conductivity for a true 50,000-hour operational lifespan.
+            <p className="text-sm text-muted-foreground leading-relaxed font-sans font-light">
+              Every system in our portfolio is engineered for seamless integration with modern dimming architectures, including DALI-2 (DT6 and DT8 tunable white), 0-10V, and wireless Casambi Bluetooth mesh ecosystems.
             </p>
           </div>
 
-          <div className="space-y-6">
-            <div className="rounded-xl border border-border bg-surface p-6">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-900 font-mono">
-                Optical Fidelity (CRI ≥ 90 / R9 &gt; 50)
-              </h3>
-              <p className="mt-2 text-xs text-muted leading-relaxed">
-                Color fidelity is paramount in galleries, luxury retail, and hospitality. Pro-Luce specifies premium LED emitters with consistent 2-step MacAdam ellipse binning.
-              </p>
-            </div>
-
-            <div className="rounded-xl border border-border bg-surface p-6">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-900 font-mono">
-                48V Modular Intelligence
-              </h3>
-              <p className="mt-2 text-xs text-muted leading-relaxed">
-                Low-voltage magnetic track platforms provide total freedom of repositioning and field adaptability without specialized tools or rewiring.
-              </p>
-            </div>
+          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {PILLARS.map((pillar) => {
+              const IconComp = pillar.icon;
+              return (
+                <Card key={pillar.title} className="p-5 rounded-xl border border-border/80 bg-card/90 backdrop-blur-xs shadow-2xs hover:border-amber-500/40 transition-colors">
+                  <CardContent className="p-0 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <div className="p-1.5 rounded-md bg-muted text-foreground">
+                        <IconComp className="h-4 w-4 text-amber-500" />
+                      </div>
+                      <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground font-mono leading-tight">
+                        {pillar.title}
+                      </h3>
+                    </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed font-light">
+                      {pillar.desc}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
 
         {/* Master PDF Catalogue Callout */}
-        <div className="rounded-2xl border border-neutral-900 bg-neutral-900 p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="space-y-2">
-            <h3 className="text-2xl font-bold font-display">Download the Complete Architectural Catalogue</h3>
-            <p className="text-sm text-neutral-400 max-w-xl">
-              Access all 119 pages of technical datasheets, dimensional line drawings, and photometric tables in high-resolution PDF format.
-            </p>
-          </div>
+        <div className="pt-16">
+          <Card className="rounded-2xl border border-neutral-900 bg-neutral-950 p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden">
+            {/* Soft Ambient Light Beam */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
 
-          <div className="flex items-center gap-4 shrink-0">
-            <a
-              href={siteConfig.catalogPdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              download="Pro-Luce-Catalogue.pdf"
-              className="rounded-lg bg-white px-6 py-3 text-xs font-semibold uppercase tracking-wider text-neutral-950 hover:bg-neutral-100 transition-colors shadow-sm"
-            >
-              Download PDF (140MB)
-            </a>
-            <Link
-              href="/catalogue"
-              className="rounded-lg border border-neutral-700 px-6 py-3 text-xs font-semibold uppercase tracking-wider text-neutral-300 hover:text-white transition-colors"
-            >
-              Browse Online
-            </Link>
-          </div>
+            <CardContent className="p-0 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+              <div className="space-y-2 max-w-xl">
+                <Badge variant="outline" className="border-white/20 bg-neutral-900/80 text-neutral-300 font-mono text-[10px] uppercase tracking-wider">
+                  Tender Documentation
+                </Badge>
+                <h3 className="text-2xl sm:text-3xl font-normal font-display text-white">
+                  Download the Complete Architectural Catalogue
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+                  Access all 119 pages of technical datasheets, dimensional line drawings, polar candlepower curves, and photometric schedules in high-resolution PDF format.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3 shrink-0 flex-wrap">
+                <Button
+                  asChild
+                  className="bg-amber-400 text-neutral-950 hover:bg-amber-300 font-mono text-xs uppercase tracking-wider px-6 h-11 shadow-sm rounded-full font-bold border-none"
+                >
+                  <a
+                    href={siteConfig.catalogPdfUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download="Pro-Luce-Catalogue.pdf"
+                  >
+                    <Download className="mr-1.5 h-3.5 w-3.5" />
+                    Download PDF Spec
+                  </a>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="border-neutral-700 bg-neutral-900/60 font-mono text-xs uppercase tracking-wider text-neutral-200 hover:text-white hover:bg-neutral-800 h-11 rounded-full px-6"
+                >
+                  <Link href="/catalogue">
+                    <span>Browse Catalogue</span>
+                    <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                  </Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
+
       </div>
     </div>
   );

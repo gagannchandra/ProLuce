@@ -2,10 +2,16 @@ import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import { siteConfig } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { Mail, Phone, MapPin, Download, Building2 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Contact & Specification Inquiries | Pro-Luce",
-  description: "Connect with the Pro-Luce engineering team for architectural project schedules, DIALux simulations, or factory quotation.",
+  description:
+    "Connect with the Pro-Luce engineering team for architectural project schedules, DIALux simulations, or factory quotation.",
   alternates: { canonical: "/contact" },
 };
 
@@ -22,61 +28,107 @@ export default function ContactPage() {
       />
 
       <div className="max-w-2xl border-b border-border pb-8">
-        <p className="text-xs font-mono font-semibold uppercase tracking-widest text-muted">
-          Commercial Project Inquiries
-        </p>
-        <h1 className="mt-2 font-display text-4xl md:text-5xl font-bold tracking-tight text-neutral-900">
+        <div className="inline-flex items-center gap-2 mb-2">
+          <Badge variant="outline" className="gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] border-border/80 text-muted-foreground">
+            <Building2 className="h-3 w-3 text-amber-500" />
+            <span>Commercial Project Inquiries</span>
+          </Badge>
+        </div>
+        <h1 className="mt-2 font-display text-4xl sm:text-5xl lg:text-[52px] font-light tracking-tight text-foreground leading-[1.08]">
           Architectural Specification Support
         </h1>
-        <p className="mt-3 text-sm text-muted leading-relaxed">
+        <p className="mt-3 text-sm text-muted-foreground leading-relaxed font-sans font-light">
           Submit your project bill of materials (BOM), request customized extrusion lengths, or consult our engineering team on DALI-2 dimming protocols and photometric schedules.
         </p>
       </div>
 
-      <div className="mt-12 grid gap-12 md:grid-cols-3">
-        <div className="md:col-span-2">
+      <div className="mt-12 grid gap-10 lg:grid-cols-12">
+        <div className="lg:col-span-8">
           <ContactForm />
         </div>
-        <div className="flex flex-col gap-6 text-sm bg-surface p-6 rounded-xl border border-border">
-          <div>
-            <h2 className="text-xs font-semibold uppercase tracking-wider text-neutral-900 font-mono">
-              Specification Email
-            </h2>
-            <a href={`mailto:${siteConfig.contact.email}`} className="mt-1 block text-sm font-medium text-neutral-700 hover:text-neutral-950 underline">
-              {siteConfig.contact.email}
-            </a>
-          </div>
 
-          <div>
-            <h2 className="text-xs font-semibold uppercase tracking-wider text-neutral-900 font-mono">
-              Commercial Phone
-            </h2>
-            <p className="mt-1 text-sm text-neutral-700">{siteConfig.contact.phone}</p>
-          </div>
+        <div className="lg:col-span-4 space-y-6">
+          <Card className="rounded-2xl border border-border/80 bg-card/90 backdrop-blur-xs shadow-2xs">
+            <CardHeader className="pb-4">
+              <CardTitle className="font-display text-xl font-normal tracking-tight text-foreground flex items-center justify-between">
+                <span>Studio Direct</span>
+                <Badge variant="secondary" className="font-mono text-[9px] uppercase tracking-wider bg-muted text-foreground border border-border/60">
+                  Verified Inquiries
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-5 text-sm">
+              <div className="flex items-start gap-3">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border/80 bg-muted/60 text-foreground">
+                  <Mail className="h-4 w-4 text-amber-500" />
+                </div>
+                <div>
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground font-mono">
+                    Specification Email
+                  </h3>
+                  <a
+                    href={`mailto:${siteConfig.contact.email}`}
+                    className="mt-0.5 block text-sm font-medium text-foreground hover:underline"
+                  >
+                    {siteConfig.contact.email}
+                  </a>
+                </div>
+              </div>
 
-          <div>
-            <h2 className="text-xs font-semibold uppercase tracking-wider text-neutral-900 font-mono">
-              Engineering Studio
-            </h2>
-            <p className="mt-1 text-sm text-muted leading-relaxed">{siteConfig.contact.address}</p>
-          </div>
+              <Separator />
 
-          <div className="pt-4 border-t border-border">
-            <h2 className="text-xs font-semibold uppercase tracking-wider text-neutral-900 font-mono">
+              <div className="flex items-start gap-3">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/40 text-foreground">
+                  <Phone className="h-4 w-4" />
+                </div>
+                <div>
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground font-mono">
+                    Commercial Phone
+                  </h3>
+                  <p className="mt-0.5 text-sm text-foreground font-medium">{siteConfig.contact.phone}</p>
+                </div>
+              </div>
+
+              <Separator />
+
+              <div className="flex items-start gap-3">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/40 text-foreground">
+                  <MapPin className="h-4 w-4" />
+                </div>
+                <div>
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground font-mono">
+                    Engineering Studio
+                  </h3>
+                  <p className="mt-0.5 text-sm text-muted-foreground leading-relaxed">{siteConfig.contact.address}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-2xl border border-border bg-surface p-6">
+            <div className="flex items-center gap-2 mb-2">
+              <Badge variant="outline" className="text-[10px] font-mono uppercase tracking-wider">
+                Full Technical Binder
+              </Badge>
+            </div>
+            <h3 className="font-display text-lg font-bold text-foreground">
               Master Architectural Catalogue
-            </h2>
-            <p className="mt-1 text-xs text-muted mb-3">119 pages of high-resolution datasheets & polar curves.</p>
-            <a
-              href={siteConfig.catalogPdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              download="Pro-Luce-Catalogue.pdf"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-neutral-900 underline"
-            >
-              <span>Download PDF (140MB)</span>
-              <span>&darr;</span>
-            </a>
-          </div>
+            </h3>
+            <p className="mt-1 text-xs text-muted-foreground font-mono leading-relaxed mb-4">
+              119 pages of high-resolution datasheets, polar candlepower curves, and dimensioned CAD schematics.
+            </p>
+            <Button asChild size="sm" className="w-full font-mono text-xs uppercase tracking-wider gap-2 rounded-full px-5">
+              <a
+                href={siteConfig.catalogPdfUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                download="Pro-Luce-Catalogue.pdf"
+              >
+                <Download className="h-3.5 w-3.5" />
+                <span>Download PDF (140MB)</span>
+              </a>
+            </Button>
+          </Card>
         </div>
       </div>
     </div>

@@ -1,220 +1,263 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import type { Product } from "@/lib/products";
+import { useSpecSchedule } from "@/context/SpecScheduleContext";
+import QuoteModal from "@/components/product/QuoteModal";
+import { Button } from "@/components/ui/button";
+import {
+  ArrowRight,
+  FileText,
+  Plus,
+  Check,
+  Power,
+} from "lucide-react";
 
-interface HeroSlide {
-  eyebrow: string;
-  title: string;
-  copy: string;
-  cta: string;
-  href: string;
-  image: string;
-  spotlight: {
-    name: string;
-    series: string;
-    specs: string;
-    href: string;
-    image: string;
-  };
+interface HeroProps {
+  product?: Product;
 }
 
-const slides: HeroSlide[] = [
-  {
-    eyebrow: "Architectural Spotlight Collection",
-    title: "LENA75 Precision Trimless Downlights",
-    copy: "Seamless plaster-in recessed downlights with 50,000h operational lifespan, Ra≥90 high-CRI optics, and multi-angle 15°/24°/36° beam distribution.",
-    cta: "Explore Spotlights",
-    href: "/catalogue?category=Spot+Light",
-    image: "/images/products/rona-fixture.png",
-    spotlight: {
-      name: "RONA Recessed",
-      series: "LENA75 Series",
-      specs: "10W · IP44 · Ø75mm Cutout",
-      href: "/products/rona",
-      image: "/images/products/rona-fixture.png",
-    },
-  },
-  {
-    eyebrow: "Low-Voltage Magnetic System",
-    title: "48V Modular Architectural Tracks",
-    copy: "Ultra-slim continuous DC48V tracks with tool-free snap-in magnetic modules — micro-spots, wall washers, and diffuse linear tubes.",
-    cta: "Explore 48V Magnetic",
-    href: "/catalogue?category=Magnetic+Series",
-    image: "/images/products/mega-tube.png",
-    spotlight: {
-      name: "Mega Tube 48V",
-      series: "Mega Magnetic Series",
-      specs: "18W · DC48V · Magnetic Track",
-      href: "/products/mega-tube",
-      image: "/images/products/mega-tube.png",
-    },
-  },
-  {
-    eyebrow: "Continuous Linear & Geometric Lighting",
-    title: "Extruded Aluminum Architectural Profiles",
-    copy: "Direct/indirect continuous linear luminaires, sharp triangular contours, and suspended geometric rings for expansive commercial volumes.",
-    cta: "Explore Linear Profiles",
-    href: "/catalogue?category=Linear+Light",
-    image: "/images/products/lena-20-linear.png",
-    spotlight: {
-      name: "LENA 20 Linear",
-      series: "LENA Architectural Profiles",
-      specs: "15W/m · Customizable · 120° Diffuse",
-      href: "/products/lena-20-linear",
-      image: "/images/products/lena-20-linear.png",
-    },
-  },
-  {
-    eyebrow: "Facade & Landscape Illumination",
-    title: "IP65 / IP67 Architectural Outdoor Projectors",
-    copy: "Engineered die-cast aluminum floodlights and in-ground drive-over fixtures with precision asymmetrical optics for facade illumination.",
-    cta: "Explore Outdoor Series",
-    href: "/catalogue?category=Outdoor+Light",
-    image: "/images/products/flood18.png",
-    spotlight: {
-      name: "Flood18 Projector",
-      series: "Outdoor Architectural Series",
-      specs: "36W · IP65 · 12°/30°/45°/60°",
-      href: "/products/flood18",
-      image: "/images/products/flood18.png",
-    },
-  },
-];
+export default function Hero({ product }: HeroProps) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoEnded, setVideoEnded] = useState(false);
+  const [isLightOn, setIsLightOn] = useState(true);
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
 
-export default function Hero() {
-  const [active, setActive] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const { isInSchedule, addItem, removeItem, openDrawer } = useSpecSchedule();
+  const activeProductId = product?.id || "rona";
+  const inSchedule = isInSchedule(activeProductId);
+
+  // Apply 2.0x playback rate for smooth kinetic motion
+  const enforceSpeed = useCallback(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 2.0;
+    }
+  }, []);
 
   useEffect(() => {
-    if (isPaused) return;
-    timerRef.current = setInterval(() => {
-      setActive((prev) => (prev + 1) % slides.length);
-    }, 6000);
+    enforceSpeed();
+    if (videoRef.current && !videoEnded && isLightOn) {
+      videoRef.current.muted = true;
+      videoRef.current.play().catch(() => {});
+    }
+  }, [videoEnded, enforceSpeed, isLightOn]);
 
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [isPaused]);
+  const handleScheduleToggle = () => {
+    if (!product) return;
+    if (inSchedule) {
+      removeItem(product.id);
+    } else {
+      addItem(product, {
+        selectedCct: "3500K",
+        selectedBeamAngle: "24°",
+        selectedFinish: "Matte Black",
+      });
+      openDrawer();
+    }
+  };
 
-  const slide = slides[active];
+  const toggleLight = () => {
+    setIsLightOn((prev) => !prev);
+  };
 
   return (
     <section
-      className="relative overflow-hidden bg-neutral-950 text-white"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      aria-label="Pro-Luce Featured Collections"
+      className="relative w-full min-h-[680px] lg:min-h-[820px] xl:min-h-[880px] bg-black text-white flex items-center overflow-hidden select-none border-b border-neutral-800/60 transition-colors duration-700"
+      aria-label="ProLuce Architectural Luminaire Showcase"
     >
-      {/* Background Architectural Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-25" />
-
-      <div className="container-site relative z-10 py-16 md:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Content */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900/80 px-3.5 py-1.5 backdrop-blur-sm">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-[11px] font-mono font-medium tracking-widest text-neutral-300 uppercase">
-                {slide.eyebrow}
-              </span>
+      {/* 1. Cinematic Background Stage */}
+      <div className="absolute inset-0 z-0 flex items-center justify-end bg-black overflow-hidden pointer-events-none">
+        {isLightOn ? (
+          !videoEnded ? (
+            <div className="relative w-full h-full lg:w-[76%] xl:w-[72%] 2xl:w-[75%] lg:ml-auto flex items-center justify-center transition-opacity duration-700">
+              <video
+                ref={videoRef}
+                autoPlay
+                muted
+                playsInline
+                poster="/images/hero-poster.webp"
+                preload="auto"
+                onPlay={enforceSpeed}
+                onLoadedMetadata={enforceSpeed}
+                onEnded={() => setVideoEnded(true)}
+                className="w-full h-full object-cover bg-black"
+              >
+                <source src="/videos/hero.webm" type="video/webm" />
+                <source src="/videos/hero.mp4" type="video/mp4" />
+              </video>
             </div>
+          ) : (
+            <div className="relative w-full h-full lg:w-[76%] xl:w-[72%] 2xl:w-[75%] lg:ml-auto flex items-center justify-center bg-black transition-opacity duration-700">
+              <Image
+                src="/images/hero-spotlight-on.webp"
+                alt="ProLuce Architectural Track Spotlight — Light Emitting"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 76vw"
+                className="object-cover bg-black"
+              />
+            </div>
+          )
+        ) : (
+          <div className="relative w-full h-full lg:w-[76%] xl:w-[72%] 2xl:w-[75%] lg:ml-auto flex items-center justify-center bg-black transition-opacity duration-700">
+            <Image
+              src="/images/hero-spotlight-off.webp"
+              alt="ProLuce Architectural Track Spotlight — Light Extinguished"
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 76vw"
+              className="object-cover bg-black"
+            />
+          </div>
+        )}
 
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white font-display leading-[1.1]">
-              {slide.title}
+        {/* Soft atmospheric radial gradient on left edge for text readability */}
+        <div className="hidden lg:block absolute inset-y-0 left-0 w-[45%] bg-gradient-to-r from-black via-black/85 to-transparent pointer-events-none z-[1]" />
+      </div>
+
+      {/* 2. Streamlined Architectural Content Overlay */}
+      <div className="container-site relative z-10 py-12 lg:py-16 w-full flex items-center">
+        {/* Soft Ambient Light Beam Behind Text (dims when light is off) */}
+        <div
+          className={`absolute top-1/2 -translate-y-1/2 left-0 w-72 sm:w-96 h-72 sm:h-96 rounded-full blur-[100px] pointer-events-none -z-10 transition-all duration-700 ${
+            isLightOn ? "bg-amber-500/18 opacity-100 scale-100" : "bg-transparent opacity-0 scale-75"
+          }`}
+        />
+
+        <div className="w-full max-w-xl lg:max-w-2xl xl:max-w-[620px] space-y-6">
+          
+          {/* Subtle Eyebrow Badge with Live Luminaire Status */}
+          <div className="animate-hero-badge inline-flex items-center gap-2 rounded-full border border-neutral-700/60 bg-neutral-900/70 backdrop-blur-md px-3.5 py-1">
+            <span
+              className={`h-1.5 w-1.5 rounded-full transition-all duration-500 ${
+                isLightOn
+                  ? "bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.9)] animate-pulse"
+                  : "bg-neutral-500"
+              }`}
+            />
+            <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-neutral-300 font-medium">
+              {isLightOn ? "Architectural Optic · 3000K Active" : "Optic Standby · Dark Mode"}
+            </span>
+          </div>
+
+          {/* Clean Display Headline */}
+          <div className="animate-hero-title">
+            <h1 className="text-5xl sm:text-6xl lg:text-[66px] font-normal tracking-tight text-white font-display leading-[1.03]">
+              Light Sculpted in <br />
+              <span className={`italic font-serif transition-colors duration-700 ${
+                isLightOn
+                  ? "bg-gradient-to-r from-white via-amber-100 to-amber-200/90 bg-clip-text text-transparent drop-shadow-sm"
+                  : "text-neutral-400"
+              }`}>
+                Pure Precision
+              </span>
+              .
             </h1>
+          </div>
 
-            <p className="text-base md:text-lg text-neutral-400 max-w-xl leading-relaxed">
-              {slide.copy}
-            </p>
+          {/* Clean Subhead */}
+          <p className="animate-hero-desc text-base sm:text-lg text-neutral-300/90 font-light leading-relaxed font-sans max-w-lg">
+            Precision-milled architectural luminaires engineered with micro-faceted TIR optics, deep glare suppression, and continuous dimming intelligence.
+          </p>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-4 pt-4">
-              <Link
-                href={slide.href}
-                className="rounded-lg bg-white px-6 py-3 text-xs font-semibold uppercase tracking-wider text-neutral-950 hover:bg-neutral-100 transition-colors shadow-sm"
-              >
-                {slide.cta}
+          {/* Clean Action Buttons */}
+          <div className="animate-hero-cta flex flex-wrap items-center gap-4 pt-3">
+            <Button
+              asChild
+              size="lg"
+              className="group h-12 rounded-full bg-white text-black hover:bg-neutral-100 font-mono text-xs uppercase tracking-wider px-7 shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+            >
+              <Link href="/catalogue" className="flex items-center gap-3 font-semibold">
+                <span>Explore Catalogue</span>
+                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-black text-white transition-transform duration-300 group-hover:translate-x-1">
+                  <ArrowRight className="h-3 w-3" />
+                </div>
               </Link>
+            </Button>
 
-              <a
-                href="/pdf/Pro-Luce-Catalogue.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                download="Pro-Luce-Catalogue.pdf"
-                className="rounded-lg border border-neutral-700 px-6 py-3 text-xs font-semibold uppercase tracking-wider text-neutral-300 hover:text-white hover:border-neutral-500 transition-colors"
+            {product ? (
+              <Button
+                variant={inSchedule ? "secondary" : "outline"}
+                size="lg"
+                onClick={handleScheduleToggle}
+                className={`h-12 rounded-full font-mono text-xs uppercase tracking-wider px-7 border hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 backdrop-blur-md ${
+                  inSchedule
+                    ? "bg-amber-500 hover:bg-amber-600 text-neutral-950 font-bold border-amber-400 shadow-md shadow-amber-500/10"
+                    : "bg-white/5 text-white border-white/20 hover:bg-white/15 hover:border-white/40"
+                }`}
               >
-                Download PDF
-              </a>
-            </div>
-
-            {/* Slide Indicators */}
-            <div className="flex items-center gap-3 pt-8">
-              {slides.map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => setActive(i)}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    active === i ? "w-8 bg-white" : "w-2 bg-neutral-700 hover:bg-neutral-500"
-                  }`}
-                  aria-label={`Go to slide ${i + 1}`}
-                />
-              ))}
-              <span className="ml-2 font-mono text-xs text-neutral-500">
-                0{active + 1} / 0{slides.length}
-              </span>
-            </div>
+                {inSchedule ? (
+                  <>
+                    <Check className="mr-2 h-4 w-4 text-neutral-950 stroke-[3]" />
+                    <span>In Spec Schedule</span>
+                  </>
+                ) : (
+                  <>
+                    <Plus className="mr-2 h-4 w-4 text-amber-400" />
+                    <span>Add to Spec Schedule</span>
+                  </>
+                )}
+              </Button>
+            ) : (
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={() => setIsQuoteOpen(true)}
+                className="h-12 rounded-full font-mono text-xs uppercase tracking-wider px-7 border-white/20 bg-white/5 text-white hover:bg-white/15 hover:border-white/40 backdrop-blur-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+              >
+                <FileText className="mr-2 h-4 w-4 text-amber-400" />
+                <span>Request Project RFQ</span>
+              </Button>
+            )}
           </div>
 
-          {/* Right Spotlight Fixture Card */}
-          <div className="lg:col-span-5 flex justify-center">
-            <div className="relative w-full max-w-md rounded-2xl border border-neutral-800 bg-neutral-900/90 p-8 backdrop-blur-md shadow-2xl">
-              {/* Product Visual Container */}
-              <div className="relative aspect-square w-full rounded-xl bg-neutral-950 border border-neutral-800/80 p-6 flex items-center justify-center overflow-hidden">
-                <Image
-                  src={slide.spotlight.image}
-                  alt={slide.spotlight.name}
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 400px"
-                  className="object-contain p-4 transition-transform duration-500 hover:scale-105"
-                />
-
-                <div className="absolute top-3 right-3">
-                  <span className="rounded bg-neutral-900/90 px-2 py-0.5 text-[10px] font-mono text-neutral-300 border border-neutral-700">
-                    Featured Luminaire
-                  </span>
-                </div>
-              </div>
-
-              {/* Spotlight Metadata */}
-              <div className="mt-6 flex items-end justify-between">
-                <div>
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">
-                    {slide.spotlight.series}
-                  </span>
-                  <h3 className="font-display text-xl font-semibold text-white mt-0.5">
-                    {slide.spotlight.name}
-                  </h3>
-                  <p className="mt-1 font-mono text-xs text-neutral-400">
-                    {slide.spotlight.specs}
-                  </p>
-                </div>
-
-                <Link
-                  href={slide.spotlight.href}
-                  className="rounded-md bg-white/10 hover:bg-white/20 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-white transition-colors"
-                >
-                  Specs →
-                </Link>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
+
+      {/* Tactile Stage Luminaire Optic Switcher (Bottom Right HUD) */}
+      <div className="flex absolute bottom-6 right-6 sm:bottom-8 sm:right-10 z-20 items-center">
+        <button
+          type="button"
+          onClick={toggleLight}
+          className={`flex items-center gap-3 px-4 py-2.5 rounded-full border backdrop-blur-2xl transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 cursor-pointer shadow-2xl ${
+            isLightOn
+              ? "bg-neutral-900/90 border-amber-400/50 text-neutral-100 shadow-amber-500/10"
+              : "bg-neutral-950/90 border-neutral-700/80 text-neutral-400 hover:border-neutral-500"
+          }`}
+          aria-label={isLightOn ? "Extinguish luminaire (Switch to dark standby)" : "Illuminate luminaire (Switch to 3000K active beam)"}
+        >
+          <div
+            className={`flex h-6 w-6 items-center justify-center rounded-full transition-all duration-300 ${
+              isLightOn
+                ? "bg-amber-400 text-neutral-950 shadow-[0_0_10px_rgba(251,191,36,0.8)]"
+                : "bg-neutral-800 text-neutral-400"
+            }`}
+          >
+            <Power className="h-3 w-3" />
+          </div>
+          <div className="flex flex-col text-left">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 leading-none">
+              Luminaire Optic
+            </span>
+            <span className={`text-xs font-mono font-semibold leading-none mt-1 transition-colors ${
+              isLightOn ? "text-amber-300" : "text-neutral-300"
+            }`}>
+              {isLightOn ? "Beam Active (3000K)" : "Dark Standby (0 lx)"}
+            </span>
+          </div>
+        </button>
+      </div>
+
+      {/* Trade Quote Modal */}
+      {product && (
+        <QuoteModal
+          product={product}
+          isOpen={isQuoteOpen}
+          onClose={() => setIsQuoteOpen(false)}
+        />
+      )}
     </section>
   );
 }

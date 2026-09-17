@@ -13,6 +13,14 @@ export type ProductCategory =
 
 export type ProductEnvironment = "Indoor" | "Outdoor" | "Indoor/Outdoor";
 
+export type ProductVariant = {
+  model: string;
+  power: string;
+  lumens: string;
+  dimensions: string;
+  cutout: string;
+};
+
 export type Product = {
   id: string;
   slug: string;
@@ -38,6 +46,18 @@ export type Product = {
   description: string;
   images: string[];
   dimensionDiagram?: string | null;
+  // Extended technical attributes from engineering datasheets
+  variants?: ProductVariant[];
+  efficacy?: string;
+  ugr?: string;
+  sdcm?: string;
+  optics?: string;
+  diffuser?: string;
+  operatingTemp?: string;
+  glowWireTest?: string;
+  standards?: string;
+  chipPartners?: string[];
+  datasheetPdf?: string;
 };
 
 export const products: Product[] = [
@@ -181,45 +201,107 @@ export const products: Product[] = [
     "slug": "nova",
     "model": "NOVA",
     "category": "Spot Light",
-    "subseries": "LENA75 Series",
-    "environment": "Indoor",
+    "subseries": "Architectural Spot Light Series",
+    "environment": "Indoor/Outdoor",
     "catalogPage": 11,
-    "dimensions": "\u00d852mm \u00d7 H55mm",
-    "cutout": null,
-    "installationMethod": "Trimless Recessed",
-    "material": "Die-cast / High-grade Extruded Aluminum + Optical PC",
+    "dimensions": "Ø52mm–Ø132mm × H55mm–H93mm",
+    "cutout": "Ø45mm / Ø75mm / Ø95mm / Ø125mm",
+    "installationMethod": "Recessed Ceiling Mounted (Adjustable)",
+    "material": "High-pressure die-cast aluminium with corrosion-resistant powder coating",
     "finishes": [
+      "Architectural Grey",
       "Matte White",
-      "Matte Black"
+      "Matte Black",
+      "RAL Custom Colors"
     ],
-    "ipRating": "IP20",
-    "power": "7W/12W/20W/30W",
-    "lumens": "100Lm/w",
+    "ipRating": "IP20 / IP44",
+    "power": "7W / 12W / 20W / 30W",
+    "lumens": "100 Lm/W (700Lm – 3000Lm)",
     "beamAngles": [
-      "15\u00b0",
-      "24\u00b0",
-      "36\u00b0"
+      "3°",
+      "5°",
+      "10°",
+      "15°",
+      "20°",
+      "24°",
+      "30°",
+      "36°",
+      "40°",
+      "45°",
+      "50°",
+      "60°"
     ],
     "cct": [
       "2700K",
       "3000K",
       "4000K",
-      "6000K"
+      "5000K",
+      "6000K",
+      "6500K"
     ],
-    "cri": "Ra \u2265 80",
-    "inputVoltage": "AC 85\u2013265V / AC 220\u2013240V, 50-60Hz",
+    "cri": "Ra > 90 (High Fidelity)",
+    "inputVoltage": "AC 85–265V, 50/60Hz",
     "driverOptions": [
       "On/Off",
-      "DALI-2",
-      "Phase Dimming (Triac)",
-      "0-10V / 1-10V"
+      "1-10V Dimming",
+      "DALI",
+      "Phase Dimming (Triac)"
     ],
-    "lifeHours": "50,000 Hrs",
-    "description": "Engineered for high-performance architectural illumination, the NOVA features premium aluminum housing for optimal heat dissipation and superior optical glare control.",
+    "lifeHours": "L80/B10 @ 50,000 h · L70/B15 @ 100,000 h (F10 @ 50,000 h, Ta 25–40°C)",
+    "description": "Our NOVA LED Spot Light is designed to deliver focused, high-intensity illumination with precise beam control, making it ideal for architectural, commercial, retail, and residential applications. Engineered for accurate accent lighting, it enhances textures, artwork, façades, display areas, and key architectural features with clarity and depth. Constructed from high-pressure die-cast aluminum, the fixture provides excellent heat dissipation for improved efficiency and extended lifespan. Its corrosion-resistant, powder-coated finish ensures long-lasting durability, making NOVA a reliable lighting solution for both indoor and outdoor applications.",
     "images": [
-      "/images/products/nova.png"
+      "/images/products/nova.png",
+      "/images/products/nova-series.png"
     ],
-    "dimensionDiagram": "/images/diagrams/nova-diagram.png"
+    "dimensionDiagram": "/images/diagrams/nova-diagram.png",
+    "variants": [
+      {
+        "model": "NOVA-A",
+        "power": "7W",
+        "lumens": "700 Lm",
+        "dimensions": "Ø52mm × H55mm",
+        "cutout": "Ø45mm"
+      },
+      {
+        "model": "NOVA-B",
+        "power": "12W",
+        "lumens": "1200 Lm",
+        "dimensions": "Ø82mm × H62mm",
+        "cutout": "Ø75mm"
+      },
+      {
+        "model": "NOVA-C",
+        "power": "20W",
+        "lumens": "2000 Lm",
+        "dimensions": "Ø102mm × H66mm",
+        "cutout": "Ø95mm"
+      },
+      {
+        "model": "NOVA-D",
+        "power": "30W",
+        "lumens": "3000 Lm",
+        "dimensions": "Ø132mm × H93mm",
+        "cutout": "Ø125mm"
+      }
+    ],
+    "efficacy": "100 Lm/W",
+    "ugr": "< 19 (Anti-Glare / Eye Comfort)",
+    "sdcm": "2.0 / 3.0 (MacAdam Ellipse)",
+    "optics": "Anodized aluminium reflector with optical PMMA reflector lens",
+    "diffuser": "Tempered clear glass",
+    "operatingTemp": "-25°C to +55°C (Ta 25–40°C)",
+    "glowWireTest": "850°C Glow Wire Flammability Test",
+    "standards": "PTPS IES 62722, LM-80 / TM-21, CE, RoHS, CIDET, Eco-Compliant",
+    "chipPartners": [
+      "CREE",
+      "SHARP",
+      "SAMSUNG",
+      "PHILIPS",
+      "CITIZEN",
+      "TRIDONIC",
+      "VS LIGHTING SOLUTIONS"
+    ],
+    "datasheetPdf": "/pdf/nova-datasheet.pdf"
   },
   {
     "id": "pl-012",
@@ -4223,7 +4305,17 @@ export const environments: ProductEnvironment[] = [
 ];
 
 export function getProductBySlug(slug: string): Product | undefined {
-  return products.find((p) => p.slug === slug);
+  const directMatch = products.find((p) => p.slug === slug);
+  if (directMatch) return directMatch;
+
+  // Fallback: Check if slug matches any variant model (e.g. nova-a, nova-b)
+  const normalized = slug.toLowerCase().replace(/[^a-z0-9]/g, "");
+  return products.find((p) => {
+    if (p.slug.replace(/[^a-z0-9]/g, "") === normalized) return true;
+    return p.variants?.some(
+      (v) => v.model.toLowerCase().replace(/[^a-z0-9]/g, "") === normalized
+    );
+  });
 }
 
 export function getProductsByCategory(category: ProductCategory): Product[] {

@@ -1,6 +1,11 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Send, CheckCircle2 } from "lucide-react";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "submitted">("idle");
@@ -12,68 +17,102 @@ export default function ContactForm() {
 
   if (status === "submitted") {
     return (
-      <div className="border border-border bg-surface p-8 text-center">
-        <h2 className="font-display text-xl">Thanks for reaching out</h2>
-        <p className="mt-2 text-muted">We&apos;ll get back to you within one business day.</p>
-      </div>
+      <Card className="border-border bg-card p-10 text-center shadow-xs">
+        <CardContent className="p-0 flex flex-col items-center justify-center space-y-3">
+          <div className="h-12 w-12 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+            <CheckCircle2 className="h-6 w-6" />
+          </div>
+          <h2 className="font-display text-2xl font-normal text-foreground">
+            Message Transmitted to Engineering Desk
+          </h2>
+          <p className="text-sm text-muted-foreground max-w-md mx-auto font-light">
+            Thank you for reaching out. Our architectural project managers will review your schedule and respond within 24 hours.
+          </p>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setStatus("idle")}
+            className="mt-4 font-mono text-xs uppercase rounded-full px-6"
+          >
+            Send Another Message
+          </Button>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Name" id="name" type="text" autoComplete="name" required />
-        <Field label="Email" id="email" type="email" autoComplete="email" required />
-      </div>
-      <Field label="Subject" id="subject" type="text" />
-      <div>
-        <label htmlFor="message" className="mb-1.5 block text-sm font-medium">
-          Message
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          required
-          rows={6}
-          className="w-full border border-border bg-background px-4 py-3 text-sm outline-none focus:border-foreground"
-        />
-      </div>
-      <button
-        type="submit"
-        className="mt-2 w-fit bg-foreground px-8 py-3.5 text-sm font-medium uppercase tracking-wide text-background transition-opacity hover:opacity-90"
-      >
-        Send Message
-      </button>
-    </form>
-  );
-}
+    <Card className="border-border bg-card shadow-xs rounded-2xl">
+      <CardContent className="p-6 sm:p-8">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label htmlFor="name" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-foreground font-mono">
+                Full Name <span className="text-destructive">*</span>
+              </label>
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                autoComplete="name"
+                required
+                placeholder="e.g. Alessandro Moretti"
+                className="text-xs"
+              />
+            </div>
 
-function Field({
-  label,
-  id,
-  type,
-  autoComplete,
-  required,
-}: {
-  label: string;
-  id: string;
-  type: string;
-  autoComplete?: string;
-  required?: boolean;
-}) {
-  return (
-    <div>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-medium">
-        {label}
-      </label>
-      <input
-        id={id}
-        name={id}
-        type={type}
-        autoComplete={autoComplete}
-        required={required}
-        className="w-full border border-border bg-background px-4 py-3 text-sm outline-none focus:border-foreground"
-      />
-    </div>
+            <div>
+              <label htmlFor="email" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-foreground font-mono">
+                Business Email <span className="text-destructive">*</span>
+              </label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                placeholder="architect@studio.com"
+                className="text-xs"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="subject" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-foreground font-mono">
+              Project Subject / Tender Code
+            </label>
+            <Input
+              id="subject"
+              name="subject"
+              type="text"
+              placeholder="e.g. Specification Inquiry - Milan Galleria Project"
+              className="text-xs"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="message" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-foreground font-mono">
+              Engineering Requirements & Space Brief <span className="text-destructive">*</span>
+            </label>
+            <Textarea
+              id="message"
+              name="message"
+              required
+              rows={5}
+              placeholder="Describe luminaire quantities, ceiling mounting details, DALI-2 dimming needs, or photometric calculation requests..."
+              className="text-xs resize-none rounded-2xl p-4"
+            />
+          </div>
+
+          <Button
+            type="submit"
+            className="mt-2 w-fit font-mono text-xs uppercase tracking-widest px-8 h-11 gap-2 shadow-sm rounded-full"
+          >
+            <Send className="h-3.5 w-3.5" />
+            <span>Send Message</span>
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
   );
 }

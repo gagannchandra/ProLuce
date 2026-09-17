@@ -3,6 +3,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Product } from "@/lib/products";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { SearchX, ArrowRight, FileText } from "lucide-react";
 
 interface CatalogTableProps {
   products: Product[];
@@ -12,109 +24,117 @@ interface CatalogTableProps {
 export default function CatalogTable({ products, onOpenQuote }: CatalogTableProps) {
   if (products.length === 0) {
     return (
-      <div className="rounded-xl border border-dashed border-border p-12 text-center bg-surface">
-        <p className="text-sm font-medium text-neutral-900">No architectural fixtures match these criteria.</p>
-        <p className="text-xs text-muted mt-1">Try relaxing some of the parametric filters in the sidebar.</p>
-      </div>
+      <Card className="border-dashed border-border p-12 text-center bg-muted/20">
+        <CardContent className="flex flex-col items-center justify-center space-y-3">
+          <SearchX className="h-10 w-10 text-muted-foreground opacity-50" />
+          <p className="text-sm font-medium text-foreground">No architectural fixtures match these criteria.</p>
+          <p className="text-xs text-muted-foreground">Try relaxing some of the parametric filters in the sidebar.</p>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <div className="w-full overflow-x-auto rounded-xl border border-border bg-white shadow-xs">
-      <table className="w-full text-left text-xs border-collapse">
-        <thead>
-          <tr className="border-b border-border bg-surface text-[11px] font-mono uppercase tracking-wider text-muted">
-            <th className="py-3 px-4 font-semibold">Fixture</th>
-            <th className="py-3 px-4 font-semibold">Model & Series</th>
-            <th className="py-3 px-4 font-semibold">Mounting</th>
-            <th className="py-3 px-4 font-semibold">Power & Efficacy</th>
-            <th className="py-3 px-4 font-semibold">Beam Angle</th>
-            <th className="py-3 px-4 font-semibold">CCT</th>
-            <th className="py-3 px-4 font-semibold">Cutout / Size</th>
-            <th className="py-3 px-4 font-semibold">IP Rating</th>
-            <th className="py-3 px-4 font-semibold">Voltage</th>
-            <th className="py-3 px-4 font-semibold text-right">Actions</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-border">
-          {products.map((p) => (
-            <tr key={p.id} className="hover:bg-surface/60 transition-colors">
-              <td className="py-2.5 px-4 w-16">
-                <Link href={`/products/${p.slug}`} className="block relative h-12 w-12 rounded border border-border/80 bg-surface overflow-hidden">
-                  <Image
-                    src={p.images[0] || "/images/products/rona.png"}
-                    alt={p.model}
-                    fill
-                    sizes="48px"
-                    className="object-contain p-1"
-                  />
-                </Link>
-              </td>
+    <Card className="w-full overflow-hidden border-border bg-card shadow-xs">
+      <div className="overflow-x-auto">
+        <Table>
+          <TableHeader className="sticky top-0 z-10 bg-muted/90 backdrop-blur-md">
+            <TableRow className="border-b border-border/80 text-[11px] font-mono uppercase tracking-wider text-muted-foreground font-semibold">
+              <TableHead className="w-16">Fixture</TableHead>
+              <TableHead>Model & Series</TableHead>
+              <TableHead>Mounting</TableHead>
+              <TableHead>Power & Efficacy</TableHead>
+              <TableHead>Beam Angle</TableHead>
+              <TableHead>CCT</TableHead>
+              <TableHead>Cutout / Size</TableHead>
+              <TableHead>IP Rating</TableHead>
+              <TableHead>Voltage</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody className="divide-y divide-border/60">
+            {products.map((p) => (
+              <TableRow key={p.id} className="hover:bg-muted/50 transition-colors">
+                <TableCell className="py-2.5 px-4 w-16">
+                  <Link href={`/products/${p.slug}`} className="block relative h-12 w-12 rounded-md border border-border bg-surface overflow-hidden group">
+                    <Image
+                      src={p.images[0] || "/images/products/rona.png"}
+                      alt={p.model}
+                      fill
+                      sizes="48px"
+                      className="object-contain p-1 transition-transform group-hover:scale-105"
+                    />
+                  </Link>
+                </TableCell>
 
-              <td className="py-2.5 px-4">
-                <Link href={`/products/${p.slug}`} className="font-semibold text-neutral-900 hover:underline">
-                  {p.model}
-                </Link>
-                {p.subseries && (
-                  <span className="block text-[10px] text-muted">{p.subseries}</span>
-                )}
-                <span className="text-[10px] font-mono text-muted-light">P.{p.catalogPage}</span>
-              </td>
+                <TableCell className="py-2.5 px-4">
+                  <Link href={`/products/${p.slug}`} className="font-semibold text-foreground hover:underline block text-sm">
+                    {p.model}
+                  </Link>
+                  {p.subseries && (
+                    <span className="block text-[10px] text-muted-foreground">{p.subseries}</span>
+                  )}
+                  <Badge variant="outline" className="text-[10px] font-mono mt-0.5">
+                    P.{p.catalogPage}
+                  </Badge>
+                </TableCell>
 
-              <td className="py-2.5 px-4 text-neutral-700">
-                {p.installationMethod}
-              </td>
+                <TableCell className="py-2.5 px-4 text-muted-foreground text-xs">
+                  {p.installationMethod}
+                </TableCell>
 
-              <td className="py-2.5 px-4">
-                <span className="font-medium text-neutral-900">{p.power}</span>
-                <span className="block text-[10px] font-mono text-muted">{p.lumens}</span>
-              </td>
+                <TableCell className="py-2.5 px-4">
+                  <span className="font-medium text-foreground">{p.power}</span>
+                  <span className="block text-[10px] font-mono text-muted-foreground">{p.lumens}</span>
+                </TableCell>
 
-              <td className="py-2.5 px-4 font-mono text-neutral-700">
-                {p.beamAngles.join(", ")}
-              </td>
+                <TableCell className="py-2.5 px-4 font-mono text-muted-foreground text-xs">
+                  {p.beamAngles.join(", ")}
+                </TableCell>
 
-              <td className="py-2.5 px-4 text-[11px] text-neutral-700">
-                {p.cct.slice(0, 3).join(", ")}
-              </td>
+                <TableCell className="py-2.5 px-4 text-[11px] text-muted-foreground">
+                  {p.cct.slice(0, 3).join(", ")}
+                </TableCell>
 
-              <td className="py-2.5 px-4 font-mono text-neutral-700">
-                {p.cutout ? (
-                  <span className="font-semibold text-neutral-900">{p.cutout}</span>
-                ) : (
-                  <span className="text-[11px]">{p.dimensions}</span>
-                )}
-              </td>
+                <TableCell className="py-2.5 px-4 font-mono text-foreground text-xs">
+                  {p.cutout ? (
+                    <span className="font-semibold">{p.cutout}</span>
+                  ) : (
+                    <span className="text-[11px] text-muted-foreground">{p.dimensions}</span>
+                  )}
+                </TableCell>
 
-              <td className="py-2.5 px-4">
-                <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold bg-surface border border-border text-neutral-800">
-                  {p.ipRating}
-                </span>
-              </td>
+                <TableCell className="py-2.5 px-4">
+                  <Badge variant="secondary" className="font-mono text-[10px] font-semibold">
+                    {p.ipRating}
+                  </Badge>
+                </TableCell>
 
-              <td className="py-2.5 px-4 text-[11px] text-muted">
-                {p.inputVoltage.includes("48V") ? "DC 48V" : p.inputVoltage.includes("24V") ? "DC 24V" : "AC 220V"}
-              </td>
+                <TableCell className="py-2.5 px-4 text-[11px] text-muted-foreground font-mono">
+                  {p.inputVoltage.includes("48V") ? "DC 48V" : p.inputVoltage.includes("24V") ? "DC 24V" : "AC 220V"}
+                </TableCell>
 
-              <td className="py-2.5 px-4 text-right space-x-2 whitespace-nowrap">
-                <Link
-                  href={`/products/${p.slug}`}
-                  className="inline-block text-[11px] font-semibold text-neutral-700 hover:text-neutral-950 underline"
-                >
-                  Specs
-                </Link>
-                <button
-                  type="button"
-                  onClick={() => onOpenQuote(p)}
-                  className="rounded bg-neutral-900 px-2.5 py-1 text-[10px] font-semibold uppercase text-white hover:bg-neutral-800"
-                >
-                  Quote
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+                <TableCell className="py-2.5 px-4 text-right space-x-1.5 whitespace-nowrap">
+                  <Button asChild variant="ghost" size="xs" className="font-mono text-xs text-foreground">
+                    <Link href={`/products/${p.slug}`}>
+                      Specs
+                      <ArrowRight className="ml-1 h-3 w-3" />
+                    </Link>
+                  </Button>
+                  <Button
+                    size="xs"
+                    onClick={() => onOpenQuote(p)}
+                    className="font-mono text-[10px] uppercase font-semibold"
+                  >
+                    <FileText className="mr-1 h-3 w-3" />
+                    Quote
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </Card>
   );
 }

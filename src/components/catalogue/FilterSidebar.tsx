@@ -1,7 +1,16 @@
 "use client";
 
-import { useState } from "react";
 import type { ProductCategory, ProductEnvironment } from "@/lib/products";
+import { Card } from "@/components/ui/card";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Search, X, RotateCcw } from "lucide-react";
 
 export interface FilterState {
   category: string;
@@ -47,6 +56,7 @@ const CCT_OPTIONS = [
   { label: "4000K", sub: "Neutral Architectural", color: "#ffe4c4" },
   { label: "5000K", sub: "Cool Daylight", color: "#f0f4ff" },
   { label: "6000K", sub: "Crisp Daylight", color: "#dbeafe" },
+  { label: "6500K", sub: "Cool Sky Daylight", color: "#cce0ff" },
   { label: "Tunable", sub: "Circadian Tunable", color: "linear-gradient(135deg, #ffc58a, #dbeafe)" },
 ];
 
@@ -60,21 +70,6 @@ export default function FilterSidebar({
   categoryCounts,
   totalCount,
 }: FilterSidebarProps) {
-  // Collapsible section state
-  const [openSections, setOpenSections] = useState({
-    categories: true,
-    environment: true,
-    cct: true,
-    ip: true,
-    beam: true,
-    electrical: false,
-    dimensions: false,
-  });
-
-  function toggleSection(sec: keyof typeof openSections) {
-    setOpenSections((prev) => ({ ...prev, [sec]: !prev[sec] }));
-  }
-
   const hasActiveFilters = Boolean(
     filters.category ||
     filters.environment ||
@@ -90,333 +85,276 @@ export default function FilterSidebar({
 
   return (
     <aside className="w-full space-y-4 text-xs font-sans select-none">
-      {/* Search Input Box with Focus State */}
-      <div className="rounded-xl border border-border bg-white p-4 shadow-xs">
-        <label htmlFor="search-input" className="block text-[11px] font-mono font-semibold uppercase tracking-wider text-neutral-900 mb-2">
+      {/* Search Input Box */}
+      <Card className="p-4 shadow-2xs border border-border/80 bg-card/90 backdrop-blur-xs rounded-2xl">
+        <label htmlFor="search-input" className="block text-[11px] font-mono font-semibold uppercase tracking-wider text-foreground mb-2">
           Search Fixture / Model
         </label>
         <div className="relative">
-          <input
+          <Input
             id="search-input"
             type="text"
             value={filters.search}
             onChange={(e) => onFilterChange("search", e.target.value)}
             placeholder="e.g. RONA, LENA, HUD, PTM, FLOOD..."
-            className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-xs font-medium text-neutral-900 outline-none transition-all placeholder:text-muted focus:border-neutral-950 focus:bg-white focus:ring-1 focus:ring-neutral-950"
+            className="w-full pr-8 text-xs font-mono rounded-xl bg-surface/50 border-border/80 focus-visible:ring-2 focus-visible:ring-amber-500"
           />
-          {filters.search && (
-            <button
-              type="button"
+          {filters.search ? (
+            <Button
+              variant="ghost"
+              size="icon-xs"
               onClick={() => onFilterChange("search", "")}
-              className="absolute right-2.5 top-2 text-muted hover:text-neutral-950"
-              aria-label="Clear search"
+              className="absolute right-1.5 top-1.5 text-muted-foreground hover:text-foreground h-6 w-6 rounded-full"
+              aria-label="Clear search query"
             >
-              ✕
-            </button>
+              <X className="h-3.5 w-3.5" />
+            </Button>
+          ) : (
+            <Search className="absolute right-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
           )}
         </div>
-      </div>
+      </Card>
 
       {/* Global Reset Bar if active */}
       {hasActiveFilters && (
-        <div className="flex items-center justify-between rounded-lg bg-neutral-100 border border-neutral-200 px-3.5 py-2">
-          <span className="text-[11px] font-mono text-neutral-600">Filters applied</span>
-          <button
-            type="button"
+        <div className="flex items-center justify-between rounded-xl bg-muted/60 border border-border/80 px-3.5 py-2">
+          <span className="text-[11px] font-mono text-muted-foreground">Active filter set</span>
+          <Button
+            variant="ghost"
+            size="xs"
             onClick={onReset}
-            className="text-[11px] font-semibold text-red-600 hover:text-red-800 hover:underline"
+            className="text-destructive hover:text-destructive hover:bg-destructive/10 text-[11px] font-mono font-semibold gap-1 rounded-full px-2.5"
           >
+            <RotateCcw className="h-3 w-3" />
             Reset All
-          </button>
+          </Button>
         </div>
       )}
 
-      {/* 1. Category Section */}
-      <div className="rounded-xl border border-border bg-white overflow-hidden shadow-xs">
-        <button
-          type="button"
-          onClick={() => toggleSection("categories")}
-          className="flex w-full items-center justify-between p-4 text-left font-mono font-semibold uppercase tracking-wider text-neutral-900 hover:bg-surface/60 transition-colors"
-          aria-expanded={openSections.categories}
-        >
-          <div className="flex items-center gap-2">
-            <span>Category</span>
-            {filters.category && (
-              <span className="h-1.5 w-1.5 rounded-full bg-neutral-900" />
-            )}
-          </div>
-          <span className={`text-muted transition-transform duration-200 ${openSections.categories ? "rotate-180" : ""}`}>
-            <ChevronDownIcon />
-          </span>
-        </button>
-
-        {openSections.categories && (
-          <div className="px-4 pb-4 space-y-1 border-t border-border/50 pt-2">
-            <label className={`flex items-center justify-between py-1.5 px-2 rounded-lg cursor-pointer transition-colors ${!filters.category ? "bg-neutral-900 text-white font-medium" : "text-neutral-700 hover:bg-surface"}`}>
-              <div className="flex items-center gap-2.5">
-                <input
-                  type="radio"
-                  name="category"
-                  checked={!filters.category}
-                  onChange={() => onFilterChange("category", "")}
-                  className="sr-only"
-                />
-                <span>All Categories</span>
-              </div>
-              <span className={`text-[10px] font-mono ${!filters.category ? "text-neutral-300" : "text-muted"}`}>
+      {/* Accordion Filter Groups */}
+      <Accordion type="multiple" defaultValue={["categories", "cct", "ip", "beam"]} className="space-y-3">
+        {/* 1. Category Section */}
+        <AccordionItem value="categories" className="rounded-2xl border border-border/80 bg-card/90 backdrop-blur-xs px-4 py-0 shadow-2xs">
+          <AccordionTrigger className="font-mono text-xs uppercase tracking-wider text-foreground hover:no-underline py-3.5">
+            <div className="flex items-center gap-2">
+              <span>Category</span>
+              {filters.category && (
+                <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+              )}
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pb-4 pt-1 space-y-1">
+            <div
+              onClick={() => onFilterChange("category", "")}
+              className={`flex items-center justify-between py-1.5 px-3 rounded-full cursor-pointer transition-colors ${
+                !filters.category
+                  ? "bg-foreground text-background font-semibold"
+                  : "text-muted-foreground hover:bg-muted/70 hover:text-foreground"
+              }`}
+            >
+              <span>All Categories</span>
+              <span className={`text-[10px] font-mono ${!filters.category ? "text-background/80" : "text-muted-foreground"}`}>
                 ({totalCount})
               </span>
-            </label>
+            </div>
 
             {CATEGORIES.map((cat) => {
               const count = categoryCounts[cat.value] || 0;
               const isSelected = filters.category === cat.value;
               return (
-                <label
+                <div
                   key={cat.value}
-                  className={`flex items-center justify-between py-1.5 px-2 rounded-lg cursor-pointer transition-colors ${
+                  onClick={() => count > 0 && onFilterChange("category", cat.value)}
+                  className={`flex items-center justify-between py-1.5 px-3 rounded-full transition-colors ${
                     isSelected
-                      ? "bg-neutral-900 text-white font-medium"
+                      ? "bg-amber-500 text-neutral-950 font-semibold cursor-pointer shadow-xs"
                       : count === 0
-                      ? "opacity-35 cursor-not-allowed text-neutral-400"
-                      : "text-neutral-700 hover:bg-surface"
+                      ? "opacity-35 cursor-not-allowed text-muted-foreground"
+                      : "text-foreground hover:bg-muted/70 cursor-pointer"
                   }`}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <input
-                      type="radio"
-                      name="category"
-                      checked={isSelected}
-                      onChange={() => onFilterChange("category", cat.value)}
-                      disabled={count === 0}
-                      className="sr-only"
-                    />
-                    <span>{cat.label}</span>
-                  </div>
-                  <span className={`text-[10px] font-mono ${isSelected ? "text-neutral-300" : "text-muted"}`}>
+                  <span className="truncate pr-2">{cat.label}</span>
+                  <span className={`text-[10px] font-mono shrink-0 ${isSelected ? "text-neutral-900 font-bold" : "text-muted-foreground"}`}>
                     ({count})
                   </span>
-                </label>
+                </div>
               );
             })}
-          </div>
-        )}
-      </div>
+          </AccordionContent>
+        </AccordionItem>
 
-      {/* 2. CCT Swatches Section */}
-      <div className="rounded-xl border border-border bg-white overflow-hidden shadow-xs">
-        <button
-          type="button"
-          onClick={() => toggleSection("cct")}
-          className="flex w-full items-center justify-between p-4 text-left font-mono font-semibold uppercase tracking-wider text-neutral-900 hover:bg-surface/60 transition-colors"
-          aria-expanded={openSections.cct}
-        >
-          <div className="flex items-center gap-2">
-            <span>Color Temp (CCT)</span>
-            {filters.cct && <span className="h-1.5 w-1.5 rounded-full bg-neutral-900" />}
-          </div>
-          <span className={`text-muted transition-transform duration-200 ${openSections.cct ? "rotate-180" : ""}`}>
-            <ChevronDownIcon />
-          </span>
-        </button>
-
-        {openSections.cct && (
-          <div className="px-4 pb-4 border-t border-border/50 pt-3">
+        {/* 2. CCT Swatches Section */}
+        <AccordionItem value="cct" className="rounded-2xl border border-border/80 bg-card/90 backdrop-blur-xs px-4 py-0 shadow-2xs">
+          <AccordionTrigger className="font-mono text-xs uppercase tracking-wider text-foreground hover:no-underline py-3.5">
+            <div className="flex items-center gap-2">
+              <span>Color Temp (CCT)</span>
+              {filters.cct && <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />}
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pb-4 pt-1">
             <div className="grid grid-cols-2 gap-2">
               {CCT_OPTIONS.map((c) => {
                 const isSelected = filters.cct === c.label;
                 return (
-                  <button
+                  <Button
                     key={c.label}
-                    type="button"
+                    variant={isSelected ? "default" : "outline"}
+                    size="sm"
                     onClick={() => onFilterChange("cct", isSelected ? "" : c.label)}
-                    className={`flex items-center gap-2 rounded-lg border p-2 text-left transition-all ${
+                    className={`h-auto py-2 px-3 justify-start text-left gap-2 rounded-xl transition-all duration-200 ${
                       isSelected
-                        ? "border-neutral-950 bg-neutral-950 text-white shadow-xs"
-                        : "border-border bg-surface hover:border-neutral-300 text-neutral-800"
+                        ? "bg-amber-500 text-neutral-950 hover:bg-amber-600 font-semibold border-none shadow-xs"
+                        : "border-border/80 hover:border-amber-500/40 hover:bg-accent"
                     }`}
                   >
                     <span
-                      className="h-3 w-3 rounded-full shrink-0 border border-black/20"
+                      className="h-3 w-3 rounded-full shrink-0 border border-black/20 shadow-2xs"
                       style={{ background: c.color }}
                     />
-                    <div>
-                      <div className="text-[11px] font-bold font-mono">{c.label}</div>
-                      <div className={`text-[9px] truncate max-w-[85px] ${isSelected ? "text-neutral-300" : "text-muted"}`}>
+                    <div className="min-w-0 flex-1">
+                      <div className="text-[11px] font-bold font-mono leading-none">{c.label}</div>
+                      <div className={`text-[9px] truncate mt-0.5 ${isSelected ? "text-neutral-900" : "text-muted-foreground"}`}>
                         {c.sub}
                       </div>
                     </div>
-                  </button>
+                  </Button>
                 );
               })}
             </div>
-          </div>
-        )}
-      </div>
+          </AccordionContent>
+        </AccordionItem>
 
-      {/* 3. IP Rating Badge Section */}
-      <div className="rounded-xl border border-border bg-white overflow-hidden shadow-xs">
-        <button
-          type="button"
-          onClick={() => toggleSection("ip")}
-          className="flex w-full items-center justify-between p-4 text-left font-mono font-semibold uppercase tracking-wider text-neutral-900 hover:bg-surface/60 transition-colors"
-          aria-expanded={openSections.ip}
-        >
-          <div className="flex items-center gap-2">
-            <span>Ingress Protection (IP)</span>
-            {filters.ipRating && <span className="h-1.5 w-1.5 rounded-full bg-neutral-900" />}
-          </div>
-          <span className={`text-muted transition-transform duration-200 ${openSections.ip ? "rotate-180" : ""}`}>
-            <ChevronDownIcon />
-          </span>
-        </button>
-
-        {openSections.ip && (
-          <div className="px-4 pb-4 border-t border-border/50 pt-3">
+        {/* 3. Ingress Protection (IP) Section */}
+        <AccordionItem value="ip" className="rounded-2xl border border-border/80 bg-card/90 backdrop-blur-xs px-4 py-0 shadow-2xs">
+          <AccordionTrigger className="font-mono text-xs uppercase tracking-wider text-foreground hover:no-underline py-3.5">
+            <div className="flex items-center gap-2">
+              <span>Ingress Protection (IP)</span>
+              {filters.ipRating && <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />}
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pb-4 pt-1">
             <div className="flex flex-wrap gap-1.5">
               {IP_OPTIONS.map((ip) => {
                 const isSelected = filters.ipRating === ip;
                 return (
-                  <button
+                  <Button
                     key={ip}
-                    type="button"
+                    variant={isSelected ? "default" : "outline"}
+                    size="xs"
                     onClick={() => onFilterChange("ipRating", isSelected ? "" : ip)}
-                    className={`rounded-md px-3 py-1.5 text-[11px] font-mono font-semibold transition-all border ${
+                    className={`font-mono text-[11px] font-semibold rounded-full px-3.5 transition-all ${
                       isSelected
-                        ? "border-neutral-950 bg-neutral-950 text-white shadow-xs"
-                        : "border-border bg-surface text-neutral-700 hover:border-neutral-400 hover:bg-white"
+                        ? "bg-amber-500 text-neutral-950 hover:bg-amber-600 border-none shadow-xs"
+                        : "border-border/80 hover:border-amber-500/40 hover:bg-accent"
                     }`}
                   >
                     {ip}
-                  </button>
+                  </Button>
                 );
               })}
             </div>
-          </div>
-        )}
-      </div>
+          </AccordionContent>
+        </AccordionItem>
 
-      {/* 4. Beam Angles Section */}
-      <div className="rounded-xl border border-border bg-white overflow-hidden shadow-xs">
-        <button
-          type="button"
-          onClick={() => toggleSection("beam")}
-          className="flex w-full items-center justify-between p-4 text-left font-mono font-semibold uppercase tracking-wider text-neutral-900 hover:bg-surface/60 transition-colors"
-          aria-expanded={openSections.beam}
-        >
-          <div className="flex items-center gap-2">
-            <span>Beam Angles</span>
-            {filters.beamAngle && <span className="h-1.5 w-1.5 rounded-full bg-neutral-900" />}
-          </div>
-          <span className={`text-muted transition-transform duration-200 ${openSections.beam ? "rotate-180" : ""}`}>
-            <ChevronDownIcon />
-          </span>
-        </button>
-
-        {openSections.beam && (
-          <div className="px-4 pb-4 border-t border-border/50 pt-3">
-            <div className="flex flex-wrap gap-1.5">
+        {/* 4. Beam Angles Section */}
+        <AccordionItem value="beam" className="rounded-2xl border border-border/80 bg-card/90 backdrop-blur-xs px-4 py-0 shadow-2xs">
+          <AccordionTrigger className="font-mono text-xs uppercase tracking-wider text-foreground hover:no-underline py-3.5">
+            <div className="flex items-center gap-2">
+              <span>Beam Angles</span>
+              {filters.beamAngle && <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />}
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pb-4 pt-1">
+            <div className="grid grid-cols-2 gap-1.5">
               {BEAM_OPTIONS.map((b) => {
                 const isSelected = filters.beamAngle === b;
+                const deg = parseInt(b.replace("°", "")) || 36;
+                const BEAM_SVG_ANGLES = [3, 5, 10, 15, 20, 22, 24, 30, 35, 36, 40, 48, 50, 60];
+                const closest = BEAM_SVG_ANGLES.reduce((prev, cur) =>
+                  Math.abs(cur - deg) < Math.abs(prev - deg) ? cur : prev
+                );
+                const padded = String(closest).padStart(2, "0");
+                const iconSrc = `/images/beams/beam_${padded}deg_black.svg`;
+
                 return (
-                  <button
+                  <Button
                     key={b}
-                    type="button"
+                    variant={isSelected ? "default" : "outline"}
+                    size="sm"
                     onClick={() => onFilterChange("beamAngle", isSelected ? "" : b)}
-                    className={`rounded-md px-2.5 py-1.5 text-[11px] font-mono font-medium transition-all border ${
+                    className={`justify-start gap-2 h-9 px-3 rounded-full font-mono text-xs transition-all ${
                       isSelected
-                        ? "border-neutral-950 bg-neutral-950 text-white shadow-xs"
-                        : "border-border bg-surface text-neutral-700 hover:border-neutral-400 hover:bg-white"
+                        ? "bg-amber-500 text-neutral-950 hover:bg-amber-600 font-semibold border-none shadow-xs"
+                        : "border-border/80 hover:border-amber-500/40 hover:bg-accent"
                     }`}
                   >
-                    {b}
-                  </button>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={iconSrc}
+                      alt=""
+                      aria-hidden="true"
+                      className={`h-5 w-5 object-contain shrink-0 ${isSelected ? "brightness-0" : "dark:invert"}`}
+                    />
+                    <span>{b}</span>
+                  </Button>
                 );
               })}
             </div>
-          </div>
-        )}
-      </div>
+          </AccordionContent>
+        </AccordionItem>
 
-      {/* 5. Environment Section */}
-      <div className="rounded-xl border border-border bg-white overflow-hidden shadow-xs">
-        <button
-          type="button"
-          onClick={() => toggleSection("environment")}
-          className="flex w-full items-center justify-between p-4 text-left font-mono font-semibold uppercase tracking-wider text-neutral-900 hover:bg-surface/60 transition-colors"
-          aria-expanded={openSections.environment}
-        >
-          <div className="flex items-center gap-2">
-            <span>Environment</span>
-            {filters.environment && <span className="h-1.5 w-1.5 rounded-full bg-neutral-900" />}
-          </div>
-          <span className={`text-muted transition-transform duration-200 ${openSections.environment ? "rotate-180" : ""}`}>
-            <ChevronDownIcon />
-          </span>
-        </button>
-
-        {openSections.environment && (
-          <div className="px-4 pb-4 border-t border-border/50 pt-2 space-y-1">
-            <label className={`flex items-center gap-2 py-1.5 px-2 rounded-lg cursor-pointer transition-colors ${!filters.environment ? "bg-neutral-900 text-white font-medium" : "text-neutral-700 hover:bg-surface"}`}>
-              <input
-                type="radio"
-                name="env"
-                checked={!filters.environment}
-                onChange={() => onFilterChange("environment", "")}
-                className="sr-only"
-              />
+        {/* 5. Environment Section */}
+        <AccordionItem value="environment" className="rounded-2xl border border-border/80 bg-card/90 backdrop-blur-xs px-4 py-0 shadow-2xs">
+          <AccordionTrigger className="font-mono text-xs uppercase tracking-wider text-foreground hover:no-underline py-3.5">
+            <div className="flex items-center gap-2">
+              <span>Environment</span>
+              {filters.environment && <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />}
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pb-4 pt-1 space-y-1">
+            <div
+              onClick={() => onFilterChange("environment", "")}
+              className={`flex items-center gap-2 py-1.5 px-3 rounded-full cursor-pointer transition-colors ${
+                !filters.environment ? "bg-foreground text-background font-semibold" : "text-muted-foreground hover:bg-muted/70 hover:text-foreground"
+              }`}
+            >
               <span>All Environments</span>
-            </label>
+            </div>
 
             {ENVIRONMENTS.map((env) => {
               const isSelected = filters.environment === env.value;
               return (
-                <label
+                <div
                   key={env.value}
-                  className={`flex items-center gap-2 py-1.5 px-2 rounded-lg cursor-pointer transition-colors ${isSelected ? "bg-neutral-900 text-white font-medium" : "text-neutral-700 hover:bg-surface"}`}
+                  onClick={() => onFilterChange("environment", env.value)}
+                  className={`flex items-center gap-2 py-1.5 px-3 rounded-full cursor-pointer transition-colors ${
+                    isSelected ? "bg-amber-500 text-neutral-950 font-semibold shadow-xs" : "text-foreground hover:bg-muted/70"
+                  }`}
                 >
-                  <input
-                    type="radio"
-                    name="env"
-                    checked={isSelected}
-                    onChange={() => onFilterChange("environment", env.value)}
-                    className="sr-only"
-                  />
                   <span>{env.label}</span>
-                </label>
+                </div>
               );
             })}
-          </div>
-        )}
-      </div>
+          </AccordionContent>
+        </AccordionItem>
 
-      {/* 6. Electrical & Control (Wattage & Voltage Dropdowns) */}
-      <div className="rounded-xl border border-border bg-white overflow-hidden shadow-xs">
-        <button
-          type="button"
-          onClick={() => toggleSection("electrical")}
-          className="flex w-full items-center justify-between p-4 text-left font-mono font-semibold uppercase tracking-wider text-neutral-900 hover:bg-surface/60 transition-colors"
-          aria-expanded={openSections.electrical}
-        >
-          <div className="flex items-center gap-2">
-            <span>Wattage & Voltage</span>
-            {(filters.wattage || filters.voltage) && <span className="h-1.5 w-1.5 rounded-full bg-neutral-900" />}
-          </div>
-          <span className={`text-muted transition-transform duration-200 ${openSections.electrical ? "rotate-180" : ""}`}>
-            <ChevronDownIcon />
-          </span>
-        </button>
-
-        {openSections.electrical && (
-          <div className="px-4 pb-4 border-t border-border/50 pt-3 space-y-3">
+        {/* 6. Electrical (Wattage & Voltage) */}
+        <AccordionItem value="electrical" className="rounded-2xl border border-border/80 bg-card/90 backdrop-blur-xs px-4 py-0 shadow-2xs">
+          <AccordionTrigger className="font-mono text-xs uppercase tracking-wider text-foreground hover:no-underline py-3.5">
+            <div className="flex items-center gap-2">
+              <span>Wattage & Voltage</span>
+              {(filters.wattage || filters.voltage) && <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />}
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pb-4 pt-1 space-y-3">
             <div>
-              <label className="block text-[11px] font-semibold text-neutral-700 mb-1">
+              <label className="block text-[11px] font-mono uppercase font-semibold text-muted-foreground mb-1.5">
                 Wattage Specification
               </label>
               <select
                 value={filters.wattage}
                 onChange={(e) => onFilterChange("wattage", e.target.value)}
-                className="w-full text-xs rounded-lg border border-border bg-surface px-3 py-2 outline-none focus:border-neutral-900 focus:bg-white"
+                className="w-full text-xs font-mono rounded-xl border border-border/80 bg-surface/50 px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
               >
                 <option value="">All Wattages</option>
                 <option value="6W">6W Low Output</option>
@@ -432,13 +370,13 @@ export default function FilterSidebar({
             </div>
 
             <div>
-              <label className="block text-[11px] font-semibold text-neutral-700 mb-1">
+              <label className="block text-[11px] font-mono uppercase font-semibold text-muted-foreground mb-1.5">
                 Input Voltage System
               </label>
               <select
                 value={filters.voltage}
                 onChange={(e) => onFilterChange("voltage", e.target.value)}
-                className="w-full text-xs rounded-lg border border-border bg-surface px-3 py-2 outline-none focus:border-neutral-900 focus:bg-white"
+                className="w-full text-xs font-mono rounded-xl border border-border/80 bg-surface/50 px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
               >
                 <option value="">All Voltage Systems</option>
                 <option value="AC">AC 220–240V Mains</option>
@@ -446,37 +384,26 @@ export default function FilterSidebar({
                 <option value="24V">DC 24V Constant Voltage</option>
               </select>
             </div>
-          </div>
-        )}
-      </div>
+          </AccordionContent>
+        </AccordionItem>
 
-      {/* 7. Dimensions & Cutouts */}
-      <div className="rounded-xl border border-border bg-white overflow-hidden shadow-xs">
-        <button
-          type="button"
-          onClick={() => toggleSection("dimensions")}
-          className="flex w-full items-center justify-between p-4 text-left font-mono font-semibold uppercase tracking-wider text-neutral-900 hover:bg-surface/60 transition-colors"
-          aria-expanded={openSections.dimensions}
-        >
-          <div className="flex items-center gap-2">
-            <span>Dimensions & Cutout</span>
-            {(filters.diameter || filters.length) && <span className="h-1.5 w-1.5 rounded-full bg-neutral-900" />}
-          </div>
-          <span className={`text-muted transition-transform duration-200 ${openSections.dimensions ? "rotate-180" : ""}`}>
-            <ChevronDownIcon />
-          </span>
-        </button>
-
-        {openSections.dimensions && (
-          <div className="px-4 pb-4 border-t border-border/50 pt-3 space-y-3">
+        {/* 7. Dimensions & Cutouts */}
+        <AccordionItem value="dimensions" className="rounded-2xl border border-border/80 bg-card/90 backdrop-blur-xs px-4 py-0 shadow-2xs">
+          <AccordionTrigger className="font-mono text-xs uppercase tracking-wider text-foreground hover:no-underline py-3.5">
+            <div className="flex items-center gap-2">
+              <span>Dimensions & Cutout</span>
+              {(filters.diameter || filters.length) && <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />}
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pb-4 pt-1 space-y-3">
             <div>
-              <label className="block text-[11px] font-semibold text-neutral-700 mb-1">
+              <label className="block text-[11px] font-mono uppercase font-semibold text-muted-foreground mb-1.5">
                 Ceiling Cutout (mm)
               </label>
               <select
                 value={filters.diameter}
                 onChange={(e) => onFilterChange("diameter", e.target.value)}
-                className="w-full text-xs rounded-lg border border-border bg-surface px-3 py-2 outline-none focus:border-neutral-900 focus:bg-white"
+                className="w-full text-xs font-mono rounded-xl border border-border/80 bg-surface/50 px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
               >
                 <option value="">All Cutouts</option>
                 <option value="75">Ø75mm Cutout (LENA75)</option>
@@ -489,13 +416,13 @@ export default function FilterSidebar({
             </div>
 
             <div>
-              <label className="block text-[11px] font-semibold text-neutral-700 mb-1">
+              <label className="block text-[11px] font-mono uppercase font-semibold text-muted-foreground mb-1.5">
                 Profile Length (mm)
               </label>
               <select
                 value={filters.length}
                 onChange={(e) => onFilterChange("length", e.target.value)}
-                className="w-full text-xs rounded-lg border border-border bg-surface px-3 py-2 outline-none focus:border-neutral-900 focus:bg-white"
+                className="w-full text-xs font-mono rounded-xl border border-border/80 bg-surface/50 px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
               >
                 <option value="">All Lengths</option>
                 <option value="1000">1000mm (1.0m)</option>
@@ -504,17 +431,9 @@ export default function FilterSidebar({
                 <option value="Custom">Custom Architectural Cut</option>
               </select>
             </div>
-          </div>
-        )}
-      </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </aside>
-  );
-}
-
-function ChevronDownIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-      <polyline points="6 9 12 15 18 9" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
   );
 }

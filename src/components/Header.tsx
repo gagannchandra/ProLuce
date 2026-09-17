@@ -2,222 +2,260 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { siteConfig, mainNav } from "@/lib/site";
+import { usePathname } from "next/navigation";
+import { siteConfig } from "@/lib/site";
 import { useSpecSchedule } from "@/context/SpecScheduleContext";
 import CommandPalette from "@/components/CommandPalette";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import {
+  Search,
+  FileSpreadsheet,
+  Menu,
+  ArrowRight,
+} from "lucide-react";
+
+const NAV_LINKS = [
+  { label: "Catalogue", href: "/catalogue" },
+  { label: "About", href: "/about" },
+  { label: "Journal", href: "/blog" },
+  { label: "Contact", href: "/contact" },
+];
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const { totalFixturesCount, items, openDrawer } = useSpecSchedule();
+  const { items, openDrawer } = useSpecSchedule();
+  const pathname = usePathname();
+
+  const isLinkActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  };
 
   return (
     <>
-      <header className="sticky top-0 z-30 border-b border-border bg-white/95 backdrop-blur-md transition-all">
-        <div className="container-site flex h-16 items-center justify-between md:h-20">
-          <div className="flex items-center gap-4">
-            <button
-              type="button"
-              className="flex flex-col gap-1.5 md:hidden p-2 -ml-2 text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 rounded"
-              aria-label="Toggle navigation menu"
-              aria-expanded={mobileOpen}
-              onClick={() => setMobileOpen((v) => !v)}
+      <header className="sticky top-0 z-40 w-full border-b border-border/80 bg-background/85 backdrop-blur-md transition-colors duration-200">
+        <div className="container-site flex h-16 items-center justify-between gap-4">
+          
+          {/* Brand Logo & Tagline */}
+          <div className="flex items-center gap-6">
+            <Link
+              href="/"
+              className="flex items-center gap-2.5 outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded-sm group transition-transform active:scale-[0.98]"
+              aria-label={`${siteConfig.name} Home`}
             >
-              <span className={`block h-0.5 w-5 bg-foreground transition-transform ${mobileOpen ? "rotate-45 translate-y-2" : ""}`} />
-              <span className={`block h-0.5 w-5 bg-foreground transition-opacity ${mobileOpen ? "opacity-0" : ""}`} />
-              <span className={`block h-0.5 w-5 bg-foreground transition-transform ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`} />
-            </button>
-
-            <Link href="/" className="flex flex-col group">
-              <span className="text-xl md:text-2xl font-semibold tracking-wider uppercase text-neutral-900 font-display">
-                PRO-LUCE
-              </span>
-              <span className="text-[9px] font-mono tracking-widest text-neutral-400 uppercase hidden sm:block -mt-1">
-                Architectural Lighting Systems
-              </span>
+              <span className="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.9)] transition-transform duration-300 group-hover:scale-125" />
+              <div className="flex flex-col">
+                <span className="text-xl font-medium tracking-[0.18em] uppercase font-display leading-none text-foreground">
+                  {siteConfig.name}
+                </span>
+                <span className="text-[9px] tracking-[0.22em] uppercase font-mono text-muted-foreground hidden sm:block mt-0.5">
+                  {siteConfig.tagline}
+                </span>
+              </div>
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex md:items-center md:gap-7">
-            {mainNav.map((item) => (
-              <div key={item.href} className="group relative">
+          {/* Desktop Navigation Links */}
+          <nav
+            className="hidden md:flex items-center gap-8"
+            aria-label="Primary navigation"
+          >
+            {NAV_LINKS.map((link) => {
+              const active = isLinkActive(link.href);
+              return (
                 <Link
-                  href={item.href}
-                  className="py-2 text-xs font-medium uppercase tracking-widest text-neutral-700 hover:text-neutral-950 transition-colors"
+                  key={link.href}
+                  href={link.href}
+                  aria-current={active ? "page" : undefined}
+                  className={`relative py-1 text-xs font-mono uppercase tracking-widest transition-colors duration-200 ${
+                    active
+                      ? "text-foreground font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-amber-500"
+                      : "text-muted-foreground hover:text-foreground font-medium"
+                  }`}
                 >
-                  {item.label}
+                  {link.label}
                 </Link>
-                {item.children && (
-                  <div className="invisible absolute left-1/2 top-full z-20 w-64 -translate-x-1/2 pt-2 opacity-0 transition-all duration-150 group-hover:visible group-hover:opacity-100">
-                    <div className="rounded-md border border-border bg-white py-2 shadow-lg ring-1 ring-black/5">
-                      {item.children.map((child) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          className="block px-4 py-2 text-xs font-medium text-neutral-600 hover:text-neutral-900 hover:bg-surface transition-colors"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
+              );
+            })}
           </nav>
 
-          {/* Right Specifier Actions */}
+          {/* Utility Actions */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Quick Search with Cmd+K */}
-            <button
-              type="button"
-              onClick={() => setSearchOpen(true)}
-              className="flex items-center gap-2 rounded-full border border-neutral-200 bg-surface/80 px-3 py-1.5 text-xs text-neutral-500 hover:text-neutral-900 hover:border-neutral-300 transition-colors"
-              aria-label="Search fixtures (Cmd+K)"
-            >
-              <SearchIcon />
-              <span className="hidden lg:inline text-xs font-medium">Search</span>
-              <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono rounded bg-white border border-neutral-200 text-neutral-400">
-                ⌘K
-              </kbd>
-            </button>
+            
+            {/* Search Trigger */}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSearchOpen(true)}
+                  aria-label="Search luminaires and specifications"
+                  className="rounded-full gap-2 px-3.5 h-9 font-mono text-xs text-muted-foreground hover:text-foreground border-border/80 bg-surface/50 hover:bg-accent"
+                >
+                  <Search className="h-3.5 w-3.5 text-muted-foreground" />
+                  <span className="hidden lg:inline text-[11px]">Search</span>
+                  <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[9px] font-mono rounded bg-muted border border-border text-muted-foreground">
+                    ⌘K
+                  </kbd>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                Search catalogue & photometrics (Cmd+K)
+              </TooltipContent>
+            </Tooltip>
 
-            {/* Specifier Schedule Shortlist */}
-            <button
-              type="button"
-              onClick={openDrawer}
-              className="relative flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-3.5 py-1.5 text-xs font-medium uppercase tracking-wider text-neutral-800 hover:border-neutral-900 transition-colors shadow-2xs"
-              aria-label="Open project luminaire schedule"
-            >
-              <ScheduleIcon />
-              <span className="hidden sm:inline">Schedule</span>
-              {items.length > 0 && (
-                <span className="inline-flex items-center justify-center h-4 min-w-[16px] px-1 rounded-full bg-neutral-900 text-[10px] font-mono font-semibold text-white">
-                  {items.length}
-                </span>
-              )}
-            </button>
+            {/* Spec Schedule Button */}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant={items.length > 0 ? "default" : "outline"}
+                  size="sm"
+                  onClick={openDrawer}
+                  aria-label="Open project luminaire schedule"
+                  className={`rounded-full gap-2 px-3.5 h-9 font-mono text-xs transition-all duration-200 ${
+                    items.length > 0
+                      ? "bg-amber-500 hover:bg-amber-600 text-neutral-950 font-semibold border-none shadow-xs"
+                      : "border-border/80 text-foreground hover:bg-accent"
+                  }`}
+                >
+                  <FileSpreadsheet className="h-3.5 w-3.5 text-current" />
+                  <span className="hidden sm:inline text-[11px] uppercase tracking-wider">
+                    Schedule
+                  </span>
+                  {items.length > 0 && (
+                    <Badge className="px-1.5 h-4 min-w-[18px] rounded-full text-[9px] font-mono bg-neutral-950 text-amber-400 font-bold border-none">
+                      {items.length}
+                    </Badge>
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                {items.length > 0
+                  ? `${items.length} fixture family(ies) in spec schedule`
+                  : "Project schedule is empty"}
+              </TooltipContent>
+            </Tooltip>
 
-            {/* PDF Catalogue Download */}
-            <a
-              href={siteConfig.catalogPdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              download="Pro-Luce-Catalogue.pdf"
-              className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-4 py-2 text-xs font-medium uppercase tracking-wider text-white hover:bg-neutral-800 transition-colors shadow-2xs"
-            >
-              <DownloadIcon />
-              <span>PDF Catalogue</span>
-            </a>
+            {/* Mobile Sheet Trigger */}
+            <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="md:hidden rounded-lg h-9 w-9 text-foreground hover:bg-accent"
+                  aria-label="Open navigation menu"
+                >
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent
+                side="right"
+                className="w-[85vw] max-w-sm p-0 flex flex-col bg-background border-l border-border"
+              >
+                <SheetHeader className="p-6 text-left border-b border-border bg-muted/20">
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
+                    <SheetTitle className="text-xl font-display uppercase tracking-widest font-bold">
+                      {siteConfig.name}
+                    </SheetTitle>
+                  </div>
+                  <SheetDescription className="text-[10px] text-muted-foreground uppercase tracking-widest font-mono mt-0.5">
+                    {siteConfig.tagline}
+                  </SheetDescription>
+                </SheetHeader>
+
+                <div className="flex-1 overflow-y-auto px-6 py-6 flex flex-col justify-between">
+                  <nav className="flex flex-col gap-2">
+                    <Link
+                      href="/"
+                      onClick={() => setMobileOpen(false)}
+                      className={`flex items-center justify-between py-3 px-4 rounded-xl text-xs font-mono uppercase tracking-wider transition-colors ${
+                        pathname === "/"
+                          ? "bg-accent text-foreground font-bold"
+                          : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+                      }`}
+                    >
+                      <span>Home</span>
+                      <ArrowRight className="h-3.5 w-3.5 opacity-50" />
+                    </Link>
+
+                    {NAV_LINKS.map((link) => {
+                      const active = isLinkActive(link.href);
+                      return (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          onClick={() => setMobileOpen(false)}
+                          className={`flex items-center justify-between py-3 px-4 rounded-xl text-xs font-mono uppercase tracking-wider transition-colors ${
+                            active
+                              ? "bg-accent text-foreground font-bold"
+                              : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+                          }`}
+                        >
+                          <span>{link.label}</span>
+                          <ArrowRight className="h-3.5 w-3.5 opacity-50" />
+                        </Link>
+                      );
+                    })}
+                  </nav>
+
+                  <div className="flex flex-col gap-3 pt-6 border-t border-border">
+                    <Button
+                      variant="outline"
+                      className="justify-between h-11 text-xs font-mono uppercase tracking-wider rounded-xl px-4"
+                      onClick={() => {
+                        setMobileOpen(false);
+                        setSearchOpen(true);
+                      }}
+                    >
+                      <span className="flex items-center gap-2">
+                        <Search className="h-4 w-4 text-muted-foreground" />
+                        Search Catalogue
+                      </span>
+                      <kbd className="px-1.5 py-0.5 text-[10px] bg-muted rounded border border-border">⌘K</kbd>
+                    </Button>
+
+                    <Button
+                      className="justify-between h-11 text-xs font-mono uppercase tracking-wider rounded-xl px-4 bg-amber-500 hover:bg-amber-600 text-neutral-950 font-bold"
+                      onClick={() => {
+                        setMobileOpen(false);
+                        openDrawer();
+                      }}
+                    >
+                      <span className="flex items-center gap-2">
+                        <FileSpreadsheet className="h-4 w-4" />
+                        Project Schedule
+                      </span>
+                      <Badge className="font-mono text-[10px] px-2 py-0.5 bg-neutral-950 text-amber-400 font-bold border-none rounded-full">
+                        {items.length}
+                      </Badge>
+                    </Button>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+
           </div>
         </div>
-
-        {/* Mobile Menu */}
-        {mobileOpen && (
-          <nav className="border-t border-border bg-white md:hidden animate-in slide-in-from-top-2 duration-150">
-            <div className="container-site py-4 space-y-3">
-              <div className="pb-3 border-b border-border/50">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMobileOpen(false);
-                    setSearchOpen(true);
-                  }}
-                  className="flex items-center gap-2 w-full rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-2 text-xs text-neutral-600"
-                >
-                  <SearchIcon />
-                  <span>Search 99 luminaires...</span>
-                </button>
-              </div>
-
-              {mainNav.map((item) => (
-                <div key={item.href} className="border-b border-border/50 pb-2">
-                  <Link
-                    href={item.href}
-                    className="block text-sm font-semibold uppercase tracking-wider text-neutral-900 py-1"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                  {item.children && (
-                    <div className="pl-3 pt-1 space-y-1">
-                      {item.children.slice(1).map((child) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          className="block text-xs text-muted hover:text-foreground py-1"
-                          onClick={() => setMobileOpen(false)}
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-
-              <div className="pt-2 space-y-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMobileOpen(false);
-                    openDrawer();
-                  }}
-                  className="flex items-center justify-center gap-2 w-full rounded-md border border-neutral-300 bg-white py-2.5 text-xs font-medium uppercase tracking-wider text-neutral-900"
-                >
-                  <ScheduleIcon />
-                  <span>Project Schedule ({items.length} fixtures, {totalFixturesCount} units)</span>
-                </button>
-
-                <a
-                  href={siteConfig.catalogPdfUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  download="Pro-Luce-Catalogue.pdf"
-                  className="flex items-center justify-center gap-2 w-full rounded-md bg-neutral-900 py-2.5 text-xs font-medium uppercase tracking-wider text-white"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  <DownloadIcon />
-                  <span>Download Catalogue (PDF)</span>
-                </a>
-              </div>
-            </div>
-          </nav>
-        )}
       </header>
 
-      {/* Global Command Palette Modal */}
+      {/* Global Command Palette Dialog */}
       <CommandPalette isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
-  );
-}
-
-function SearchIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <circle cx="11" cy="11" r="7" />
-      <path d="m20 20-3-3" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function ScheduleIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
-      <rect x="9" y="3" width="6" height="4" rx="1" />
-      <path d="M9 14l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function DownloadIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" strokeLinecap="round" strokeLinejoin="round" />
-      <polyline points="7 10 12 15 17 10" strokeLinecap="round" strokeLinejoin="round" />
-      <line x1="12" y1="15" x2="12" y2="3" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
   );
 }

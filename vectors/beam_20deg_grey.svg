@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+ width="1600" height="1600" viewBox="0 0 1600 1600">
+<defs>
+  <linearGradient id="beam_20_grey" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1"/>
+    <stop offset="42%" stop-color="#FAFAFA" stop-opacity=".98"/>
+    <stop offset="78%" stop-color="#D5D5D5" stop-opacity=".93"/>
+    <stop offset="100%" stop-color="#A8A8A8" stop-opacity=".88"/>
+  </linearGradient>
+</defs>
+
+<rect width="1600" height="1600" fill="#E2E2E2"/>
+
+<text x="65" y="105"
+ font-family="Arial, Helvetica, sans-serif"
+ font-size="76" font-weight="700"
+ fill="#B8B8B8">20°</text>
+
+<!-- SINGLE CONTINUOUS BEAM + FLOOR FOOTPRINT.
+     There is no separate circle/oval placed under the beam. -->
+<path d="M 800 185 L 625.92 1370 C 629.40 1381.33, 730.37 1388.28, 800 1388.28 C 869.63 1388.28, 970.60 1381.33, 974.08 1370 Z"
+ fill="url(#beam_20_grey)"/>
+
+</svg>

@@ -1,6 +1,9 @@
 "use client";
 
 import type { FilterState } from "./FilterSidebar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { X, RotateCcw } from "lucide-react";
 
 interface ActiveFilterChipsProps {
   filters: FilterState;
@@ -31,38 +34,41 @@ export default function ActiveFilterChips({
   if (filters.search) activeChips.push({ key: "search", label: "Query", value: `"${filters.search}"` });
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4 mb-6">
+    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/80 pb-4 mb-6">
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs font-medium text-muted mr-1">
-          Showing <strong className="text-neutral-900 font-semibold">{filteredCount}</strong> of {totalCount} fixtures
+        <span className="text-xs font-mono text-muted-foreground mr-1">
+          Showing <strong className="text-foreground font-semibold">{filteredCount}</strong> of {totalCount} fixtures
         </span>
 
         {activeChips.map((chip) => (
-          <span
+          <Badge
             key={chip.key}
-            className="inline-flex items-center gap-1.5 rounded-full bg-neutral-100 border border-neutral-200 px-3 py-1 text-xs font-medium text-neutral-800"
+            variant="secondary"
+            className="gap-1.5 py-1 px-3 font-mono text-xs rounded-full border border-border/80 bg-muted/80 text-foreground shadow-2xs hover:border-amber-500/40 transition-colors"
           >
-            <span className="text-muted text-[10px] uppercase font-mono">{chip.label}:</span>
-            <span>{chip.value}</span>
+            <span className="text-muted-foreground text-[10px] uppercase tracking-wider">{chip.label}:</span>
+            <span className="text-foreground font-semibold">{chip.value}</span>
             <button
               type="button"
               onClick={() => onRemoveFilter(chip.key)}
-              className="text-neutral-400 hover:text-neutral-900 ml-0.5"
+              className="h-3.5 w-3.5 ml-0.5 inline-flex items-center justify-center text-muted-foreground hover:text-destructive transition-colors rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-500"
               aria-label={`Remove filter ${chip.label}`}
             >
-              ✕
+              <X className="h-3 w-3" />
             </button>
-          </span>
+          </Badge>
         ))}
 
         {activeChips.length > 0 && (
-          <button
-            type="button"
+          <Button
+            variant="ghost"
+            size="xs"
             onClick={onResetAll}
-            className="text-xs font-medium text-red-600 hover:text-red-800 hover:underline ml-1"
+            className="text-destructive hover:text-destructive hover:bg-destructive/10 font-mono text-xs gap-1 rounded-full px-2.5"
           >
+            <RotateCcw className="h-3 w-3" />
             Reset all
-          </button>
+          </Button>
         )}
       </div>
     </div>

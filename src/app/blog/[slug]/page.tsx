@@ -5,6 +5,10 @@ import { notFound } from "next/navigation";
 import { blogPosts, getPostBySlug } from "@/lib/blog";
 import { siteConfig } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { ArrowLeft, Calendar, ChevronRight } from "lucide-react";
 
 export function generateStaticParams() {
   return blogPosts.map((p) => ({ slug: p.slug }));
@@ -20,7 +24,7 @@ export async function generateMetadata({
   if (!post) return {};
 
   return {
-    title: post.title,
+    title: `${post.title} | Pro-Luce Journal`,
     description: post.excerpt,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
@@ -41,7 +45,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const date = new Date(post.date);
 
   return (
-    <article className="container-site py-12 md:py-16">
+    <article className="container-site py-10 md:py-16">
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -55,47 +59,83 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         }}
       />
 
-      <nav aria-label="Breadcrumb" className="mb-8 text-sm text-muted">
-        <ol className="flex flex-wrap items-center gap-1.5">
+      {/* Breadcrumbs */}
+      <nav aria-label="Breadcrumb" className="mb-8 text-xs font-mono text-muted-foreground">
+        <ol className="flex flex-wrap items-center gap-2">
           <li>
-            <Link href="/" className="hover:underline">
-              Home
+            <Link href="/" className="hover:text-foreground transition-colors">
+              Studio
             </Link>
           </li>
-          <li aria-hidden="true">/</li>
+          <li aria-hidden="true">
+            <ChevronRight className="h-3 w-3 text-muted-foreground/60" />
+          </li>
           <li>
-            <Link href="/blog" className="hover:underline">
-              Blog
+            <Link href="/blog" className="hover:text-foreground transition-colors">
+              Journal
             </Link>
           </li>
-          <li aria-hidden="true">/</li>
-          <li aria-current="page" className="text-foreground">
+          <li aria-hidden="true">
+            <ChevronRight className="h-3 w-3 text-muted-foreground/60" />
+          </li>
+          <li aria-current="page" className="text-foreground truncate max-w-xs font-medium">
             {post.title}
           </li>
         </ol>
       </nav>
 
       <div className="mx-auto max-w-3xl">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-accent">{post.category}</p>
-        <h1 className="mt-2 font-display text-3xl md:text-5xl">{post.title}</h1>
-        <time dateTime={post.date} className="mt-3 block text-sm text-muted">
-          {date.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}
-        </time>
-
-        <div className="relative mt-8 aspect-[3/2] w-full overflow-hidden bg-surface">
-          <Image src={post.image} alt="" fill priority sizes="(min-width: 768px) 768px, 100vw" className="object-cover" />
+        <div className="flex items-center gap-3">
+          <Badge variant="secondary" className="font-mono text-[10px] uppercase tracking-wider">
+            {post.category}
+          </Badge>
+          <span className="flex items-center gap-1.5 text-xs font-mono text-muted-foreground">
+            <Calendar className="h-3 w-3" />
+            <time dateTime={post.date}>
+              {date.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}
+            </time>
+          </span>
         </div>
 
-        <div className="prose-content mt-10 flex flex-col gap-5 text-foreground/90">
+        <h1 className="mt-4 font-display text-3xl sm:text-4xl md:text-[46px] font-light tracking-tight text-foreground leading-[1.12]">
+          {post.title}
+        </h1>
+
+        <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed font-sans font-light">
+          {post.excerpt}
+        </p>
+
+        <div className="relative mt-8 aspect-[16/10] w-full overflow-hidden rounded-2xl border border-border/80 bg-surface shadow-md">
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill
+            priority
+            sizes="(min-width: 768px) 768px, 100vw"
+            className="object-cover"
+          />
+        </div>
+
+        <div className="mt-10 flex flex-col gap-6 text-foreground/90 font-sans leading-relaxed text-base font-light">
           {post.content.map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
+            <p key={i} className="leading-relaxed">{paragraph}</p>
           ))}
         </div>
 
-        <div className="mt-12 border-t border-border pt-8">
-          <Link href="/blog" className="border-b border-foreground pb-0.5 text-sm font-medium uppercase tracking-wide">
-            Back to the blog
-          </Link>
+        <Separator className="mt-12 mb-8" />
+
+        <div className="flex items-center justify-between">
+          <Button asChild variant="outline" size="sm" className="font-mono text-xs uppercase tracking-wider gap-2">
+            <Link href="/blog">
+              <ArrowLeft className="h-3.5 w-3.5" />
+              <span>Back to Journal</span>
+            </Link>
+          </Button>
+          <Button asChild size="sm" className="font-mono text-xs uppercase tracking-wider">
+            <Link href="/catalogue">
+              Explore Luminaires
+            </Link>
+          </Button>
         </div>
       </div>
     </article>

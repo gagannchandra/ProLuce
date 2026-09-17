@@ -1,9 +1,29 @@
 "use client";
 
-import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSpecSchedule } from "@/context/SpecScheduleContext";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+  SheetFooter,
+} from "@/components/ui/sheet";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Download,
+  Trash2,
+  Plus,
+  Minus,
+  FileSpreadsheet,
+  X,
+  FileText,
+} from "lucide-react";
 
 interface SpecScheduleDrawerProps {
   onRequestQuote: () => void;
@@ -22,107 +42,59 @@ export default function SpecScheduleDrawer({ onRequestQuote }: SpecScheduleDrawe
     exportCsv,
   } = useSpecSchedule();
 
-  // Close on escape key
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isDrawerOpen) {
-        closeDrawer();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isDrawerOpen, closeDrawer]);
-
-  // Lock body scroll when drawer is open
-  useEffect(() => {
-    if (isDrawerOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isDrawerOpen]);
-
-  if (!isDrawerOpen) return null;
-
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="schedule-drawer-title"
-      className="fixed inset-0 z-50 flex justify-end bg-neutral-900/50 backdrop-blur-xs transition-opacity"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) closeDrawer();
-      }}
-    >
-      <div className="relative flex h-full w-full max-w-xl flex-col bg-white shadow-2xl animate-in slide-in-from-right duration-200">
+    <Sheet open={isDrawerOpen} onOpenChange={(open) => !open && closeDrawer()}>
+      <SheetContent
+        side="right"
+        className="w-full sm:max-w-xl p-0 flex flex-col bg-background border-border shadow-2xl"
+      >
         {/* Drawer Header */}
-        <div className="flex items-center justify-between border-b border-neutral-200 px-6 py-4">
-          <div>
-            <div className="flex items-center gap-2.5">
-              <h2 id="schedule-drawer-title" className="font-display text-lg font-semibold text-neutral-900">
-                Architectural Spec Schedule
-              </h2>
-              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-mono font-medium bg-neutral-100 text-neutral-800 border border-neutral-200">
-                {items.length} {items.length === 1 ? "Fixture" : "Fixtures"} ({totalFixturesCount} Units)
-              </span>
-            </div>
-            <p className="text-xs text-neutral-500 mt-0.5">
-              Project luminaire schedule for tender & technical specifications
-            </p>
+        <SheetHeader className="p-6 pb-4 border-b border-border text-left">
+          <div className="flex items-center gap-2.5">
+            <SheetTitle className="font-display text-xl font-normal text-foreground">
+              Architectural Spec Schedule
+            </SheetTitle>
+            <Badge variant="secondary" className="font-mono text-xs">
+              {items.length} {items.length === 1 ? "Fixture" : "Fixtures"} ({totalFixturesCount} Units)
+            </Badge>
           </div>
-
-          <button
-            type="button"
-            onClick={closeDrawer}
-            className="p-2 text-neutral-400 hover:text-neutral-900 rounded-full hover:bg-neutral-100 transition-colors"
-            aria-label="Close schedule drawer"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
-        </div>
+          <SheetDescription className="text-xs text-muted-foreground mt-0.5">
+            Project luminaire schedule for tender & technical specifications
+          </SheetDescription>
+        </SheetHeader>
 
         {/* Drawer Content */}
-        <div className="flex-1 overflow-y-auto px-6 py-4">
+        <div className="flex-1 overflow-y-auto p-6">
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full py-16 text-center">
-              <div className="h-16 w-16 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-400 mb-4 border border-neutral-200">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
-                  <rect x="9" y="3" width="6" height="4" rx="1" />
-                  <path d="M9 14l2 2 4-4" />
-                </svg>
+              <div className="h-16 w-16 rounded-full bg-muted/60 flex items-center justify-center text-muted-foreground mb-4 border border-border">
+                <FileSpreadsheet className="h-8 w-8" />
               </div>
-              <h3 className="font-display text-base font-semibold text-neutral-900">
+              <h3 className="font-display text-lg font-normal text-foreground">
                 Specification Schedule Empty
               </h3>
-              <p className="text-xs text-neutral-500 max-w-sm mt-1 mb-6">
+              <p className="text-xs text-muted-foreground max-w-sm mt-1 mb-6 font-light">
                 Explore the architectural catalogue and click &ldquo;+ Schedule&rdquo; on any luminaire to construct your project specification list.
               </p>
-              <Link
-                href="/catalogue"
-                onClick={closeDrawer}
-                className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2.5 text-xs font-medium uppercase tracking-wider text-white hover:bg-neutral-800 transition-colors"
-              >
-                Browse Catalogue
-              </Link>
+              <Button asChild size="sm" className="font-mono text-xs uppercase tracking-wider">
+                <Link href="/catalogue" onClick={closeDrawer}>
+                  Browse Catalogue
+                </Link>
+              </Button>
             </div>
           ) : (
             <div className="space-y-4">
-              <div className="flex items-center justify-between text-xs text-neutral-500 pb-2 border-b border-neutral-100">
-                <span>Shortlisted Project Luminaires</span>
-                <button
-                  type="button"
+              <div className="flex items-center justify-between text-xs text-muted-foreground pb-2 border-b border-border">
+                <span className="font-mono uppercase text-[11px]">Shortlisted Project Luminaires</span>
+                <Button
+                  variant="ghost"
+                  size="xs"
                   onClick={clearSchedule}
-                  className="text-neutral-400 hover:text-red-600 transition-colors underline"
+                  className="text-destructive hover:text-destructive text-xs gap-1 font-mono"
                 >
-                  Clear Schedule
-                </button>
+                  <Trash2 className="h-3 w-3" />
+                  Clear
+                </Button>
               </div>
 
               {items.map((item) => {
@@ -130,126 +102,127 @@ export default function SpecScheduleDrawer({ onRequestQuote }: SpecScheduleDrawe
                 const thumb = p.images[0] || "/images/products/rona.png";
 
                 return (
-                  <div
+                  <Card
                     key={p.id}
-                    className="relative flex gap-4 rounded-xl border border-neutral-200 bg-white p-4 shadow-2xs transition-shadow hover:shadow-xs"
+                    className="p-4 shadow-xs border-border bg-card transition-shadow hover:shadow-md"
                   >
-                    {/* Thumbnail */}
-                    <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50 p-1">
-                      <Image
-                        src={thumb}
-                        alt={p.model}
-                        fill
-                        sizes="80px"
-                        className="object-contain p-1"
-                      />
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-2">
-                        <div>
-                          <Link
-                            href={`/products/${p.slug}`}
-                            onClick={closeDrawer}
-                            className="font-display font-semibold text-sm text-neutral-900 hover:text-neutral-600 transition-colors"
-                          >
-                            {p.model}
-                          </Link>
-                          <p className="text-xs text-neutral-500">
-                            {p.category} · P.{p.catalogPage}
-                          </p>
-                        </div>
-
-                        {/* Remove item button */}
-                        <button
-                          type="button"
-                          onClick={() => removeItem(p.id)}
-                          className="text-neutral-400 hover:text-neutral-700 p-1"
-                          aria-label={`Remove ${p.model} from schedule`}
-                        >
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <line x1="18" y1="6" x2="6" y2="18" />
-                            <line x1="6" y1="6" x2="18" y2="18" />
-                          </svg>
-                        </button>
+                    <CardContent className="p-0 flex gap-4">
+                      {/* Thumbnail */}
+                      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg border border-border bg-surface p-1">
+                        <Image
+                          src={thumb}
+                          alt={p.model}
+                          fill
+                          sizes="80px"
+                          className="object-contain p-1"
+                        />
                       </div>
 
-                      {/* Specs Row */}
-                      <div className="mt-2 flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
-                        <span className="px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-700 border border-neutral-200">
-                          {p.power}
-                        </span>
-                        <span className="px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-700 border border-neutral-200">
-                          {p.ipRating}
-                        </span>
-                        {p.cutout && (
-                          <span className="px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-700 border border-neutral-200">
-                            Cut: {p.cutout}
-                          </span>
-                        )}
-                      </div>
+                      {/* Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <Link
+                              href={`/products/${p.slug}`}
+                              onClick={closeDrawer}
+                              className="font-display text-base font-semibold text-foreground hover:text-primary transition-colors"
+                            >
+                              {p.model}
+                            </Link>
+                            <p className="text-xs text-muted-foreground">
+                              {p.category} · P.{p.catalogPage}
+                            </p>
+                          </div>
 
-                      {/* Configurable Details */}
-                      <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
-                        <div>
-                          <label className="block text-[10px] font-mono text-neutral-400 uppercase">
-                            Project Tag
-                          </label>
-                          <input
-                            type="text"
-                            value={item.projectTag || ""}
-                            onChange={(e) => updateItem(p.id, { projectTag: e.target.value })}
-                            placeholder="e.g. L-01"
-                            className="w-full mt-0.5 rounded border border-neutral-200 px-2 py-1 text-xs text-neutral-900 focus:outline-none focus:border-neutral-900"
-                          />
+                          <Button
+                            variant="ghost"
+                            size="icon-xs"
+                            onClick={() => removeItem(p.id)}
+                            className="text-muted-foreground hover:text-foreground"
+                            aria-label={`Remove ${p.model} from schedule`}
+                          >
+                            <X className="h-3.5 w-3.5" />
+                          </Button>
                         </div>
 
-                        <div>
-                          <label className="block text-[10px] font-mono text-neutral-400 uppercase">
-                            CCT Variant
-                          </label>
-                          <select
-                            value={item.selectedCct || p.cct[0]}
-                            onChange={(e) => updateItem(p.id, { selectedCct: e.target.value })}
-                            className="w-full mt-0.5 rounded border border-neutral-200 px-2 py-1 text-xs text-neutral-900 bg-white focus:outline-none focus:border-neutral-900"
-                          >
-                            {p.cct.map((c) => (
-                              <option key={c} value={c}>
-                                {c}
-                              </option>
-                            ))}
-                          </select>
+                        {/* Specs Row */}
+                        <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                          <Badge variant="outline" className="font-mono text-[10px]">
+                            {p.power}
+                          </Badge>
+                          <Badge variant="outline" className="font-mono text-[10px]">
+                            {p.ipRating}
+                          </Badge>
+                          {p.cutout && (
+                            <Badge variant="outline" className="font-mono text-[10px]">
+                              Cut: {p.cutout}
+                            </Badge>
+                          )}
                         </div>
-                      </div>
 
-                      {/* Quantity Selector */}
-                      <div className="mt-3 flex items-center justify-between pt-2 border-t border-neutral-100">
-                        <span className="text-xs text-neutral-500 font-medium">Quantity</span>
-                        <div className="flex items-center gap-2 border border-neutral-200 rounded-md bg-neutral-50 px-2 py-0.5">
-                          <button
-                            type="button"
-                            onClick={() => updateQuantity(p.id, item.quantity - 1)}
-                            className="text-neutral-500 hover:text-neutral-900 px-1 font-mono font-bold"
-                            aria-label="Decrease quantity"
-                          >
-                            -
-                          </button>
-                          <span className="text-xs font-mono font-semibold w-6 text-center text-neutral-900">
-                            {item.quantity}
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => updateQuantity(p.id, item.quantity + 1)}
-                            className="text-neutral-500 hover:text-neutral-900 px-1 font-mono font-bold"
-                            aria-label="Increase quantity"
-                          >
-                            +
-                          </button>
+                        {/* Configurable Details */}
+                        <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
+                          <div>
+                            <label className="block text-[10px] font-mono text-muted-foreground uppercase mb-1">
+                              Project Tag
+                            </label>
+                            <Input
+                              type="text"
+                              value={item.projectTag || ""}
+                              onChange={(e) => updateItem(p.id, { projectTag: e.target.value })}
+                              placeholder="e.g. L-01"
+                              className="h-7 text-xs"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-[10px] font-mono text-muted-foreground uppercase mb-1">
+                              CCT Variant
+                            </label>
+                            <select
+                              value={item.selectedCct || p.cct[0]}
+                              onChange={(e) => updateItem(p.id, { selectedCct: e.target.value })}
+                              className="w-full h-7 rounded-md border border-border bg-background px-2 text-xs font-mono text-foreground focus:outline-none focus:border-foreground"
+                            >
+                              {p.cct.map((c) => (
+                                <option key={c} value={c}>
+                                  {c}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+
+                        {/* Quantity Selector */}
+                        <div className="mt-3 flex items-center justify-between pt-2 border-t border-border">
+                          <span className="text-xs text-muted-foreground font-medium">Quantity</span>
+                          <div className="flex items-center gap-1.5 border border-border rounded-full bg-muted/40 px-2 py-0.5">
+                            <Button
+                              variant="ghost"
+                              size="icon-xs"
+                              onClick={() => updateQuantity(p.id, item.quantity - 1)}
+                              className="h-5 w-5 p-0 text-muted-foreground hover:text-foreground rounded-full"
+                              aria-label="Decrease quantity"
+                            >
+                              <Minus className="h-3 w-3" />
+                            </Button>
+                            <span className="text-xs font-mono font-semibold w-7 text-center text-foreground">
+                              {item.quantity}
+                            </span>
+                            <Button
+                              variant="ghost"
+                              size="icon-xs"
+                              onClick={() => updateQuantity(p.id, item.quantity + 1)}
+                              className="h-5 w-5 p-0 text-muted-foreground hover:text-foreground rounded-full"
+                              aria-label="Increase quantity"
+                            >
+                              <Plus className="h-3 w-3" />
+                            </Button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
+                    </CardContent>
+                  </Card>
                 );
               })}
             </div>
@@ -258,36 +231,34 @@ export default function SpecScheduleDrawer({ onRequestQuote }: SpecScheduleDrawe
 
         {/* Drawer Footer Actions */}
         {items.length > 0 && (
-          <div className="border-t border-neutral-200 bg-neutral-50 p-6 space-y-3">
-            <button
-              type="button"
+          <SheetFooter className="border-t border-border/80 bg-muted/30 p-6 flex flex-col gap-2.5 sm:flex-col">
+            <Button
               onClick={() => {
                 closeDrawer();
                 onRequestQuote();
               }}
-              className="w-full flex items-center justify-center gap-2 rounded-full bg-neutral-900 py-3 text-xs font-medium uppercase tracking-wider text-white hover:bg-neutral-800 transition-colors shadow-sm"
+              className="w-full font-mono text-xs uppercase tracking-wider h-11 justify-between shadow-sm rounded-full px-5 bg-amber-500 hover:bg-amber-600 text-neutral-950 font-bold border-none"
             >
-              <span>Request Schedule Specification (RFQ)</span>
-              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-mono bg-white/20 text-white">
-                {totalFixturesCount} units
+              <span className="flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                Request Tender RFQ
               </span>
-            </button>
+              <Badge className="font-mono text-[10px] rounded-full px-2.5 bg-neutral-950 text-amber-400 font-bold border-none">
+                {totalFixturesCount} units
+              </Badge>
+            </Button>
 
-            <button
-              type="button"
+            <Button
+              variant="outline"
               onClick={exportCsv}
-              className="w-full flex items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white py-2.5 text-xs font-medium uppercase tracking-wider text-neutral-800 hover:bg-neutral-100 transition-colors"
+              className="w-full font-mono text-xs uppercase tracking-wider h-10 gap-2 rounded-full px-5 border-border/80 hover:bg-accent text-foreground"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-              </svg>
-              <span>Export Luminaire Schedule (.CSV)</span>
-            </button>
-          </div>
+              <Download className="h-3.5 w-3.5 text-amber-500" />
+              <span>Export Schedule (.CSV)</span>
+            </Button>
+          </SheetFooter>
         )}
-      </div>
-    </div>
+      </SheetContent>
+    </Sheet>
   );
 }

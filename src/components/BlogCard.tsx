@@ -1,38 +1,62 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { BlogPost } from "@/lib/blog";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Calendar } from "lucide-react";
 
 export default function BlogCard({ post }: { post: BlogPost }) {
   const date = new Date(post.date);
-  const day = date.toLocaleDateString("en-US", { day: "2-digit" });
-  const month = date.toLocaleDateString("en-US", { month: "short" });
+  const formattedDate = date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 
   return (
-    <article className="group flex flex-col">
-      <Link href={`/blog/${post.slug}`} className="relative block aspect-[3/2] overflow-hidden bg-surface">
+    <Card className="group flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card/90 backdrop-blur-xs transition-all duration-300 hover:border-amber-500/50 hover:shadow-xl hover:shadow-amber-500/5">
+      <Link href={`/blog/${post.slug}`} className="relative block aspect-3/2 overflow-hidden bg-surface/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">
         <Image
           src={post.image}
-          alt=""
+          alt={post.title}
           fill
           sizes="(min-width: 1024px) 33vw, 100vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute left-4 top-4 flex h-14 w-14 flex-col items-center justify-center bg-background text-center leading-none">
-          <span className="text-lg font-semibold">{day}</span>
-          <span className="text-xs uppercase text-muted">{month}</span>
+        <div className="absolute left-3 top-3">
+          <Badge variant="secondary" className="bg-background/90 text-foreground backdrop-blur-xs font-mono text-[10px] uppercase tracking-wider shadow-2xs border border-border/80">
+            <Calendar className="mr-1 h-3 w-3 text-amber-500" />
+            {formattedDate}
+          </Badge>
         </div>
       </Link>
-      <p className="mt-4 text-xs font-medium uppercase tracking-wide text-accent">{post.category}</p>
-      <h3 className="mt-1 font-display text-xl leading-snug">
-        <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-      </h3>
-      <p className="mt-2 text-sm text-muted">{post.excerpt}</p>
-      <Link
-        href={`/blog/${post.slug}`}
-        className="mt-3 w-fit border-b border-foreground pb-0.5 text-sm font-medium uppercase tracking-wide"
-      >
-        Read more
-      </Link>
-    </article>
+
+      <CardHeader className="p-6 pb-2">
+        <div className="flex items-center justify-between">
+          <Badge variant="outline" className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground border-border/80">
+            {post.category}
+          </Badge>
+        </div>
+        <Link href={`/blog/${post.slug}`} className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded-sm">
+          <h3 className="font-display text-2xl lg:text-[25px] font-light leading-snug mt-2.5 text-foreground group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+            {post.title}
+          </h3>
+        </Link>
+      </CardHeader>
+
+      <CardContent className="p-6 pt-0 flex-1 flex flex-col justify-between">
+        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3 font-sans font-light mb-5">
+          {post.excerpt}
+        </p>
+
+        <Button asChild variant="outline" size="sm" className="w-fit font-mono text-xs uppercase tracking-wider rounded-full px-4 h-8 gap-1.5 group/btn border-border/80 hover:border-amber-500/40 hover:bg-accent transition-all">
+          <Link href={`/blog/${post.slug}`}>
+            <span>Read Architectural Note</span>
+            <ArrowRight className="h-3.5 w-3.5 opacity-70 transition-transform group-hover/btn:translate-x-1" />
+          </Link>
+        </Button>
+      </CardContent>
+    </Card>
   );
 }

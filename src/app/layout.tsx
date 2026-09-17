@@ -1,21 +1,33 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
 import { siteConfig } from "@/lib/site";
+import ClientProviders from "@/components/ClientProviders";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { Plus_Jakarta_Sans, Cormorant_Garamond, JetBrains_Mono } from "next/font/google";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const sansFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  variable: "--font-sans",
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800"],
+});
+
+const displayFont = Cormorant_Garamond({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
   style: ["normal", "italic"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const monoFont = JetBrains_Mono({
   subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -44,16 +56,17 @@ export const metadata: Metadata = {
   },
 };
 
-import ClientProviders from "@/components/ClientProviders";
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${inter.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col bg-background text-foreground selection:bg-neutral-900 selection:text-white">
+    <html
+      lang="en"
+      className={`h-full antialiased ${sansFont.variable} ${displayFont.variable} ${monoFont.variable}`}
+    >
+      <body className="flex min-h-full flex-col bg-background text-foreground font-sans selection:bg-amber-400/30 selection:text-amber-900 dark:selection:text-amber-100">
         <JsonLd
           data={{
             "@context": "https://schema.org",
@@ -84,11 +97,13 @@ export default function RootLayout({
           Skip to content
         </a>
         <ClientProviders>
-          <Header />
-          <main id="main-content" className="flex-1">
-            {children}
-          </main>
-          <Footer />
+          <TooltipProvider delay={150}>
+            <Header />
+            <main id="main-content" className="flex-1">
+              {children}
+            </main>
+            <Footer />
+          </TooltipProvider>
         </ClientProviders>
       </body>
     </html>
