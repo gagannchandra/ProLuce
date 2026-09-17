@@ -30,7 +30,7 @@ export default function ContactPage() {
       <div className="max-w-2xl border-b border-border pb-8">
         <div className="inline-flex items-center gap-2 mb-2">
           <Badge variant="outline" className="gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] border-border/80 text-muted-foreground">
-            <Building2 className="h-3 w-3 text-amber-500" />
+            <Building2 className="h-3 w-3 text-stone-300" />
             <span>Commercial Project Inquiries</span>
           </Badge>
         </div>
@@ -60,11 +60,11 @@ export default function ContactPage() {
             <CardContent className="space-y-5 text-sm">
               <div className="flex items-start gap-3">
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border/80 bg-muted/60 text-foreground">
-                  <Mail className="h-4 w-4 text-amber-500" />
+                  <Mail className="h-4 w-4 text-stone-300" />
                 </div>
                 <div>
                   <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground font-mono">
-                    Specification Email
+                    Studio Email
                   </h3>
                   <a
                     href={`mailto:${siteConfig.contact.email}`}

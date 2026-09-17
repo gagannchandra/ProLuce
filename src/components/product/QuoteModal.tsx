@@ -118,7 +118,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
                   <select
                     value={selectedCct}
                     onChange={(e) => setSelectedCct(e.target.value)}
-                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background px-3 py-2 font-medium outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background px-3 py-2 font-medium outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
                   >
                     {product.cct.map((c) => (
                       <option key={c} value={c}>{c}</option>
@@ -133,7 +133,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
                   <select
                     value={selectedFinish}
                     onChange={(e) => setSelectedFinish(e.target.value)}
-                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background px-3 py-2 font-medium outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background px-3 py-2 font-medium outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
                   >
                     {product.finishes.map((f) => (
                       <option key={f} value={f}>{f}</option>
@@ -148,7 +148,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
                   <select
                     value={selectedDriver}
                     onChange={(e) => setSelectedDriver(e.target.value)}
-                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background px-3 py-2 font-medium outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background px-3 py-2 font-medium outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
                   >
                     {product.driverOptions.map((d) => (
                       <option key={d} value={d}>{d}</option>
@@ -178,99 +178,97 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
             )}
 
             {/* Contact Information */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-foreground font-semibold mb-1.5">
-                  Your Name <span className="text-destructive">*</span>
+                <label className="block text-[11px] font-mono uppercase tracking-wider text-muted-foreground font-semibold mb-1.5">
+                  Your Name *
                 </label>
                 <Input
-                  type="text"
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. Marco Rossi"
-                  className="text-xs font-mono rounded-xl"
+                  placeholder="Architect / Specifier Name"
+                  className="font-mono text-xs rounded-xl"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-foreground font-semibold mb-1.5">
-                  Studio / Firm <span className="text-destructive">*</span>
+                <label className="block text-[11px] font-mono uppercase tracking-wider text-muted-foreground font-semibold mb-1.5">
+                  Firm / Studio *
                 </label>
                 <Input
-                  type="text"
                   required
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
-                  placeholder="Studio Design Associates"
-                  className="text-xs font-mono rounded-xl"
+                  placeholder="Studio / Practice Name"
+                  className="font-mono text-xs rounded-xl"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-foreground font-semibold mb-1.5">
-                  Business Email <span className="text-destructive">*</span>
+                <label className="block text-[11px] font-mono uppercase tracking-wider text-muted-foreground font-semibold mb-1.5">
+                  Corporate Email *
                 </label>
                 <Input
-                  type="email"
                   required
+                  type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="specifications@studio.com"
-                  className="text-xs font-mono rounded-xl"
+                  placeholder="specifier@firm.com"
+                  className="font-mono text-xs rounded-xl"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-foreground font-semibold mb-1.5">
-                  Phone / WhatsApp
+                <label className="block text-[11px] font-mono uppercase tracking-wider text-muted-foreground font-semibold mb-1.5">
+                  Contact Phone
                 </label>
                 <Input
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+39 02 1234 5678"
-                  className="text-xs font-mono rounded-xl"
+                  placeholder="+1 (555) 000-0000"
+                  className="font-mono text-xs rounded-xl"
                 />
               </div>
+            </div>
 
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-foreground font-semibold mb-1.5">
-                  Project Name & City
+                <label className="block text-[11px] font-mono uppercase tracking-wider text-muted-foreground font-semibold mb-1.5">
+                  Project Name / Site
                 </label>
                 <Input
-                  type="text"
                   value={projectName}
                   onChange={(e) => setProjectName(e.target.value)}
-                  placeholder="e.g. Milan Flagship Galleria"
-                  className="text-xs font-mono rounded-xl"
+                  placeholder="e.g., Zurich Luxury Villa"
+                  className="font-mono text-xs rounded-xl"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-foreground font-semibold mb-1.5">
-                  {isScheduleMode ? "Delivery Schedule / Phase" : "Estimated Quantity"}
+                <label className="block text-[11px] font-mono uppercase tracking-wider text-muted-foreground font-semibold mb-1.5">
+                  Estimated Quantity
                 </label>
                 <Input
-                  type="text"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
-                  placeholder={isScheduleMode ? "e.g. Phase 1: Q3 Delivery" : "e.g. 50 units / 120 meters"}
-                  className="text-xs font-mono rounded-xl"
+                  placeholder="e.g., 25 units"
+                  className="font-mono text-xs rounded-xl"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-mono uppercase tracking-wider text-foreground font-semibold mb-1.5">
-                Project Notes & Dimming Requirements
+              <label className="block text-[11px] font-mono uppercase tracking-wider text-muted-foreground font-semibold mb-1.5">
+                Technical Notes / Project Schedule Scope
               </label>
               <Textarea
                 rows={3}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                placeholder="Specify ceiling types (trimless plaster-in / acoustic tile), dimming protocols (DALI-2 DT8 / Casambi), or delivery phases..."
-                className="text-xs resize-none rounded-2xl p-3 font-mono"
+                placeholder="Specify special mounting accessories, emergency battery packs, wireless mesh protocols, or custom mitered lengths..."
+                className="font-mono text-xs rounded-xl resize-none"
               />
             </div>
 
@@ -285,7 +283,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
               </Button>
               <Button
                 type="submit"
-                className="font-mono text-xs uppercase tracking-wider px-6 shadow-sm gap-1.5 rounded-full bg-amber-500 hover:bg-amber-600 text-neutral-950 font-bold border-none"
+                className="font-mono text-xs uppercase tracking-wider px-6 shadow-sm gap-1.5 rounded-full bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 font-bold border-none"
               >
                 <Send className="h-3.5 w-3.5" />
                 {isScheduleMode ? "Transmit Project RFQ" : "Submit Quote Request"}

@@ -1,8 +1,8 @@
 export const siteConfig = {
   name: "Pro-Luce",
-  tagline: "Architectural Lighting Systems",
+  tagline: "The Italian Language of Light",
   description:
-    "Pro-Luce manufactures precision architectural lighting systems: trimless spotlights, linear profiles, 48V magnetic tracks, outdoor luminaires, and industrial highbays.",
+    "Pro-Luce manufactures precision lighting systems: trimless spotlights, linear profiles, 48V magnetic tracks, outdoor luminaires, and industrial highbays.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://proluce-lighting.com",
   catalogPdfUrl: "/pdf/Pro-Luce-Catalogue.pdf",
   ogImage: "/images/products/rona.png",
@@ -11,9 +11,9 @@ export const siteConfig = {
     instagram: "https://instagram.com",
   },
   contact: {
-    email: "specifications@pro-luce.com",
+    email: "info@pro-luce.com",
     phone: "+39 (0) 02 8934 2100",
-    address: "Pro-Luce Architectural Lighting Design & Engineering Studio",
+    address: "Via Aldo Moro, 10/12, 50019 Sesto Fiorentino FI, Italy",
   },
 };
 

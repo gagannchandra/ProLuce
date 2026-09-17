@@ -6,7 +6,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { siteConfig } from "@/lib/site";
 import ClientProviders from "@/components/ClientProviders";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Plus_Jakarta_Sans, Cormorant_Garamond, JetBrains_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Cormorant_Garamond, JetBrains_Mono, Italianno } from "next/font/google";
 
 const sansFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -21,6 +21,13 @@ const displayFont = Cormorant_Garamond({
   display: "swap",
   weight: ["300", "400", "500", "600", "700"],
   style: ["normal", "italic"],
+});
+
+const scriptFont = Italianno({
+  subsets: ["latin"],
+  variable: "--font-script",
+  display: "swap",
+  weight: ["400"],
 });
 
 const monoFont = JetBrains_Mono({
@@ -56,6 +63,26 @@ export const metadata: Metadata = {
   },
 };
 
+const themeInitScript = `
+  (function() {
+    try {
+      var stored = localStorage.getItem('proluce-theme') || 'dark';
+      var resolved = stored === 'system'
+        ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        : stored;
+      if (resolved === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    } catch (e) {}
+  })();
+`;
+
 export default function RootLayout({
   children,
 }: {
@@ -64,9 +91,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`h-full antialiased ${sansFont.variable} ${displayFont.variable} ${monoFont.variable}`}
+      suppressHydrationWarning
+      className={`h-full antialiased ${sansFont.variable} ${displayFont.variable} ${scriptFont.variable} ${monoFont.variable}`}
     >
-      <body className="flex min-h-full flex-col bg-background text-foreground font-sans selection:bg-amber-400/30 selection:text-amber-900 dark:selection:text-amber-100">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
+      </head>
+      <body className="flex min-h-full flex-col bg-background text-foreground font-sans selection:bg-[#f4f0e6]/25 selection:text-[#f4f0e6] transition-colors duration-200">
         <JsonLd
           data={{
             "@context": "https://schema.org",

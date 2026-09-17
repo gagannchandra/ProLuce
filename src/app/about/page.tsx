@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Download, ArrowRight, Eye, Cpu, ShieldCheck, Layers } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "About Pro-Luce | Architectural Lighting Systems & Engineering",
+  title: "About Pro-Luce | Lighting Systems & Engineering",
   description:
     "Pro-Luce engineers precision architectural luminaires, 48V magnetic track channels, and micro-faceted optical systems for architects, lighting designers, and specifiers worldwide.",
   alternates: { canonical: "/about" },
@@ -72,11 +72,11 @@ export default function AboutPage() {
             {PILLARS.map((pillar) => {
               const IconComp = pillar.icon;
               return (
-                <Card key={pillar.title} className="p-5 rounded-xl border border-border/80 bg-card/90 backdrop-blur-xs shadow-2xs hover:border-amber-500/40 transition-colors">
+                <Card key={pillar.title} className="p-5 rounded-xl border border-border/80 bg-card/90 backdrop-blur-xs shadow-2xs hover:border-[#e6dfd1]/40 transition-colors">
                   <CardContent className="p-0 space-y-2">
                     <div className="flex items-center gap-2">
                       <div className="p-1.5 rounded-md bg-muted text-foreground">
-                        <IconComp className="h-4 w-4 text-amber-500" />
+                        <IconComp className="h-4 w-4 text-stone-300" />
                       </div>
                       <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground font-mono leading-tight">
                         {pillar.title}
@@ -94,19 +94,19 @@ export default function AboutPage() {
 
         {/* Master PDF Catalogue Callout */}
         <div className="pt-16">
-          <Card className="rounded-2xl border border-neutral-900 bg-neutral-950 p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden">
+          <Card className="rounded-2xl border border-border bg-card p-8 sm:p-12 text-foreground shadow-2xl relative overflow-hidden">
             {/* Soft Ambient Light Beam */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#f4f0e6]/10 dark:bg-[#f4f0e6]/5 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
 
             <CardContent className="p-0 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
               <div className="space-y-2 max-w-xl">
-                <Badge variant="outline" className="border-white/20 bg-neutral-900/80 text-neutral-300 font-mono text-[10px] uppercase tracking-wider">
+                <Badge variant="outline" className="border-border bg-muted text-muted-foreground font-mono text-[10px] uppercase tracking-wider">
                   Tender Documentation
                 </Badge>
-                <h3 className="text-2xl sm:text-3xl font-normal font-display text-white">
+                <h3 className="text-2xl sm:text-3xl font-normal font-display text-foreground">
                   Download the Complete Architectural Catalogue
                 </h3>
-                <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+                <p className="text-xs sm:text-sm text-muted-foreground font-light leading-relaxed">
                   Access all 119 pages of technical datasheets, dimensional line drawings, polar candlepower curves, and photometric schedules in high-resolution PDF format.
                 </p>
               </div>
@@ -114,7 +114,7 @@ export default function AboutPage() {
               <div className="flex items-center gap-3 shrink-0 flex-wrap">
                 <Button
                   asChild
-                  className="bg-amber-400 text-neutral-950 hover:bg-amber-300 font-mono text-xs uppercase tracking-wider px-6 h-11 shadow-sm rounded-full font-bold border-none"
+                  className="bg-[#f4f0e6] text-neutral-950 hover:bg-[#eae4d5] font-mono text-xs uppercase tracking-wider px-6 h-11 shadow-sm rounded-full font-bold border-none cursor-pointer"
                 >
                   <a
                     href={siteConfig.catalogPdfUrl}
@@ -129,7 +129,7 @@ export default function AboutPage() {
                 <Button
                   asChild
                   variant="outline"
-                  className="border-neutral-700 bg-neutral-900/60 font-mono text-xs uppercase tracking-wider text-neutral-200 hover:text-white hover:bg-neutral-800 h-11 rounded-full px-6"
+                  className="border-border bg-card font-mono text-xs uppercase tracking-wider text-foreground hover:bg-muted h-11 rounded-full px-6 cursor-pointer shadow-2xs"
                 >
                   <Link href="/catalogue">
                     <span>Browse Catalogue</span>

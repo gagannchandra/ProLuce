@@ -30,7 +30,7 @@ export default function ProductCard({ product, onOpenQuote }: ProductCardProps) 
 
   return (
     <Card
-      className="group relative flex flex-col rounded-2xl border border-border/80 bg-card/90 backdrop-blur-xs p-4 transition-all duration-300 hover:border-amber-500/50 hover:shadow-xl hover:shadow-amber-500/5 hover:bg-card transform-gpu focus-within:ring-2 focus-within:ring-amber-500/50"
+      className="group relative flex flex-col rounded-2xl border border-border/80 bg-card/90 backdrop-blur-xs p-4 transition-all duration-300 hover:border-stone-400 dark:hover:border-[#e6dfd1]/40 hover:shadow-xl hover:shadow-black/5 dark:hover:shadow-black/40 hover:bg-card transform-gpu focus-within:ring-2 focus-within:ring-stone-400"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -39,7 +39,7 @@ export default function ProductCard({ product, onOpenQuote }: ProductCardProps) 
         <Link
           href={`/products/${product.slug}`}
           style={{ viewTransitionName: `product-image-${product.slug}` } as React.CSSProperties}
-          className="relative block w-full aspect-square overflow-hidden rounded-xl bg-surface/60 border border-border/60 p-4 transition-all duration-300 ease-out group-hover:bg-muted/30 group-hover:border-border transform-gpu focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+          className="relative block w-full aspect-square overflow-hidden rounded-xl bg-surface/60 border border-border/60 p-4 transition-all duration-300 ease-out group-hover:bg-muted/30 group-hover:border-border transform-gpu focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
         >
           <Image
             src={isHovered && product.dimensionDiagram ? hoverImage : primaryImage}
@@ -84,10 +84,10 @@ export default function ProductCard({ product, onOpenQuote }: ProductCardProps) 
               </span>
             </div>
 
-            <Link href={`/products/${product.slug}`} className="block mt-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded-xs">
+            <Link href={`/products/${product.slug}`} className="block mt-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 rounded-xs">
               <h3
                 style={{ viewTransitionName: `product-title-${product.slug}` } as React.CSSProperties}
-                className="font-display text-xl font-normal tracking-tight text-foreground group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-200"
+                className="font-display text-xl font-normal tracking-tight text-foreground group-hover:text-primary dark:group-hover:text-[#f4f0e6] transition-colors duration-200"
               >
                 {product.model}
               </h3>
@@ -134,8 +134,8 @@ export default function ProductCard({ product, onOpenQuote }: ProductCardProps) 
                   }}
                   className={`font-mono text-[11px] h-8 px-3 rounded-full transition-all duration-200 ${
                     inSchedule
-                      ? "bg-amber-500 hover:bg-amber-600 text-neutral-950 font-semibold border-none shadow-xs"
-                      : "border-border hover:border-amber-500/50 hover:bg-accent"
+                      ? "bg-emerald-600 hover:bg-emerald-500 text-white font-semibold border-none shadow-xs"
+                      : "bg-[#f4f0e6] hover:bg-[#eae4d5] text-zinc-950 font-semibold border-none shadow-xs"
                   }`}
                   aria-label={inSchedule ? `Remove ${product.model} from schedule` : `Add ${product.model} to schedule`}
                 >
@@ -170,7 +170,7 @@ export default function ProductCard({ product, onOpenQuote }: ProductCardProps) 
                   onClick={() => onOpenQuote(product)}
                   className="font-mono text-[11px] uppercase tracking-wider h-8 px-3 rounded-full border-border hover:border-foreground/30"
                 >
-                  <FileText className="mr-1 h-3 w-3 text-amber-500" />
+                  <FileText className="mr-1 h-3 w-3 text-stone-300" />
                   RFQ
                 </Button>
               )}

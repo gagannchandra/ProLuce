@@ -15,8 +15,8 @@ export default function BlogCard({ post }: { post: BlogPost }) {
   });
 
   return (
-    <Card className="group flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card/90 backdrop-blur-xs transition-all duration-300 hover:border-amber-500/50 hover:shadow-xl hover:shadow-amber-500/5">
-      <Link href={`/blog/${post.slug}`} className="relative block aspect-3/2 overflow-hidden bg-surface/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">
+    <Card className="group flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card/90 backdrop-blur-xs transition-all duration-300 hover:border-[#e6dfd1]/40 hover:shadow-xl hover:shadow-black/40">
+      <Link href={`/blog/${post.slug}`} className="relative block aspect-3/2 overflow-hidden bg-surface/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400">
         <Image
           src={post.image}
           alt={post.title}
@@ -26,7 +26,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
         />
         <div className="absolute left-3 top-3">
           <Badge variant="secondary" className="bg-background/90 text-foreground backdrop-blur-xs font-mono text-[10px] uppercase tracking-wider shadow-2xs border border-border/80">
-            <Calendar className="mr-1 h-3 w-3 text-amber-500" />
+            <Calendar className="mr-1 h-3 w-3 text-stone-300" />
             {formattedDate}
           </Badge>
         </div>
@@ -38,8 +38,8 @@ export default function BlogCard({ post }: { post: BlogPost }) {
             {post.category}
           </Badge>
         </div>
-        <Link href={`/blog/${post.slug}`} className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded-sm">
-          <h3 className="font-display text-2xl lg:text-[25px] font-light leading-snug mt-2.5 text-foreground group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+        <Link href={`/blog/${post.slug}`} className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 rounded-sm">
+          <h3 className="font-display text-2xl lg:text-[25px] font-light leading-snug mt-2.5 text-foreground group-hover:text-[#f4f0e6] transition-colors">
             {post.title}
           </h3>
         </Link>
@@ -50,7 +50,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
           {post.excerpt}
         </p>
 
-        <Button asChild variant="outline" size="sm" className="w-fit font-mono text-xs uppercase tracking-wider rounded-full px-4 h-8 gap-1.5 group/btn border-border/80 hover:border-amber-500/40 hover:bg-accent transition-all">
+        <Button asChild variant="outline" size="sm" className="w-fit font-mono text-xs uppercase tracking-wider rounded-full px-4 h-8 gap-1.5 group/btn border-border/80 hover:border-[#e6dfd1]/40 hover:bg-accent transition-all">
           <Link href={`/blog/${post.slug}`}>
             <span>Read Architectural Note</span>
             <ArrowRight className="h-3.5 w-3.5 opacity-70 transition-transform group-hover/btn:translate-x-1" />

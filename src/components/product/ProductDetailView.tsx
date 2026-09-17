@@ -27,6 +27,7 @@ import {
   ArrowRight,
   Sliders,
 } from "lucide-react";
+import { BeamAngleIcon } from "@/components/ui/beam-angle-icon";
 
 interface ProductDetailViewProps {
   product: Product;
@@ -61,16 +62,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
   };
   const activeLightColor = cctColorMap[selectedCct] || "#ffe4c4";
 
-  // Map a beam angle string like "24°" → the closest available SVG filename
-  const BEAM_SVG_ANGLES = [3, 5, 10, 15, 20, 22, 24, 30, 35, 36, 40, 48, 50, 60];
-  function beamSvgPath(angleStr: string, variant: "grey" | "black" = "grey"): string {
-    const deg = parseInt(angleStr.replace("°", "")) || 36;
-    const closest = BEAM_SVG_ANGLES.reduce((prev, cur) =>
-      Math.abs(cur - deg) < Math.abs(prev - deg) ? cur : prev
-    );
-    const padded = String(closest).padStart(2, "0");
-    return `/images/beams/beam_${padded}deg_${variant}.svg`;
-  }
+
 
   return (
     <div className="space-y-12 pb-16">
@@ -286,40 +278,161 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                 </div>
 
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {product.beamAngles.map((b) => (
-                    <Button
-                      key={b}
-                      variant={selectedBeam === b ? "default" : "outline"}
-                      size="xs"
-                      onClick={() => setSelectedBeam(b)}
-                      className="font-mono text-xs rounded-full px-3.5"
-                    >
-                      {b}
-                    </Button>
-                  ))}
+                  {product.beamAngles.map((b) => {
+                    const isSelected = selectedBeam === b;
+                    return (
+                      <Button
+                        key={b}
+                        variant={isSelected ? "default" : "outline"}
+                        size="xs"
+                        onClick={() => setSelectedBeam(b)}
+                        className={`gap-1.5 font-mono text-xs rounded-full px-3.5 transition-all cursor-pointer ${
+                          isSelected
+                            ? "bg-[#f4f0e6] text-neutral-950 hover:bg-[#eae4d5] font-semibold border-none shadow-xs"
+                            : ""
+                        }`}
+                      >
+                        <BeamAngleIcon
+                          angle={b}
+                          isSelected={isSelected}
+                          className="h-3.5 w-3.5 shrink-0"
+                        />
+                        <span>{b}</span>
+                      </Button>
+                    );
+                  })}
                 </div>
 
-                {/* Real Photometric Beam Diagram */}
-                <div className="relative h-44 w-full rounded-xl bg-neutral-950 flex flex-col items-center justify-center overflow-hidden shadow-inner border border-white/5">
-                  <div
-                    className="absolute inset-0 pointer-events-none opacity-20 transition-all duration-700"
-                    style={{
-                      background: activeLightColor.startsWith("linear")
-                        ? activeLightColor
-                        : `radial-gradient(ellipse at 50% 0%, ${activeLightColor} 0%, transparent 70%)`,
-                    }}
-                  />
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    key={selectedBeam}
-                    src={beamSvgPath(selectedBeam, "grey")}
-                    alt={`${selectedBeam} beam angle distribution diagram`}
-                    className="h-full w-auto max-w-full object-contain opacity-90 transition-all duration-500 mix-blend-lighten"
-                  />
-                  <Badge variant="outline" className="absolute bottom-2 font-mono text-[10px] text-neutral-400 bg-neutral-950/80 border-neutral-800">
-                    {selectedBeam} photometric beam · {selectedCct}
-                  </Badge>
-                </div>
+                {/* Real Photometric Beam Vector Visualizer */}
+                {(() => {
+                  const deg = parseInt(selectedBeam.replace(/[^0-9]/g, ""), 10) || 24;
+                  const rad = (deg * Math.PI) / 360;
+                  const apexX = 180;
+                  const apexY = 18;
+                  const floorY = 145;
+                  const heightPixels = floorY - apexY;
+                  const halfWidth = Math.min(140, Math.max(16, heightPixels * Math.tan(rad)));
+                  const leftX = apexX - halfWidth;
+                  const rightX = apexX + halfWidth;
+                  const estimatedSpot = (2 * 3.0 * Math.tan(rad)).toFixed(2);
+                  const colorStop = activeLightColor.startsWith("linear") ? "#ffe4c4" : activeLightColor;
+
+                  return (
+                    <div className="relative h-48 w-full rounded-2xl bg-zinc-950 flex flex-col items-center justify-center overflow-hidden shadow-inner border border-white/10 p-3">
+                      {/* Ambient Kelvin Glow */}
+                      <div
+                        className="absolute inset-0 pointer-events-none opacity-20 transition-all duration-700 blur-2xl"
+                        style={{
+                          background: activeLightColor.startsWith("linear")
+                            ? activeLightColor
+                            : `radial-gradient(circle at 50% 10%, ${activeLightColor} 0%, transparent 70%)`,
+                        }}
+                      />
+
+                      <svg
+                        viewBox="0 0 360 160"
+                        className="w-full h-full overflow-visible"
+                        preserveAspectRatio="xMidYMid meet"
+                      >
+                        <defs>
+                          <linearGradient id={`pdpBeamGrad-${product.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor={colorStop} stopOpacity="0.85" />
+                            <stop offset="40%" stopColor={colorStop} stopOpacity="0.4" />
+                            <stop offset="85%" stopColor={colorStop} stopOpacity="0.12" />
+                            <stop offset="100%" stopColor={colorStop} stopOpacity="0.0" />
+                          </linearGradient>
+                          <radialGradient id={`pdpFlare-${product.id}`} cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
+                            <stop offset="40%" stopColor={colorStop} stopOpacity="0.9" />
+                            <stop offset="100%" stopColor={colorStop} stopOpacity="0" />
+                          </radialGradient>
+                        </defs>
+
+                        {/* Ceiling Plane Datum Line */}
+                        <line x1="20" y1={apexY} x2="340" y2={apexY} stroke="#3f3f46" strokeDasharray="3 3" strokeWidth="1" />
+                        {/* Floor Workplane Datum Line */}
+                        <line x1="20" y1={floorY} x2="340" y2={floorY} stroke="#52525b" strokeWidth="1.2" />
+
+                        {/* Optical Cone Polygon */}
+                        <polygon
+                          points={`${apexX},${apexY} ${leftX.toFixed(1)},${floorY} ${rightX.toFixed(1)},${floorY}`}
+                          fill={`url(#pdpBeamGrad-${product.id})`}
+                          className="transition-all duration-500 ease-out"
+                        />
+
+                        {/* Boundary Ray Lines */}
+                        <line
+                          x1={apexX}
+                          y1={apexY}
+                          x2={leftX.toFixed(1)}
+                          y2={floorY}
+                          stroke={colorStop}
+                          strokeWidth="1.5"
+                          strokeOpacity="0.75"
+                          className="transition-all duration-500 ease-out"
+                        />
+                        <line
+                          x1={apexX}
+                          y1={apexY}
+                          x2={rightX.toFixed(1)}
+                          y2={floorY}
+                          stroke={colorStop}
+                          strokeWidth="1.5"
+                          strokeOpacity="0.75"
+                          className="transition-all duration-500 ease-out"
+                        />
+
+                        {/* Central Optical Axis */}
+                        <line
+                          x1={apexX}
+                          y1={apexY}
+                          x2={apexX}
+                          y2={floorY}
+                          stroke="#a1a1aa"
+                          strokeWidth="1"
+                          strokeDasharray="2 3"
+                          strokeOpacity="0.5"
+                        />
+
+                        {/* Floor Illuminance Footprint Ellipse */}
+                        <ellipse
+                          cx={apexX}
+                          cy={floorY}
+                          rx={halfWidth}
+                          ry={Math.max(4, halfWidth * 0.1)}
+                          fill={colorStop}
+                          fillOpacity="0.2"
+                          stroke={colorStop}
+                          strokeWidth="1.2"
+                          strokeOpacity="0.8"
+                          className="transition-all duration-500 ease-out"
+                        />
+
+                        {/* Luminaire Emitter Head & Baffle */}
+                        <rect x="164" y="10" width="32" height="8" rx="2" fill="#27272a" stroke="#71717a" strokeWidth="1" />
+                        <circle cx={apexX} cy={apexY} r="4" fill={`url(#pdpFlare-${product.id})`} />
+                        <circle cx={apexX} cy={apexY} r="1.5" fill="#ffffff" />
+
+                        {/* Technical Datum Annotations */}
+                        <text x="24" y="13" fill="#71717a" fontSize="8" fontFamily="monospace">CEILING H=0m</text>
+                        <text x="24" y={floorY + 11} fill="#71717a" fontSize="8" fontFamily="monospace">WORKPLANE H=3.0m</text>
+                        <text x="336" y={floorY + 11} textAnchor="end" fill="#f4f0e6" fontSize="8" fontFamily="monospace" fontWeight="bold">
+                          SPOT Ø ≈ {estimatedSpot}m
+                        </text>
+                      </svg>
+
+                      {/* Photometric Technical Badges */}
+                      <div className="absolute bottom-2 inset-x-3 flex items-center justify-between pointer-events-none">
+                        <Badge variant="outline" className="font-mono text-[10px] text-zinc-300 bg-zinc-950/80 border-zinc-800 backdrop-blur-xs">
+                          {selectedBeam} distribution · 30° Shielded
+                        </Badge>
+                        <Badge variant="outline" className="font-mono text-[10px] text-[#f4f0e6] bg-zinc-950/80 border-[#e6dfd1]/40 backdrop-blur-xs">
+                          {selectedCct} · Ra ≥ 90
+                        </Badge>
+                      </div>
+                    </div>
+                  );
+                })()}
               </div>
             )}
           </Card>
@@ -586,8 +699,8 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
 
           {/* Direct Project RFQ Banner */}
           <Card className="relative border-neutral-900 bg-neutral-950 p-6 sm:p-8 text-white no-print shadow-xl rounded-3xl overflow-hidden">
-            {/* Ambient Gold Ray Accent */}
-            <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none -mr-16 -mt-16" />
+            {/* Ambient Cream Ray Accent */}
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#f4f0e6]/5 rounded-full blur-3xl pointer-events-none -mr-16 -mt-16" />
 
             <CardContent className="relative z-10 p-0 space-y-3">
               <h3 className="font-display text-2xl font-normal tracking-tight text-white">

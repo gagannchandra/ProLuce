@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { useSearchParams, usePathname } from "next/navigation";
-import type { Product, ProductCategory } from "@/lib/products";
+import type { Product } from "@/lib/products";
 import FilterSidebar, { type FilterState } from "./FilterSidebar";
 import ActiveFilterChips from "./ActiveFilterChips";
 import ViewModeToggle from "./ViewModeToggle";
@@ -38,6 +38,14 @@ function extractNumericPower(powerStr?: string): number {
   return match ? parseFloat(match[1]) : 0;
 }
 
+function parseList(param: string | null): string[] {
+  if (!param) return [];
+  return param
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
 const QUICK_CATEGORIES: { label: string; value: string }[] = [
   { label: "All (99)", value: "" },
   { label: "Spot Lights", value: "Spot Light" },
@@ -52,18 +60,18 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  // Read initial filter values from URL
+  // Read initial filter values from URL supporting multi-value comma lists
   const [filters, setFilters] = useState<FilterState>(() => ({
-    category: searchParams.get("category") || "",
-    environment: searchParams.get("environment") || "",
-    cct: searchParams.get("cct") || "",
-    wattage: searchParams.get("wattage") || "",
-    voltage: searchParams.get("voltage") || "",
-    diameter: searchParams.get("diameter") || "",
-    length: searchParams.get("length") || "",
-    ipRating: searchParams.get("ip") || "",
-    beamAngle: searchParams.get("beam") || "",
-    search: searchParams.get("q") || "",
+    categories: parseList(searchParams.get("category") || searchParams.get("categories")),
+    environments: parseList(searchParams.get("environment") || searchParams.get("env")),
+    ccts: parseList(searchParams.get("cct")),
+    wattages: parseList(searchParams.get("wattage")),
+    voltages: parseList(searchParams.get("voltage")),
+    diameters: parseList(searchParams.get("diameter") || searchParams.get("cutout")),
+    lengths: parseList(searchParams.get("length")),
+    ipRatings: parseList(searchParams.get("ip") || searchParams.get("ipRating")),
+    beamAngles: parseList(searchParams.get("beam") || searchParams.get("beamAngle")),
+    search: searchParams.get("q") || searchParams.get("search") || "",
   }));
 
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
@@ -77,15 +85,15 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
   // Sync state to URL search parameters
   useEffect(() => {
     const params = new URLSearchParams();
-    if (filters.category) params.set("category", filters.category);
-    if (filters.environment) params.set("environment", filters.environment);
-    if (filters.cct) params.set("cct", filters.cct);
-    if (filters.wattage) params.set("wattage", filters.wattage);
-    if (filters.voltage) params.set("voltage", filters.voltage);
-    if (filters.diameter) params.set("diameter", filters.diameter);
-    if (filters.length) params.set("length", filters.length);
-    if (filters.ipRating) params.set("ip", filters.ipRating);
-    if (filters.beamAngle) params.set("beam", filters.beamAngle);
+    if (filters.categories.length) params.set("category", filters.categories.join(","));
+    if (filters.environments.length) params.set("environment", filters.environments.join(","));
+    if (filters.ccts.length) params.set("cct", filters.ccts.join(","));
+    if (filters.wattages.length) params.set("wattage", filters.wattages.join(","));
+    if (filters.voltages.length) params.set("voltage", filters.voltages.join(","));
+    if (filters.diameters.length) params.set("diameter", filters.diameters.join(","));
+    if (filters.lengths.length) params.set("length", filters.lengths.join(","));
+    if (filters.ipRatings.length) params.set("ip", filters.ipRatings.join(","));
+    if (filters.beamAngles.length) params.set("beam", filters.beamAngles.join(","));
     if (debouncedSearch) params.set("q", debouncedSearch);
 
     const query = params.toString();
@@ -93,25 +101,53 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
     window.history.replaceState(null, "", target);
   }, [filters, debouncedSearch, pathname]);
 
+  function handleToggleFilter<K extends keyof FilterState>(key: K, value: string) {
+    if (key === "search") {
+      setFilters((prev) => ({ ...prev, search: value }));
+      return;
+    }
+    setFilters((prev) => {
+      const list = prev[key] as string[];
+      const exists = list.includes(value);
+      const updated = exists ? list.filter((item) => item !== value) : [...list, value];
+      return { ...prev, [key]: updated };
+    });
+  }
+
+  function handleClearFilterGroup<K extends keyof FilterState>(key: K) {
+    if (key === "search") {
+      setFilters((prev) => ({ ...prev, search: "" }));
+      return;
+    }
+    setFilters((prev) => ({ ...prev, [key]: [] }));
+  }
+
   function handleFilterChange<K extends keyof FilterState>(key: K, value: FilterState[K]) {
     setFilters((prev) => ({ ...prev, [key]: value }));
   }
 
-  function handleRemoveFilter<K extends keyof FilterState>(key: K) {
-    setFilters((prev) => ({ ...prev, [key]: "" }));
+  function handleRemoveFilter<K extends keyof FilterState>(key: K, value?: string) {
+    if (key === "search" || !value) {
+      setFilters((prev) => ({ ...prev, [key]: key === "search" ? "" : [] }));
+      return;
+    }
+    setFilters((prev) => {
+      const list = prev[key] as string[];
+      return { ...prev, [key]: list.filter((item) => item !== value) };
+    });
   }
 
   function handleResetAll() {
     setFilters({
-      category: "",
-      environment: "",
-      cct: "",
-      wattage: "",
-      voltage: "",
-      diameter: "",
-      length: "",
-      ipRating: "",
-      beamAngle: "",
+      categories: [],
+      environments: [],
+      ccts: [],
+      wattages: [],
+      voltages: [],
+      diameters: [],
+      lengths: [],
+      ipRatings: [],
+      beamAngles: [],
       search: "",
     });
   }
@@ -125,57 +161,85 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
     return counts;
   }, [initialProducts]);
 
-  // Comprehensive multi-field filtering logic
+  // Comprehensive multi-selection filtering logic (OR within facets, AND across facets)
   const filteredProducts = useMemo(() => {
     return initialProducts
       .filter((p) => {
-        // 1. Category
-        if (filters.category && p.category !== filters.category) return false;
+        // 1. Categories (OR within categories)
+        if (filters.categories.length > 0 && !filters.categories.includes(p.category)) {
+          return false;
+        }
 
-        // 2. Environment
-        if (filters.environment && p.environment !== filters.environment) return false;
+        // 2. Environments (OR within environments)
+        if (filters.environments.length > 0 && !filters.environments.includes(p.environment)) {
+          return false;
+        }
 
-        // 3. CCT
-        if (filters.cct && !p.cct.includes(filters.cct)) return false;
-
-        // 4. Ingress Protection (IP Rating)
-        if (filters.ipRating && !p.ipRating.includes(filters.ipRating)) return false;
-
-        // 5. Beam Angle
-        if (filters.beamAngle && !p.beamAngles.some((b) => b.includes(filters.beamAngle))) return false;
-
-        // 6. Wattage match
-        if (filters.wattage) {
-          const wNum = parseInt(filters.wattage);
-          const pWatt = extractNumericPower(p.power);
-          if (pWatt > 0 && Math.abs(pWatt - wNum) > 2) {
-            if (!p.power.toLowerCase().includes(filters.wattage.toLowerCase())) {
-              return false;
+        // 3. CCT (OR within CCTs)
+        if (filters.ccts.length > 0) {
+          const matchCCT = filters.ccts.some((selectedCct) => {
+            if (selectedCct === "Tunable") {
+              return p.cct.some(
+                (c) =>
+                  c.toLowerCase().includes("tunable") ||
+                  c.toLowerCase().includes("rgb") ||
+                  c.toLowerCase().includes("cct")
+              );
             }
-          }
+            return p.cct.some((c) => c.includes(selectedCct));
+          });
+          if (!matchCCT) return false;
         }
 
-        // 7. Input Voltage
-        if (filters.voltage) {
-          if (!p.inputVoltage.toUpperCase().includes(filters.voltage.toUpperCase())) {
-            return false;
-          }
+        // 4. Ingress Protection / IP Rating (OR within IP ratings)
+        if (filters.ipRatings.length > 0) {
+          const matchIp = filters.ipRatings.some((selectedIp) => p.ipRating.includes(selectedIp));
+          if (!matchIp) return false;
         }
 
-        // 8. Diameter / Cutout
-        if (filters.diameter) {
-          if (!p.cutout || !p.cutout.includes(filters.diameter)) {
-            if (!p.dimensions || !p.dimensions.includes(filters.diameter)) {
-              return false;
+        // 5. Beam Angle (OR within beam angles)
+        if (filters.beamAngles.length > 0) {
+          const matchBeam = filters.beamAngles.some((selectedBeam) =>
+            p.beamAngles.some((b) => b.includes(selectedBeam))
+          );
+          if (!matchBeam) return false;
+        }
+
+        // 6. Wattage (OR within wattages)
+        if (filters.wattages.length > 0) {
+          const matchWatt = filters.wattages.some((w) => {
+            const wNum = parseInt(w);
+            const pWatt = extractNumericPower(p.power);
+            if (pWatt > 0 && !isNaN(wNum) && Math.abs(pWatt - wNum) <= 2) {
+              return true;
             }
-          }
+            return p.power.toLowerCase().includes(w.toLowerCase());
+          });
+          if (!matchWatt) return false;
         }
 
-        // 9. Length
-        if (filters.length) {
-          if (!p.dimensions || !p.dimensions.includes(filters.length)) {
+        // 7. Input Voltage (OR within voltages)
+        if (filters.voltages.length > 0) {
+          const matchVolt = filters.voltages.some((v) =>
+            p.inputVoltage.toUpperCase().includes(v.toUpperCase())
+          );
+          if (!matchVolt) return false;
+        }
+
+        // 8. Diameter / Cutout (OR within diameters)
+        if (filters.diameters.length > 0) {
+          const matchDiam = filters.diameters.some((d) => {
+            if (p.cutout && p.cutout.includes(d)) return true;
+            if (p.dimensions && p.dimensions.includes(d)) return true;
             return false;
-          }
+          });
+          if (!matchDiam) return false;
+        }
+
+        // 9. Length (OR within lengths)
+        if (filters.lengths.length > 0) {
+          const matchLen = filters.lengths.some((l) => p.dimensions && p.dimensions.includes(l));
+          if (!matchLen) return false;
         }
 
         // 10. Free-text search
@@ -186,7 +250,10 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
           const matchCat = p.category.toLowerCase().includes(q);
           const matchPower = p.power.toLowerCase().includes(q);
           const matchIp = p.ipRating.toLowerCase().includes(q);
-          const matchPage = `p.${p.catalogPage}`.includes(q) || `page ${p.catalogPage}`.includes(q) || String(p.catalogPage) === q;
+          const matchPage =
+            `p.${p.catalogPage}`.includes(q) ||
+            `page ${p.catalogPage}`.includes(q) ||
+            String(p.catalogPage) === q;
           const matchBeam = p.beamAngles.some((b) => b.toLowerCase().includes(q));
 
           if (!matchModel && !matchSub && !matchCat && !matchPower && !matchIp && !matchPage && !matchBeam) {
@@ -219,13 +286,13 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
       {/* Glassmorphism Header Title Block */}
       <div className="relative mb-8 rounded-2xl border border-border/80 bg-card/60 backdrop-blur-md p-6 sm:p-8 overflow-hidden shadow-xs">
         {/* Soft Ambient Light Beam Accent */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 dark:bg-amber-400/5 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#f4f0e6]/5 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
         
         <div className="relative z-10 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div>
             <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-[0.2em] text-muted-foreground">
               <span className="flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.8)]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[#f4f0e6] shadow-[0_0_6px_rgba(244,240,230,0.6)]" />
                 Pro-Luce
               </span>
               <span>/</span>
@@ -248,7 +315,7 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
                 <Button
                   variant="outline"
                   size="sm"
-                  className="lg:hidden gap-1.5 font-mono text-xs rounded-full"
+                  className="lg:hidden gap-1.5 font-mono text-xs rounded-full cursor-pointer"
                 >
                   <SlidersHorizontal className="h-3.5 w-3.5" />
                   <span>Filters</span>
@@ -263,6 +330,8 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
                 <div className="py-4">
                   <FilterSidebar
                     filters={filters}
+                    onToggleFilter={handleToggleFilter}
+                    onClearFilterGroup={handleClearFilterGroup}
                     onFilterChange={handleFilterChange}
                     onReset={handleResetAll}
                     categoryCounts={categoryCounts}
@@ -279,21 +348,30 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
       <div className="mb-6 flex items-center justify-between gap-4 overflow-x-auto pb-2 border-b border-border/60 no-scrollbar">
         <div className="flex items-center gap-2 shrink-0">
           {QUICK_CATEGORIES.map((qc) => {
-            const isSelected = filters.category === qc.value;
+            const isAll = qc.value === "";
+            const isSelected = isAll
+              ? filters.categories.length === 0
+              : filters.categories.includes(qc.value);
+
             return (
-              <Button
+              <button
                 key={qc.label}
-                variant={isSelected ? "default" : "secondary"}
-                size="xs"
-                onClick={() => handleFilterChange("category", qc.value as ProductCategory)}
-                className={`rounded-full px-4 py-1 text-xs font-mono whitespace-nowrap transition-all duration-200 ${
+                type="button"
+                onClick={() => {
+                  if (isAll) {
+                    handleClearFilterGroup("categories");
+                  } else {
+                    handleToggleFilter("categories", qc.value);
+                  }
+                }}
+                className={`rounded-full px-4 py-1.5 text-xs font-mono whitespace-nowrap transition-all duration-200 cursor-pointer border ${
                   isSelected
-                    ? "shadow-sm"
-                    : "bg-secondary/60 hover:bg-secondary hover:border-border border border-transparent"
+                    ? "filter-pill-selected"
+                    : "filter-pill-unselected"
                 }`}
               >
                 {qc.label}
-              </Button>
+              </button>
             );
           })}
         </div>
@@ -304,7 +382,7 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
             Sort:
           </span>
           <Select value={sortBy} onValueChange={(v) => setSortBy(v as typeof sortBy)}>
-            <SelectTrigger className="h-8 text-xs font-mono w-[180px] rounded-full border-border/80 bg-card/80 backdrop-blur-xs">
+            <SelectTrigger className="h-8 text-xs font-mono w-[180px] rounded-full border-border/80 bg-card/80 backdrop-blur-xs cursor-pointer">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -323,6 +401,8 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
         <div className="hidden lg:block lg:col-span-1 sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pr-2">
           <FilterSidebar
             filters={filters}
+            onToggleFilter={handleToggleFilter}
+            onClearFilterGroup={handleClearFilterGroup}
             onFilterChange={handleFilterChange}
             onReset={handleResetAll}
             categoryCounts={categoryCounts}
@@ -352,7 +432,7 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
                   variant="outline"
                   size="sm"
                   onClick={handleResetAll}
-                  className="mt-2 font-mono text-xs uppercase"
+                  className="mt-2 font-mono text-xs uppercase cursor-pointer"
                 >
                   <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
                   Reset all filters

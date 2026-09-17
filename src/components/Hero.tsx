@@ -122,7 +122,7 @@ export default function Hero({ product }: HeroProps) {
         {/* Soft Ambient Light Beam Behind Text (dims when light is off) */}
         <div
           className={`absolute top-1/2 -translate-y-1/2 left-0 w-72 sm:w-96 h-72 sm:h-96 rounded-full blur-[100px] pointer-events-none -z-10 transition-all duration-700 ${
-            isLightOn ? "bg-amber-500/18 opacity-100 scale-100" : "bg-transparent opacity-0 scale-75"
+            isLightOn ? "bg-[#f4f0e6]/10 opacity-100 scale-100" : "bg-transparent opacity-0 scale-75"
           }`}
         />
 
@@ -133,7 +133,7 @@ export default function Hero({ product }: HeroProps) {
             <span
               className={`h-1.5 w-1.5 rounded-full transition-all duration-500 ${
                 isLightOn
-                  ? "bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.9)] animate-pulse"
+                  ? "bg-[#f4f0e6] shadow-[0_0_8px_rgba(244,240,230,0.8)] animate-pulse"
                   : "bg-neutral-500"
               }`}
             />
@@ -148,7 +148,7 @@ export default function Hero({ product }: HeroProps) {
               Light Sculpted in <br />
               <span className={`italic font-serif transition-colors duration-700 ${
                 isLightOn
-                  ? "bg-gradient-to-r from-white via-amber-100 to-amber-200/90 bg-clip-text text-transparent drop-shadow-sm"
+                  ? "bg-gradient-to-r from-white via-stone-100 to-[#f4f0e6] bg-clip-text text-transparent drop-shadow-sm"
                   : "text-neutral-400"
               }`}>
                 Pure Precision
@@ -167,11 +167,11 @@ export default function Hero({ product }: HeroProps) {
             <Button
               asChild
               size="lg"
-              className="group h-12 rounded-full bg-white text-black hover:bg-neutral-100 font-mono text-xs uppercase tracking-wider px-7 shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+              className="group h-12 rounded-full bg-[#f4f0e6] text-zinc-950 hover:bg-[#eae4d5] font-mono text-xs uppercase tracking-wider px-7 shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 font-semibold"
             >
-              <Link href="/catalogue" className="flex items-center gap-3 font-semibold">
+              <Link href="/catalogue" className="flex items-center gap-3">
                 <span>Explore Catalogue</span>
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-black text-white transition-transform duration-300 group-hover:translate-x-1">
+                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-zinc-950 text-white transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-3 w-3" />
                 </div>
               </Link>
@@ -184,18 +184,18 @@ export default function Hero({ product }: HeroProps) {
                 onClick={handleScheduleToggle}
                 className={`h-12 rounded-full font-mono text-xs uppercase tracking-wider px-7 border hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 backdrop-blur-md ${
                   inSchedule
-                    ? "bg-amber-500 hover:bg-amber-600 text-neutral-950 font-bold border-amber-400 shadow-md shadow-amber-500/10"
+                    ? "bg-emerald-600 hover:bg-emerald-500 text-white font-medium border-emerald-500 shadow-md"
                     : "bg-white/5 text-white border-white/20 hover:bg-white/15 hover:border-white/40"
                 }`}
               >
                 {inSchedule ? (
                   <>
-                    <Check className="mr-2 h-4 w-4 text-neutral-950 stroke-[3]" />
+                    <Check className="mr-2 h-4 w-4 text-white stroke-[3]" />
                     <span>In Spec Schedule</span>
                   </>
                 ) : (
                   <>
-                    <Plus className="mr-2 h-4 w-4 text-amber-400" />
+                    <Plus className="mr-2 h-4 w-4 text-stone-300" />
                     <span>Add to Spec Schedule</span>
                   </>
                 )}
@@ -207,7 +207,7 @@ export default function Hero({ product }: HeroProps) {
                 onClick={() => setIsQuoteOpen(true)}
                 className="h-12 rounded-full font-mono text-xs uppercase tracking-wider px-7 border-white/20 bg-white/5 text-white hover:bg-white/15 hover:border-white/40 backdrop-blur-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
               >
-                <FileText className="mr-2 h-4 w-4 text-amber-400" />
+                <FileText className="mr-2 h-4 w-4 text-stone-300" />
                 <span>Request Project RFQ</span>
               </Button>
             )}
@@ -221,9 +221,9 @@ export default function Hero({ product }: HeroProps) {
         <button
           type="button"
           onClick={toggleLight}
-          className={`flex items-center gap-3 px-4 py-2.5 rounded-full border backdrop-blur-2xl transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 cursor-pointer shadow-2xl ${
+          className={`flex items-center gap-3 px-4 py-2.5 rounded-full border backdrop-blur-2xl transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-300 cursor-pointer shadow-2xl ${
             isLightOn
-              ? "bg-neutral-900/90 border-amber-400/50 text-neutral-100 shadow-amber-500/10"
+              ? "bg-neutral-900/90 border-[#e6dfd1]/50 text-neutral-100 shadow-black/20"
               : "bg-neutral-950/90 border-neutral-700/80 text-neutral-400 hover:border-neutral-500"
           }`}
           aria-label={isLightOn ? "Extinguish luminaire (Switch to dark standby)" : "Illuminate luminaire (Switch to 3000K active beam)"}
@@ -231,7 +231,7 @@ export default function Hero({ product }: HeroProps) {
           <div
             className={`flex h-6 w-6 items-center justify-center rounded-full transition-all duration-300 ${
               isLightOn
-                ? "bg-amber-400 text-neutral-950 shadow-[0_0_10px_rgba(251,191,36,0.8)]"
+                ? "bg-[#f4f0e6] text-zinc-950 shadow-[0_0_10px_rgba(244,240,230,0.6)]"
                 : "bg-neutral-800 text-neutral-400"
             }`}
           >
@@ -242,7 +242,7 @@ export default function Hero({ product }: HeroProps) {
               Luminaire Optic
             </span>
             <span className={`text-xs font-mono font-semibold leading-none mt-1 transition-colors ${
-              isLightOn ? "text-amber-300" : "text-neutral-300"
+              isLightOn ? "text-[#f4f0e6]" : "text-neutral-300"
             }`}>
               {isLightOn ? "Beam Active (3000K)" : "Dark Standby (0 lx)"}
             </span>

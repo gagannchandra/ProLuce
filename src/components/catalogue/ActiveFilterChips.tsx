@@ -7,7 +7,7 @@ import { X, RotateCcw } from "lucide-react";
 
 interface ActiveFilterChipsProps {
   filters: FilterState;
-  onRemoveFilter: <K extends keyof FilterState>(key: K) => void;
+  onRemoveFilter: <K extends keyof FilterState>(key: K, value?: string) => void;
   onResetAll: () => void;
   filteredCount: number;
   totalCount: number;
@@ -20,18 +20,56 @@ export default function ActiveFilterChips({
   filteredCount,
   totalCount,
 }: ActiveFilterChipsProps) {
-  const activeChips: { key: keyof FilterState; label: string; value: string }[] = [];
+  const activeChips: { id: string; key: keyof FilterState; label: string; value: string; rawValue: string }[] = [];
 
-  if (filters.category) activeChips.push({ key: "category", label: "Category", value: filters.category });
-  if (filters.environment) activeChips.push({ key: "environment", label: "Env", value: filters.environment });
-  if (filters.cct) activeChips.push({ key: "cct", label: "CCT", value: filters.cct });
-  if (filters.wattage) activeChips.push({ key: "wattage", label: "Wattage", value: filters.wattage });
-  if (filters.voltage) activeChips.push({ key: "voltage", label: "Voltage", value: filters.voltage });
-  if (filters.diameter) activeChips.push({ key: "diameter", label: "Diameter", value: `Ø${filters.diameter}` });
-  if (filters.length) activeChips.push({ key: "length", label: "Length", value: `${filters.length}mm` });
-  if (filters.ipRating) activeChips.push({ key: "ipRating", label: "IP", value: filters.ipRating });
-  if (filters.beamAngle) activeChips.push({ key: "beamAngle", label: "Beam", value: filters.beamAngle });
-  if (filters.search) activeChips.push({ key: "search", label: "Query", value: `"${filters.search}"` });
+  filters.categories.forEach((cat) => {
+    activeChips.push({ id: `cat-${cat}`, key: "categories", label: "Category", value: cat, rawValue: cat });
+  });
+
+  filters.environments.forEach((env) => {
+    activeChips.push({ id: `env-${env}`, key: "environments", label: "Env", value: env, rawValue: env });
+  });
+
+  filters.ccts.forEach((cct) => {
+    activeChips.push({ id: `cct-${cct}`, key: "ccts", label: "CCT", value: cct, rawValue: cct });
+  });
+
+  filters.ipRatings.forEach((ip) => {
+    activeChips.push({ id: `ip-${ip}`, key: "ipRatings", label: "IP", value: ip, rawValue: ip });
+  });
+
+  filters.beamAngles.forEach((beam) => {
+    activeChips.push({ id: `beam-${beam}`, key: "beamAngles", label: "Beam", value: beam, rawValue: beam });
+  });
+
+  filters.wattages.forEach((w) => {
+    activeChips.push({ id: `watt-${w}`, key: "wattages", label: "Wattage", value: w, rawValue: w });
+  });
+
+  filters.voltages.forEach((v) => {
+    const display = v === "AC" ? "AC 220–240V" : v === "48V" ? "DC 48V" : v === "24V" ? "DC 24V" : v;
+    activeChips.push({ id: `volt-${v}`, key: "voltages", label: "Voltage", value: display, rawValue: v });
+  });
+
+  filters.diameters.forEach((d) => {
+    const display = d === "Customizable" ? "Custom Cutout" : `Ø${d}mm`;
+    activeChips.push({ id: `diam-${d}`, key: "diameters", label: "Cutout", value: display, rawValue: d });
+  });
+
+  filters.lengths.forEach((l) => {
+    const display = l === "Custom" ? "Custom Length" : `${l}mm`;
+    activeChips.push({ id: `len-${l}`, key: "lengths", label: "Length", value: display, rawValue: l });
+  });
+
+  if (filters.search) {
+    activeChips.push({
+      id: "search-q",
+      key: "search",
+      label: "Query",
+      value: `"${filters.search}"`,
+      rawValue: filters.search,
+    });
+  }
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/80 pb-4 mb-6">
@@ -42,17 +80,17 @@ export default function ActiveFilterChips({
 
         {activeChips.map((chip) => (
           <Badge
-            key={chip.key}
+            key={chip.id}
             variant="secondary"
-            className="gap-1.5 py-1 px-3 font-mono text-xs rounded-full border border-border/80 bg-muted/80 text-foreground shadow-2xs hover:border-amber-500/40 transition-colors"
+            className="gap-1.5 py-1 px-3 font-mono text-xs rounded-full border border-border/80 bg-muted/80 text-foreground shadow-2xs hover:border-stone-400 transition-colors"
           >
             <span className="text-muted-foreground text-[10px] uppercase tracking-wider">{chip.label}:</span>
             <span className="text-foreground font-semibold">{chip.value}</span>
             <button
               type="button"
-              onClick={() => onRemoveFilter(chip.key)}
-              className="h-3.5 w-3.5 ml-0.5 inline-flex items-center justify-center text-muted-foreground hover:text-destructive transition-colors rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-500"
-              aria-label={`Remove filter ${chip.label}`}
+              onClick={() => onRemoveFilter(chip.key, chip.rawValue)}
+              className="h-3.5 w-3.5 ml-0.5 inline-flex items-center justify-center text-muted-foreground hover:text-destructive transition-colors rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 cursor-pointer"
+              aria-label={`Remove filter ${chip.label} ${chip.value}`}
             >
               <X className="h-3 w-3" />
             </button>
@@ -64,7 +102,7 @@ export default function ActiveFilterChips({
             variant="ghost"
             size="xs"
             onClick={onResetAll}
-            className="text-destructive hover:text-destructive hover:bg-destructive/10 font-mono text-xs gap-1 rounded-full px-2.5"
+            className="text-destructive hover:text-destructive hover:bg-destructive/10 font-mono text-xs gap-1 rounded-full px-2.5 cursor-pointer"
           >
             <RotateCcw className="h-3 w-3" />
             Reset all

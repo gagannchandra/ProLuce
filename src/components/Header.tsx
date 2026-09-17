@@ -4,8 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/site";
+import BrandLogo from "@/components/BrandLogo";
 import { useSpecSchedule } from "@/context/SpecScheduleContext";
 import CommandPalette from "@/components/CommandPalette";
+import ThemeToggle from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -48,25 +50,17 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full border-b border-border/80 bg-background/85 backdrop-blur-md transition-colors duration-200">
-        <div className="container-site flex h-16 items-center justify-between gap-4">
+      <header className="sticky top-0 z-40 w-full border-b border-border/80 bg-background/90 backdrop-blur-md transition-colors duration-200 text-foreground">
+        <div className="container-site flex h-16 sm:h-[70px] items-center justify-between gap-4">
           
           {/* Brand Logo & Tagline */}
           <div className="flex items-center gap-6">
             <Link
               href="/"
-              className="flex items-center gap-2.5 outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded-sm group transition-transform active:scale-[0.98]"
+              className="flex items-center outline-none focus-visible:ring-2 focus-visible:ring-stone-400 rounded-sm group transition-transform active:scale-[0.98]"
               aria-label={`${siteConfig.name} Home`}
             >
-              <span className="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.9)] transition-transform duration-300 group-hover:scale-125" />
-              <div className="flex flex-col">
-                <span className="text-xl font-medium tracking-[0.18em] uppercase font-display leading-none text-foreground">
-                  {siteConfig.name}
-                </span>
-                <span className="text-[9px] tracking-[0.22em] uppercase font-mono text-muted-foreground hidden sm:block mt-0.5">
-                  {siteConfig.tagline}
-                </span>
-              </div>
+              <BrandLogo size="md" theme="auto" />
             </Link>
           </div>
 
@@ -82,9 +76,9 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   aria-current={active ? "page" : undefined}
-                  className={`relative py-1 text-xs font-mono uppercase tracking-widest transition-colors duration-200 ${
+                  className={`relative py-1.5 text-[13px] sm:text-sm font-mono uppercase tracking-[0.12em] transition-colors duration-200 ${
                     active
-                      ? "text-foreground font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-amber-500"
+                      ? "text-foreground font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-foreground"
                       : "text-muted-foreground hover:text-foreground font-medium"
                   }`}
                 >
@@ -95,7 +89,7 @@ export default function Header() {
           </nav>
 
           {/* Utility Actions */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-2.5">
             
             {/* Search Trigger */}
             <Tooltip>
@@ -105,11 +99,11 @@ export default function Header() {
                   size="sm"
                   onClick={() => setSearchOpen(true)}
                   aria-label="Search luminaires and specifications"
-                  className="rounded-full gap-2 px-3.5 h-9 font-mono text-xs text-muted-foreground hover:text-foreground border-border/80 bg-surface/50 hover:bg-accent"
+                  className="rounded-full gap-2 px-3.5 h-9 sm:h-10 font-mono text-xs sm:text-[13px] text-foreground border-border/80 bg-background/80 hover:bg-accent"
                 >
-                  <Search className="h-3.5 w-3.5 text-muted-foreground" />
-                  <span className="hidden lg:inline text-[11px]">Search</span>
-                  <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[9px] font-mono rounded bg-muted border border-border text-muted-foreground">
+                  <Search className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground" />
+                  <span className="hidden lg:inline">Search</span>
+                  <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono rounded bg-muted border border-border text-muted-foreground">
                     ⌘K
                   </kbd>
                 </Button>
@@ -127,18 +121,18 @@ export default function Header() {
                   size="sm"
                   onClick={openDrawer}
                   aria-label="Open project luminaire schedule"
-                  className={`rounded-full gap-2 px-3.5 h-9 font-mono text-xs transition-all duration-200 ${
+                  className={`rounded-full gap-2 px-3.5 h-9 sm:h-10 font-mono text-xs sm:text-[13px] transition-all duration-200 ${
                     items.length > 0
-                      ? "bg-amber-500 hover:bg-amber-600 text-neutral-950 font-semibold border-none shadow-xs"
-                      : "border-border/80 text-foreground hover:bg-accent"
+                      ? "bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 font-bold border border-[#e6dfd1] shadow-xs"
+                      : "border-border/80 bg-background/80 text-foreground hover:bg-accent"
                   }`}
                 >
-                  <FileSpreadsheet className="h-3.5 w-3.5 text-current" />
-                  <span className="hidden sm:inline text-[11px] uppercase tracking-wider">
+                  <FileSpreadsheet className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-current" />
+                  <span className="hidden sm:inline uppercase tracking-wider">
                     Schedule
                   </span>
                   {items.length > 0 && (
-                    <Badge className="px-1.5 h-4 min-w-[18px] rounded-full text-[9px] font-mono bg-neutral-950 text-amber-400 font-bold border-none">
+                    <Badge className="px-1.5 h-4.5 min-w-[18px] rounded-full text-[11px] font-mono bg-neutral-950 text-[#f4f0e6] font-bold border-none">
                       {items.length}
                     </Badge>
                   )}
@@ -151,13 +145,16 @@ export default function Header() {
               </TooltipContent>
             </Tooltip>
 
+            {/* Theme Toggle Button */}
+            <ThemeToggle />
+
             {/* Mobile Sheet Trigger */}
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="md:hidden rounded-lg h-9 w-9 text-foreground hover:bg-accent"
+                  className="md:hidden rounded-lg h-9 w-9 sm:h-10 sm:w-10 text-muted-foreground hover:text-foreground hover:bg-accent"
                   aria-label="Open navigation menu"
                 >
                   <Menu className="h-5 w-5" />
@@ -165,16 +162,19 @@ export default function Header() {
               </SheetTrigger>
               <SheetContent
                 side="right"
-                className="w-[85vw] max-w-sm p-0 flex flex-col bg-background border-l border-border"
+                className="w-[85vw] max-w-sm p-0 flex flex-col bg-background text-foreground border-l border-border"
               >
-                <SheetHeader className="p-6 text-left border-b border-border bg-muted/20">
-                  <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
-                    <SheetTitle className="text-xl font-display uppercase tracking-widest font-bold">
-                      {siteConfig.name}
-                    </SheetTitle>
-                  </div>
-                  <SheetDescription className="text-[10px] text-muted-foreground uppercase tracking-widest font-mono mt-0.5">
+                <SheetHeader className="p-6 text-center border-b border-border bg-muted/30">
+                  <SheetTitle className="sr-only">{siteConfig.name}</SheetTitle>
+                  <Link
+                    href="/"
+                    onClick={() => setMobileOpen(false)}
+                    className="inline-block outline-none"
+                    aria-label={`${siteConfig.name} Home`}
+                  >
+                    <BrandLogo size="md" theme="auto" />
+                  </Link>
+                  <SheetDescription className="sr-only">
                     {siteConfig.tagline}
                   </SheetDescription>
                 </SheetHeader>
@@ -184,14 +184,14 @@ export default function Header() {
                     <Link
                       href="/"
                       onClick={() => setMobileOpen(false)}
-                      className={`flex items-center justify-between py-3 px-4 rounded-xl text-xs font-mono uppercase tracking-wider transition-colors ${
+                      className={`flex items-center justify-between py-3 px-4 rounded-xl text-sm sm:text-base font-mono uppercase tracking-wider transition-colors ${
                         pathname === "/"
                           ? "bg-accent text-foreground font-bold"
-                          : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+                          : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
                       }`}
                     >
                       <span>Home</span>
-                      <ArrowRight className="h-3.5 w-3.5 opacity-50" />
+                      <ArrowRight className="h-4 w-4 opacity-50" />
                     </Link>
 
                     {NAV_LINKS.map((link) => {
@@ -201,23 +201,26 @@ export default function Header() {
                           key={link.href}
                           href={link.href}
                           onClick={() => setMobileOpen(false)}
-                          className={`flex items-center justify-between py-3 px-4 rounded-xl text-xs font-mono uppercase tracking-wider transition-colors ${
+                          className={`flex items-center justify-between py-3 px-4 rounded-xl text-sm sm:text-base font-mono uppercase tracking-wider transition-colors ${
                             active
                               ? "bg-accent text-foreground font-bold"
-                              : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+                              : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
                           }`}
                         >
                           <span>{link.label}</span>
-                          <ArrowRight className="h-3.5 w-3.5 opacity-50" />
+                          <ArrowRight className="h-4 w-4 opacity-50" />
                         </Link>
                       );
                     })}
                   </nav>
 
                   <div className="flex flex-col gap-3 pt-6 border-t border-border">
+                    {/* Mobile Theme Switcher */}
+                    <ThemeToggle showLabel className="w-full justify-between" />
+
                     <Button
                       variant="outline"
-                      className="justify-between h-11 text-xs font-mono uppercase tracking-wider rounded-xl px-4"
+                      className="justify-between h-11 text-xs sm:text-sm font-mono uppercase tracking-wider rounded-xl px-4 border-border bg-card text-foreground hover:bg-accent"
                       onClick={() => {
                         setMobileOpen(false);
                         setSearchOpen(true);
@@ -227,11 +230,11 @@ export default function Header() {
                         <Search className="h-4 w-4 text-muted-foreground" />
                         Search Catalogue
                       </span>
-                      <kbd className="px-1.5 py-0.5 text-[10px] bg-muted rounded border border-border">⌘K</kbd>
+                      <kbd className="px-1.5 py-0.5 text-[11px] bg-muted text-muted-foreground rounded border border-border">⌘K</kbd>
                     </Button>
 
                     <Button
-                      className="justify-between h-11 text-xs font-mono uppercase tracking-wider rounded-xl px-4 bg-amber-500 hover:bg-amber-600 text-neutral-950 font-bold"
+                      className="justify-between h-11 text-xs sm:text-sm font-mono uppercase tracking-wider rounded-xl px-4 bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 font-bold border border-[#e6dfd1]"
                       onClick={() => {
                         setMobileOpen(false);
                         openDrawer();
@@ -241,7 +244,7 @@ export default function Header() {
                         <FileSpreadsheet className="h-4 w-4" />
                         Project Schedule
                       </span>
-                      <Badge className="font-mono text-[10px] px-2 py-0.5 bg-neutral-950 text-amber-400 font-bold border-none rounded-full">
+                      <Badge className="font-mono text-[11px] px-2 py-0.5 bg-neutral-950 text-[#f4f0e6] font-bold border-none rounded-full">
                         {items.length}
                       </Badge>
                     </Button>

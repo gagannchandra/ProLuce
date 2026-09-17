@@ -19,7 +19,7 @@ export default function BlogIndexPage() {
       <div className="mb-12 max-w-2xl border-b border-border pb-8">
         <div className="inline-flex items-center gap-2 mb-2">
           <Badge variant="outline" className="gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] border-border/80 text-muted-foreground">
-            <BookOpen className="h-3 w-3 text-amber-500" />
+            <BookOpen className="h-3 w-3 text-stone-300" />
             <span>Studio Journal</span>
           </Badge>
         </div>

@@ -233,28 +233,30 @@ export default function SpecScheduleDrawer({ onRequestQuote }: SpecScheduleDrawe
         {items.length > 0 && (
           <SheetFooter className="border-t border-border/80 bg-muted/30 p-6 flex flex-col gap-2.5 sm:flex-col">
             <Button
+              size="lg"
               onClick={() => {
                 closeDrawer();
                 onRequestQuote();
               }}
-              className="w-full font-mono text-xs uppercase tracking-wider h-11 justify-between shadow-sm rounded-full px-5 bg-amber-500 hover:bg-amber-600 text-neutral-950 font-bold border-none"
+              className="w-full font-mono text-xs uppercase tracking-wider h-11 justify-between shadow-sm rounded-full px-5 bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 font-bold border-none"
             >
               <span className="flex items-center gap-2">
                 <FileText className="h-4 w-4" />
-                Request Tender RFQ
+                Request Project Quotation
               </span>
-              <Badge className="font-mono text-[10px] rounded-full px-2.5 bg-neutral-950 text-amber-400 font-bold border-none">
+              <Badge className="font-mono text-[10px] rounded-full px-2.5 bg-neutral-950 text-[#f4f0e6] font-bold border-none">
                 {totalFixturesCount} units
               </Badge>
             </Button>
 
             <Button
               variant="outline"
+              size="sm"
               onClick={exportCsv}
-              className="w-full font-mono text-xs uppercase tracking-wider h-10 gap-2 rounded-full px-5 border-border/80 hover:bg-accent text-foreground"
+              className="w-full font-mono text-xs uppercase tracking-wider h-9 gap-1.5 rounded-full border-border hover:bg-accent"
             >
-              <Download className="h-3.5 w-3.5 text-amber-500" />
-              <span>Export Schedule (.CSV)</span>
+              <Download className="h-3.5 w-3.5 text-stone-300" />
+              Download Spec Schedule (.CSV)
             </Button>
           </SheetFooter>
         )}
