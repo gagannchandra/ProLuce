@@ -39,20 +39,21 @@ export default function Newsletter() {
           Thank you. You are subscribed to technical specification updates.
         </Badge>
       ) : (
-        <form onSubmit={handleSubmit} className="flex w-full max-w-md gap-2">
+        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row w-full max-w-md gap-2.5">
           <label htmlFor="newsletter-email" className="sr-only">
             Professional Email address
           </label>
           <Input
             id="newsletter-email"
             type="email"
+            inputMode="email"
             required
             placeholder="architect@studio.com"
-            className="w-full text-xs sm:text-[13px] font-mono rounded-full px-4 h-10"
+            className="w-full text-xs sm:text-[13px] font-mono rounded-full px-4 h-11 sm:h-10 touch-manipulation"
           />
           <Button
             type="submit"
-            className="shrink-0 font-mono text-xs sm:text-[13px] uppercase tracking-wider px-5 h-10 rounded-full shadow-xs"
+            className="shrink-0 font-mono text-xs sm:text-[13px] uppercase tracking-wider px-6 h-11 sm:h-10 rounded-full shadow-xs touch-manipulation cursor-pointer"
           >
             <Mail className="mr-1.5 h-3.5 w-3.5" />
             Subscribe

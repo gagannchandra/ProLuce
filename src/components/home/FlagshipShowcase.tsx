@@ -69,7 +69,7 @@ export default function FlagshipShowcase() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 lg:mb-16 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-card text-foreground text-xs font-mono uppercase tracking-widest mb-3 shadow-2xs">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-border bg-card text-foreground text-[11px] sm:text-xs font-sans uppercase tracking-[0.18em] font-medium mb-3 shadow-2xs">
               <Sparkles className="w-3.5 h-3.5 text-stone-400" />
               <span>Flagship Architectural Luminaires</span>
             </div>
@@ -84,7 +84,7 @@ export default function FlagshipShowcase() {
           <div className="flex items-center gap-3">
             <Link
               href="/catalogue"
-              className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors group"
+              className="inline-flex items-center gap-2 text-xs font-sans uppercase tracking-[0.14em] font-medium text-muted-foreground hover:text-foreground transition-colors group"
             >
               <span>Explore All {products.length} Luminaires</span>
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -92,34 +92,34 @@ export default function FlagshipShowcase() {
           </div>
         </div>
 
-        {/* Luminaire Selector Ribbon */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 mb-10">
+        {/* Luminaire Selector Ribbon (Swipeable Carousel on Mobile) */}
+        <div className="flex overflow-x-auto no-scrollbar scroll-snap-x gap-2.5 sm:gap-3 mb-8 sm:mb-10 pb-2 sm:pb-0 lg:grid lg:grid-cols-5">
           {flagshipProducts.map((prod) => {
             const isSelected = prod.slug === activeSlug;
             return (
               <button
                 key={prod.id}
                 onClick={() => handleSelectProduct(prod.slug)}
-                className={`relative flex flex-col p-4 rounded-xl text-left transition-all duration-300 border cursor-pointer ${
+                className={`relative shrink-0 w-[160px] sm:w-[200px] lg:w-auto snap-start flex flex-col p-3.5 sm:p-4 rounded-2xl text-left transition-all duration-300 border cursor-pointer touch-manipulation ${
                   isSelected
                     ? "bg-card border-[#e6dfd1] dark:border-[#e6dfd1]/70 shadow-lg shadow-black/5 dark:shadow-black/40 ring-1 ring-[#e6dfd1]/40"
                     : "bg-card/40 border-border hover:bg-card hover:border-border text-muted-foreground"
                 }`}
               >
-                <div className="flex items-center justify-between w-full mb-2">
+                <div className="flex items-center justify-between w-full mb-1.5 sm:mb-2">
                   <span className="text-[10px] font-mono text-muted-foreground uppercase">
                     P.{prod.catalogPage.toString().padStart(2, "0")}
                   </span>
-                  <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${
+                  <span className={`text-[9px] sm:text-[10px] font-mono px-1.5 py-0.5 rounded ${
                     isSelected ? "bg-muted text-foreground font-medium" : "bg-muted/60 text-muted-foreground"
                   }`}>
                     {prod.category}
                   </span>
                 </div>
-                <div className={`text-base font-medium tracking-tight ${isSelected ? "text-foreground" : "text-muted-foreground"}`}>
+                <div className={`text-sm sm:text-base font-medium tracking-tight ${isSelected ? "text-foreground" : "text-muted-foreground"}`}>
                   {prod.model}
                 </div>
-                <div className="text-xs text-muted-foreground mt-1 truncate">
+                <div className="text-xs text-muted-foreground mt-0.5 sm:mt-1 truncate">
                   {prod.power} · {prod.ipRating}
                 </div>
                 {isSelected && (
@@ -132,9 +132,9 @@ export default function FlagshipShowcase() {
 
         {/* Main Flagship Interactive Stage */}
         {currentProduct && (
-          <div className="bg-card border border-border rounded-2xl overflow-hidden backdrop-blur-md grid grid-cols-1 lg:grid-cols-12 shadow-2xl">
+          <div className="bg-card border border-border rounded-3xl overflow-hidden backdrop-blur-md grid grid-cols-1 lg:grid-cols-12 shadow-2xl">
             {/* Left: Product Visual / Dimensional Diagram Canvas */}
-            <div className="lg:col-span-6 p-6 sm:p-10 flex flex-col justify-between relative bg-surface/80 dark:bg-zinc-950/70 border-b lg:border-b-0 lg:border-r border-border">
+            <div className="lg:col-span-6 p-4 sm:p-6 lg:p-10 flex flex-col justify-between relative bg-surface/80 dark:bg-zinc-950/70 border-b lg:border-b-0 lg:border-r border-border">
               {/* Top Bar inside image stage */}
               <div className="flex items-center justify-between z-10">
                 <div className="flex items-center gap-2">
@@ -228,7 +228,7 @@ export default function FlagshipShowcase() {
             </div>
 
             {/* Right: Technical Matrix & Specifier Interactivity */}
-            <div className="lg:col-span-6 p-6 sm:p-10 flex flex-col justify-between">
+            <div className="lg:col-span-6 p-5 sm:p-7 lg:p-10 flex flex-col justify-between">
               <div>
                 {/* Header */}
                 <div className="flex items-start justify-between gap-4 mb-4">

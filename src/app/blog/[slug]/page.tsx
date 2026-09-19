@@ -60,7 +60,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       />
 
       {/* Breadcrumbs */}
-      <nav aria-label="Breadcrumb" className="mb-8 text-xs font-mono text-muted-foreground">
+      <nav aria-label="Breadcrumb" className="mb-8 text-[11px] sm:text-xs font-sans uppercase tracking-[0.18em] text-muted-foreground font-medium">
         <ol className="flex flex-wrap items-center gap-2">
           <li>
             <Link href="/" className="hover:text-foreground transition-colors">
@@ -86,10 +86,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       <div className="mx-auto max-w-3xl">
         <div className="flex items-center gap-3">
-          <Badge variant="secondary" className="font-mono text-[10px] uppercase tracking-wider">
+          <Badge variant="outline" className="font-sans text-[10px] uppercase tracking-[0.18em] font-medium text-muted-foreground border-border/80">
             {post.category}
           </Badge>
-          <span className="flex items-center gap-1.5 text-xs font-mono text-muted-foreground">
+          <span className="flex items-center gap-1.5 text-xs font-sans text-muted-foreground">
             <Calendar className="h-3 w-3" />
             <time dateTime={post.date}>
               {date.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}
@@ -125,13 +125,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <Separator className="mt-12 mb-8" />
 
         <div className="flex items-center justify-between">
-          <Button asChild variant="outline" size="sm" className="font-mono text-xs uppercase tracking-wider gap-2">
+          <Button asChild variant="outline" size="sm" className="font-sans text-xs uppercase tracking-[0.14em] font-medium rounded-full px-5 gap-2 border-border/80 hover:bg-accent">
             <Link href="/blog">
               <ArrowLeft className="h-3.5 w-3.5" />
               <span>Back to Journal</span>
             </Link>
           </Button>
-          <Button asChild size="sm" className="font-mono text-xs uppercase tracking-wider">
+          <Button asChild size="sm" className="font-sans text-xs uppercase tracking-[0.14em] font-medium rounded-full px-5 bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 font-bold border-none">
             <Link href="/catalogue">
               Explore Luminaires
             </Link>

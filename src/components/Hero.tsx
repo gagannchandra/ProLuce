@@ -113,12 +113,13 @@ export default function Hero({ product }: HeroProps) {
           </div>
         )}
 
-        {/* Soft atmospheric radial gradient on left edge for text readability */}
-        <div className="hidden lg:block absolute inset-y-0 left-0 w-[45%] bg-gradient-to-r from-black via-black/85 to-transparent pointer-events-none z-[1]" />
+        {/* Soft atmospheric gradient for text readability across mobile and desktop */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/65 to-black/90 lg:hidden pointer-events-none z-[1]" />
+        <div className="hidden lg:block absolute inset-y-0 left-0 w-[48%] bg-gradient-to-r from-black via-black/90 to-transparent pointer-events-none z-[1]" />
       </div>
 
       {/* 2. Streamlined Architectural Content Overlay */}
-      <div className="container-site relative z-10 py-12 lg:py-16 w-full flex items-center">
+      <div className="container-site relative z-10 py-10 sm:py-12 lg:py-16 w-full flex items-center">
         {/* Soft Ambient Light Beam Behind Text (dims when light is off) */}
         <div
           className={`absolute top-1/2 -translate-y-1/2 left-0 w-72 sm:w-96 h-72 sm:h-96 rounded-full blur-[100px] pointer-events-none -z-10 transition-all duration-700 ${
@@ -126,10 +127,10 @@ export default function Hero({ product }: HeroProps) {
           }`}
         />
 
-        <div className="w-full max-w-xl lg:max-w-2xl xl:max-w-[620px] space-y-6">
+        <div className="w-full max-w-xl lg:max-w-2xl xl:max-w-[620px] space-y-5 sm:space-y-6">
           
           {/* Subtle Eyebrow Badge with Live Luminaire Status */}
-          <div className="animate-hero-badge inline-flex items-center gap-2 rounded-full border border-neutral-700/60 bg-neutral-900/70 backdrop-blur-md px-3.5 py-1">
+          <div className="animate-hero-badge inline-flex items-center gap-2 rounded-full border border-neutral-700/60 bg-neutral-900/80 backdrop-blur-md px-3 sm:px-3.5 py-1">
             <span
               className={`h-1.5 w-1.5 rounded-full transition-all duration-500 ${
                 isLightOn
@@ -137,15 +138,15 @@ export default function Hero({ product }: HeroProps) {
                   : "bg-neutral-500"
               }`}
             />
-            <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-neutral-300 font-medium">
+            <span className="text-[11px] sm:text-xs font-sans uppercase tracking-[0.18em] text-neutral-300 font-medium">
               {isLightOn ? "Architectural Optic · 3000K Active" : "Optic Standby · Dark Mode"}
             </span>
           </div>
 
           {/* Clean Display Headline */}
           <div className="animate-hero-title">
-            <h1 className="text-5xl sm:text-6xl lg:text-[66px] font-normal tracking-tight text-white font-display leading-[1.03]">
-              Light Sculpted in <br />
+            <h1 className="text-[36px] sm:text-5xl lg:text-[66px] font-normal tracking-tight text-white font-display leading-[1.05]">
+              Light Sculpted in <br className="hidden xs:inline" />
               <span className={`italic font-serif transition-colors duration-700 ${
                 isLightOn
                   ? "bg-gradient-to-r from-white via-stone-100 to-[#f4f0e6] bg-clip-text text-transparent drop-shadow-sm"
@@ -158,20 +159,20 @@ export default function Hero({ product }: HeroProps) {
           </div>
 
           {/* Clean Subhead */}
-          <p className="animate-hero-desc text-base sm:text-lg text-neutral-300/90 font-light leading-relaxed font-sans max-w-lg">
+          <p className="animate-hero-desc text-sm sm:text-base lg:text-lg text-neutral-300 font-light leading-relaxed font-sans max-w-lg">
             Precision-milled architectural luminaires engineered with micro-faceted TIR optics, deep glare suppression, and continuous dimming intelligence.
           </p>
 
           {/* Clean Action Buttons */}
-          <div className="animate-hero-cta flex flex-wrap items-center gap-4 pt-3">
+          <div className="animate-hero-cta flex flex-wrap items-center gap-3 sm:gap-4 pt-2 sm:pt-3">
             <Button
               asChild
               size="lg"
-              className="group h-12 rounded-full bg-[#f4f0e6] text-zinc-950 hover:bg-[#eae4d5] font-mono text-xs uppercase tracking-wider px-7 shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 font-semibold"
+              className="group h-11 sm:h-12 rounded-full bg-[#f4f0e6] text-zinc-950 hover:bg-[#eae4d5] font-mono text-xs uppercase tracking-wider px-6 sm:px-7 shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 font-semibold touch-manipulation"
             >
-              <Link href="/catalogue" className="flex items-center gap-3">
+              <Link href="/catalogue" className="flex items-center gap-2.5 sm:gap-3">
                 <span>Explore Catalogue</span>
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-zinc-950 text-white transition-transform duration-300 group-hover:translate-x-1">
+                <div className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-full bg-zinc-950 text-white transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-3 w-3" />
                 </div>
               </Link>
@@ -182,7 +183,7 @@ export default function Hero({ product }: HeroProps) {
                 variant={inSchedule ? "secondary" : "outline"}
                 size="lg"
                 onClick={handleScheduleToggle}
-                className={`h-12 rounded-full font-mono text-xs uppercase tracking-wider px-7 border hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 backdrop-blur-md ${
+                className={`h-11 sm:h-12 rounded-full font-mono text-xs uppercase tracking-wider px-5 sm:px-7 border hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 backdrop-blur-md touch-manipulation ${
                   inSchedule
                     ? "bg-emerald-600 hover:bg-emerald-500 text-white font-medium border-emerald-500 shadow-md"
                     : "bg-white/5 text-white border-white/20 hover:bg-white/15 hover:border-white/40"
@@ -196,7 +197,7 @@ export default function Hero({ product }: HeroProps) {
                 ) : (
                   <>
                     <Plus className="mr-2 h-4 w-4 text-stone-300" />
-                    <span>Add to Spec Schedule</span>
+                    <span>Add to Schedule</span>
                   </>
                 )}
               </Button>
@@ -205,7 +206,7 @@ export default function Hero({ product }: HeroProps) {
                 variant="outline"
                 size="lg"
                 onClick={() => setIsQuoteOpen(true)}
-                className="h-12 rounded-full font-mono text-xs uppercase tracking-wider px-7 border-white/20 bg-white/5 text-white hover:bg-white/15 hover:border-white/40 backdrop-blur-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                className="h-11 sm:h-12 rounded-full font-mono text-xs uppercase tracking-wider px-5 sm:px-7 border-white/20 bg-white/5 text-white hover:bg-white/15 hover:border-white/40 backdrop-blur-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 touch-manipulation"
               >
                 <FileText className="mr-2 h-4 w-4 text-stone-300" />
                 <span>Request Project RFQ</span>
@@ -217,11 +218,11 @@ export default function Hero({ product }: HeroProps) {
       </div>
 
       {/* Tactile Stage Luminaire Optic Switcher (Bottom Right HUD) */}
-      <div className="flex absolute bottom-6 right-6 sm:bottom-8 sm:right-10 z-20 items-center">
+      <div className="flex absolute bottom-4 right-4 sm:bottom-8 sm:right-10 z-20 items-center">
         <button
           type="button"
           onClick={toggleLight}
-          className={`flex items-center gap-3 px-4 py-2.5 rounded-full border backdrop-blur-2xl transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-300 cursor-pointer shadow-2xl ${
+          className={`flex items-center gap-2.5 sm:gap-3 px-3 py-2 sm:px-4 sm:py-2.5 rounded-full border backdrop-blur-2xl transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-300 cursor-pointer shadow-2xl touch-manipulation ${
             isLightOn
               ? "bg-neutral-900/90 border-[#e6dfd1]/50 text-neutral-100 shadow-black/20"
               : "bg-neutral-950/90 border-neutral-700/80 text-neutral-400 hover:border-neutral-500"
@@ -229,7 +230,7 @@ export default function Hero({ product }: HeroProps) {
           aria-label={isLightOn ? "Extinguish luminaire (Switch to dark standby)" : "Illuminate luminaire (Switch to 3000K active beam)"}
         >
           <div
-            className={`flex h-6 w-6 items-center justify-center rounded-full transition-all duration-300 ${
+            className={`flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-full transition-all duration-300 ${
               isLightOn
                 ? "bg-[#f4f0e6] text-zinc-950 shadow-[0_0_10px_rgba(244,240,230,0.6)]"
                 : "bg-neutral-800 text-neutral-400"
@@ -238,13 +239,13 @@ export default function Hero({ product }: HeroProps) {
             <Power className="h-3 w-3" />
           </div>
           <div className="flex flex-col text-left">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 leading-none">
+            <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-neutral-400 leading-none">
               Luminaire Optic
             </span>
-            <span className={`text-xs font-mono font-semibold leading-none mt-1 transition-colors ${
+            <span className={`text-[11px] sm:text-xs font-mono font-semibold leading-none mt-0.5 sm:mt-1 transition-colors ${
               isLightOn ? "text-[#f4f0e6]" : "text-neutral-300"
             }`}>
-              {isLightOn ? "Beam Active (3000K)" : "Dark Standby (0 lx)"}
+              {isLightOn ? "3000K Active" : "Dark Standby"}
             </span>
           </div>
         </button>

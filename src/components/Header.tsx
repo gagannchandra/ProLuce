@@ -76,7 +76,7 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   aria-current={active ? "page" : undefined}
-                  className={`relative py-1.5 text-[13px] sm:text-sm font-mono uppercase tracking-[0.12em] transition-colors duration-200 ${
+                  className={`relative py-1.5 text-[12px] sm:text-[13px] font-sans uppercase tracking-[0.14em] transition-colors duration-200 ${
                     active
                       ? "text-foreground font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-foreground"
                       : "text-muted-foreground hover:text-foreground font-medium"
@@ -184,9 +184,9 @@ export default function Header() {
                     <Link
                       href="/"
                       onClick={() => setMobileOpen(false)}
-                      className={`flex items-center justify-between py-3 px-4 rounded-xl text-sm sm:text-base font-mono uppercase tracking-wider transition-colors ${
+                      className={`flex items-center justify-between py-3 px-4 rounded-xl text-xs sm:text-sm font-sans uppercase tracking-[0.14em] font-medium transition-colors ${
                         pathname === "/"
-                          ? "bg-accent text-foreground font-bold"
+                          ? "bg-accent text-foreground font-semibold"
                           : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
                       }`}
                     >
@@ -201,9 +201,9 @@ export default function Header() {
                           key={link.href}
                           href={link.href}
                           onClick={() => setMobileOpen(false)}
-                          className={`flex items-center justify-between py-3 px-4 rounded-xl text-sm sm:text-base font-mono uppercase tracking-wider transition-colors ${
+                          className={`flex items-center justify-between py-3 px-4 rounded-xl text-xs sm:text-sm font-sans uppercase tracking-[0.14em] font-medium transition-colors ${
                             active
-                              ? "bg-accent text-foreground font-bold"
+                              ? "bg-accent text-foreground font-semibold"
                               : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
                           }`}
                         >
@@ -216,11 +216,11 @@ export default function Header() {
 
                   <div className="flex flex-col gap-3 pt-6 border-t border-border">
                     {/* Mobile Theme Switcher */}
-                    <ThemeToggle showLabel className="w-full justify-between" />
+                    <ThemeToggle showLabel className="w-full justify-between font-sans uppercase tracking-[0.14em] text-xs font-medium" />
 
                     <Button
                       variant="outline"
-                      className="justify-between h-11 text-xs sm:text-sm font-mono uppercase tracking-wider rounded-xl px-4 border-border bg-card text-foreground hover:bg-accent"
+                      className="justify-between h-11 text-xs font-sans uppercase tracking-[0.14em] font-medium rounded-xl px-4 border-border bg-card text-foreground hover:bg-accent"
                       onClick={() => {
                         setMobileOpen(false);
                         setSearchOpen(true);
@@ -230,11 +230,11 @@ export default function Header() {
                         <Search className="h-4 w-4 text-muted-foreground" />
                         Search Catalogue
                       </span>
-                      <kbd className="px-1.5 py-0.5 text-[11px] bg-muted text-muted-foreground rounded border border-border">⌘K</kbd>
+                      <kbd className="px-1.5 py-0.5 text-[11px] font-mono bg-muted text-muted-foreground rounded border border-border">⌘K</kbd>
                     </Button>
 
                     <Button
-                      className="justify-between h-11 text-xs sm:text-sm font-mono uppercase tracking-wider rounded-xl px-4 bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 font-bold border border-[#e6dfd1]"
+                      className="justify-between h-11 text-xs font-sans uppercase tracking-[0.14em] font-bold rounded-xl px-4 bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 border border-[#e6dfd1]"
                       onClick={() => {
                         setMobileOpen(false);
                         openDrawer();

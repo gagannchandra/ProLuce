@@ -146,7 +146,7 @@ export default function PhotometricLab() {
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1 text-foreground shadow-2xs">
               <Sparkles className="h-3.5 w-3.5 text-stone-400" />
-              <span className="text-[11px] font-mono uppercase tracking-[0.2em] font-semibold">
+              <span className="text-[11px] sm:text-xs font-sans uppercase tracking-[0.18em] font-medium">
                 Pro-Luce Optical Engineering
               </span>
             </div>
@@ -178,18 +178,18 @@ export default function PhotometricLab() {
           <div className="lg:col-span-5 space-y-6">
             
             {/* 1. Beam Angle Selector */}
-            <Card className="p-5 bg-card border-border backdrop-blur-md rounded-2xl shadow-xl">
+            <Card className="p-4 sm:p-5 bg-card border-border backdrop-blur-md rounded-2xl shadow-xl">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground font-semibold flex items-center gap-2">
-                  <Sliders className="h-3.5 w-3.5 text-stone-400" />
-                  Select Optical Distribution
+                <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground font-semibold flex items-center gap-1.5">
+                  <Sliders className="h-3.5 w-3.5 text-stone-400 shrink-0" />
+                  <span className="truncate">Optical Distribution</span>
                 </span>
-                <span className="text-xs font-mono font-bold text-foreground">
+                <span className="text-xs font-mono font-bold text-foreground shrink-0">
                   {selectedBeam.angle} · {selectedBeam.label}
                 </span>
               </div>
 
-              <div className="grid grid-cols-5 gap-2">
+              <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
                 {BEAMS.map((b) => {
                   const isSelected = selectedBeam.angle === b.angle;
                   return (
@@ -197,7 +197,7 @@ export default function PhotometricLab() {
                       key={b.angle}
                       type="button"
                       onClick={() => setSelectedBeam(b)}
-                      className={`flex flex-col items-center justify-center p-2.5 rounded-xl border font-mono transition-all duration-200 cursor-pointer ${
+                      className={`flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-xl border font-mono transition-all duration-200 cursor-pointer touch-manipulation ${
                         isSelected
                           ? "bg-[#f4f0e6] border-[#e6dfd1] text-zinc-950 font-bold shadow-md scale-[1.02]"
                           : "bg-surface/80 dark:bg-zinc-800/60 border-border text-foreground hover:border-stone-400 hover:bg-muted"
@@ -206,15 +206,15 @@ export default function PhotometricLab() {
                       <BeamAngleIcon
                         angle={b.angleNumber}
                         isSelected={isSelected}
-                        className="h-5 w-5 mb-1"
+                        className="h-4 w-4 sm:h-5 sm:w-5 mb-0.5 sm:mb-1 shrink-0"
                       />
-                      <span className="text-xs">{b.angle}</span>
+                      <span className="text-[11px] sm:text-xs font-bold">{b.angle}</span>
                     </button>
                   );
                 })}
               </div>
 
-              <div className="mt-4 pt-3 border-t border-border/80 text-xs text-muted-foreground leading-relaxed font-sans">
+              <div className="mt-3.5 pt-2.5 border-t border-border/80 text-xs text-muted-foreground leading-relaxed font-sans">
                 <strong className="text-foreground font-medium">Application:</strong> {selectedBeam.application}
               </div>
             </Card>
@@ -452,41 +452,41 @@ export default function PhotometricLab() {
               </div>
 
               {/* Real-time Photometric Metrics Summary Bar */}
-              <div className="w-full grid grid-cols-3 gap-3 mt-6 pt-5 border-t border-zinc-800">
-                <div className="text-center p-3 rounded-xl bg-zinc-950/70 border border-zinc-800/80">
-                  <div className="text-[10px] font-mono uppercase text-zinc-400">Calculated Lux (E)</div>
-                  <div className="text-lg sm:text-xl font-mono font-bold text-[#f4f0e6] mt-0.5">
+              <div className="w-full grid grid-cols-3 gap-2 sm:gap-3 mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-zinc-800">
+                <div className="text-center p-2 sm:p-3 rounded-xl bg-zinc-950/70 border border-zinc-800/80">
+                  <div className="text-[9px] sm:text-[10px] font-mono uppercase text-zinc-400">Calculated Lux</div>
+                  <div className="text-sm sm:text-lg md:text-xl font-mono font-bold text-[#f4f0e6] mt-0.5">
                     {floorLux.toLocaleString()} lx
                   </div>
-                  <div className="text-[9px] text-zinc-400 font-mono">Floor Level Center</div>
+                  <div className="text-[8px] sm:text-[9px] text-zinc-400 font-mono hidden xs:block">Floor Center</div>
                 </div>
 
-                <div className="text-center p-3 rounded-xl bg-zinc-950/70 border border-zinc-800/80">
-                  <div className="text-[10px] font-mono uppercase text-zinc-400">Beam Diameter</div>
-                  <div className="text-lg sm:text-xl font-mono font-bold text-zinc-100 mt-0.5">
-                    Ø {beamDiameter} m
+                <div className="text-center p-2 sm:p-3 rounded-xl bg-zinc-950/70 border border-zinc-800/80">
+                  <div className="text-[9px] sm:text-[10px] font-mono uppercase text-zinc-400">Beam Spread</div>
+                  <div className="text-sm sm:text-lg md:text-xl font-mono font-bold text-zinc-100 mt-0.5">
+                    Ø {beamDiameter}m
                   </div>
-                  <div className="text-[9px] text-zinc-400 font-mono">at {ceilingHeight.toFixed(1)}m height</div>
+                  <div className="text-[8px] sm:text-[9px] text-zinc-400 font-mono hidden xs:block">at {ceilingHeight.toFixed(1)}m H</div>
                 </div>
 
-                <div className="text-center p-3 rounded-xl bg-zinc-950/70 border border-zinc-800/80">
-                  <div className="text-[10px] font-mono uppercase text-zinc-400">Glare Rating</div>
-                  <div className="text-lg sm:text-xl font-mono font-bold text-emerald-400 mt-0.5">
+                <div className="text-center p-2 sm:p-3 rounded-xl bg-zinc-950/70 border border-zinc-800/80">
+                  <div className="text-[9px] sm:text-[10px] font-mono uppercase text-zinc-400">Glare Rating</div>
+                  <div className="text-sm sm:text-lg md:text-xl font-mono font-bold text-emerald-400 mt-0.5">
                     UGR &lt; 13
                   </div>
-                  <div className="text-[9px] text-zinc-400 font-mono">Deep Glare Cutoff</div>
+                  <div className="text-[8px] sm:text-[9px] text-zinc-400 font-mono hidden xs:block">Dark-Light</div>
                 </div>
               </div>
 
               {/* Engineering Standard Validation Footer */}
-              <div className="w-full flex items-center justify-between text-[11px] font-mono text-zinc-400 mt-4 px-1">
+              <div className="w-full flex flex-col xs:flex-row items-center justify-between gap-2 text-[10px] sm:text-[11px] font-mono text-zinc-400 mt-4 px-1 text-center xs:text-left">
                 <span className="flex items-center gap-1">
-                  <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+                  <ShieldCheck className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
                   IEC 62722 Photometric Validated
                 </span>
                 <span className="flex items-center gap-1">
-                  <Eye className="h-3.5 w-3.5 text-stone-300" />
-                  RG0 Zero Photobiological Risk
+                  <Eye className="h-3.5 w-3.5 text-stone-300 shrink-0" />
+                  RG0 Zero Risk
                 </span>
               </div>
 

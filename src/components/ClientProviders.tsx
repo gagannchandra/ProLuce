@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import { SpecScheduleProvider } from "@/context/SpecScheduleContext";
 import SpecScheduleDrawer from "@/components/schedule/SpecScheduleDrawer";
 import QuoteModal from "@/components/product/QuoteModal";
+import MobileNavigationDock from "@/components/mobile/MobileNavigationDock";
 
 export default function ClientProviders({ children }: { children: React.ReactNode }) {
   const [scheduleQuoteOpen, setScheduleQuoteOpen] = useState(false);
@@ -13,6 +14,7 @@ export default function ClientProviders({ children }: { children: React.ReactNod
     <ThemeProvider>
       <SpecScheduleProvider>
         {children}
+        <MobileNavigationDock />
         <SpecScheduleDrawer onRequestQuote={() => setScheduleQuoteOpen(true)} />
         <QuoteModal
           isOpen={scheduleQuoteOpen}

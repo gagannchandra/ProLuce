@@ -57,7 +57,7 @@ export default function ContactForm() {
                 autoComplete="name"
                 required
                 placeholder="e.g. Alessandro Moretti"
-                className="text-xs"
+                className="text-xs h-10 touch-manipulation"
               />
             </div>
 
@@ -69,10 +69,11 @@ export default function ContactForm() {
                 id="email"
                 name="email"
                 type="email"
+                inputMode="email"
                 autoComplete="email"
                 required
                 placeholder="architect@studio.com"
-                className="text-xs"
+                className="text-xs h-10 touch-manipulation"
               />
             </div>
           </div>
@@ -86,7 +87,7 @@ export default function ContactForm() {
               name="subject"
               type="text"
               placeholder="e.g. Specification Inquiry - Milan Galleria Project"
-              className="text-xs"
+              className="text-xs h-10 touch-manipulation"
             />
           </div>
 
@@ -100,13 +101,13 @@ export default function ContactForm() {
               required
               rows={5}
               placeholder="Describe luminaire quantities, ceiling mounting details, DALI-2 dimming needs, or photometric calculation requests..."
-              className="text-xs resize-none rounded-2xl p-4"
+              className="text-xs resize-none rounded-2xl p-4 touch-manipulation"
             />
           </div>
 
           <Button
             type="submit"
-            className="mt-2 w-fit font-mono text-xs uppercase tracking-widest px-8 h-11 gap-2 shadow-sm rounded-full"
+            className="mt-2 w-full sm:w-fit font-mono text-xs uppercase tracking-widest px-8 h-11 gap-2 shadow-sm rounded-full touch-manipulation cursor-pointer"
           >
             <Send className="h-3.5 w-3.5" />
             <span>Send Message</span>

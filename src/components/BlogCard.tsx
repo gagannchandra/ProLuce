@@ -34,7 +34,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
 
       <CardHeader className="p-6 pb-2">
         <div className="flex items-center justify-between">
-          <Badge variant="outline" className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground border-border/80">
+          <Badge variant="outline" className="font-sans text-[10px] uppercase tracking-[0.18em] font-medium text-muted-foreground border-border/80">
             {post.category}
           </Badge>
         </div>
@@ -50,7 +50,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
           {post.excerpt}
         </p>
 
-        <Button asChild variant="outline" size="sm" className="w-fit font-mono text-xs uppercase tracking-wider rounded-full px-4 h-8 gap-1.5 group/btn border-border/80 hover:border-[#e6dfd1]/40 hover:bg-accent transition-all">
+        <Button asChild variant="outline" size="sm" className="w-fit font-sans text-xs uppercase tracking-[0.14em] font-medium rounded-full px-4 h-8 gap-1.5 group/btn border-border/80 hover:border-[#e6dfd1]/40 hover:bg-accent transition-all">
           <Link href={`/blog/${post.slug}`}>
             <span>Read Architectural Note</span>
             <ArrowRight className="h-3.5 w-3.5 opacity-70 transition-transform group-hover/btn:translate-x-1" />

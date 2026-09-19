@@ -65,7 +65,7 @@ export default function ProductCard({ product, onOpenQuote }: ProductCardProps) 
 
           {/* Schematics Peek Indicator on hover */}
           {product.dimensionDiagram && (
-            <div className="absolute bottom-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <div className="absolute bottom-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hidden sm:block">
               <Badge variant="secondary" className="font-mono text-[9px] bg-foreground text-background gap-1 rounded-full px-2.5 py-0.5 shadow-sm">
                 <Layers className="h-3 w-3" />
                 <span>CAD View</span>
@@ -84,7 +84,7 @@ export default function ProductCard({ product, onOpenQuote }: ProductCardProps) 
               </span>
             </div>
 
-            <Link href={`/products/${product.slug}`} className="block mt-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 rounded-xs">
+            <Link href={`/products/${product.slug}`} className="block mt-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 rounded-xs touch-manipulation">
               <h3
                 style={{ viewTransitionName: `product-title-${product.slug}` } as React.CSSProperties}
                 className="font-display text-xl font-normal tracking-tight text-foreground group-hover:text-primary dark:group-hover:text-[#f4f0e6] transition-colors duration-200"
@@ -132,10 +132,10 @@ export default function ProductCard({ product, onOpenQuote }: ProductCardProps) 
                       addItem(product);
                     }
                   }}
-                  className={`font-mono text-[11px] h-8 px-3 rounded-full transition-all duration-200 ${
+                  className={`font-mono text-[11px] h-8 px-3.5 rounded-full transition-all duration-200 touch-manipulation cursor-pointer ${
                     inSchedule
                       ? "bg-emerald-600 hover:bg-emerald-500 text-white font-semibold border-none shadow-xs"
-                      : "bg-[#f4f0e6] hover:bg-[#eae4d5] text-zinc-950 font-semibold border-none shadow-xs"
+                      : "border-border/90 text-foreground hover:bg-accent font-medium shadow-2xs"
                   }`}
                   aria-label={inSchedule ? `Remove ${product.model} from schedule` : `Add ${product.model} to schedule`}
                 >
@@ -156,10 +156,10 @@ export default function ProductCard({ product, onOpenQuote }: ProductCardProps) 
             </Tooltip>
 
             <div className="flex items-center gap-1.5">
-              <Button asChild variant="ghost" size="sm" className="font-mono text-xs uppercase tracking-wider h-8 px-3 rounded-full text-foreground hidden sm:inline-flex hover:bg-accent">
-                <Link href={`/products/${product.slug}`}>
-                  <span>Spec</span>
-                  <ArrowRight className="ml-1 h-3 w-3 opacity-70 group-hover:translate-x-0.5 transition-transform" />
+              <Button asChild variant="ghost" size="sm" className="font-mono text-xs uppercase tracking-wider h-8 px-3 rounded-full text-foreground hover:bg-accent touch-manipulation">
+                <Link href={`/products/${product.slug}`} aria-label={`View specs for ${product.model}`}>
+                  <span className="hidden sm:inline">Spec</span>
+                  <ArrowRight className="h-3.5 w-3.5 opacity-70 group-hover:translate-x-0.5 transition-transform" />
                 </Link>
               </Button>
 
@@ -168,7 +168,7 @@ export default function ProductCard({ product, onOpenQuote }: ProductCardProps) 
                   variant="outline"
                   size="sm"
                   onClick={() => onOpenQuote(product)}
-                  className="font-mono text-[11px] uppercase tracking-wider h-8 px-3 rounded-full border-border hover:border-foreground/30"
+                  className="font-mono text-[11px] uppercase tracking-wider h-8 px-3 rounded-full border-border hover:border-foreground/30 touch-manipulation cursor-pointer"
                 >
                   <FileText className="mr-1 h-3 w-3 text-stone-300" />
                   RFQ

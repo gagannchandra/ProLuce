@@ -7,12 +7,12 @@ import { Badge } from "@/components/ui/badge";
 
 export default function Footer() {
   return (
-    <footer className="mt-24 border-t border-border bg-surface">
-      <div className="container-site py-16">
+    <footer className="mt-20 sm:mt-24 border-t border-border bg-surface pb-28 md:pb-0">
+      <div className="container-site py-12 sm:py-16">
         <Newsletter />
 
-        <div className="mt-14 grid grid-cols-2 gap-10 md:grid-cols-5">
-          <div className="col-span-2">
+        <div className="mt-12 sm:mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 sm:gap-10">
+          <div className="sm:col-span-2">
             <Link
               href="/"
               className="inline-block outline-none focus-visible:ring-2 focus-visible:ring-stone-400 rounded-sm"
@@ -40,10 +40,10 @@ export default function Footer() {
           <FooterColumn title="Studio & Company" links={footerNav.company} />
         </div>
 
-        <Separator className="mt-12 mb-6 bg-border" />
+        <Separator className="mt-10 sm:mt-12 mb-6 bg-border" />
 
         <div className="flex flex-col items-center justify-between gap-4 text-xs sm:text-[13px] text-muted-foreground lg:flex-row font-mono">
-          <p>
+          <p className="text-center sm:text-left">
             &copy; {new Date().getFullYear()} {siteConfig.name} &bull; {siteConfig.tagline}. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center justify-center lg:justify-end gap-x-6 gap-y-2 text-center lg:text-right">

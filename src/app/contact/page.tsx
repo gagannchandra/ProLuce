@@ -29,7 +29,7 @@ export default function ContactPage() {
 
       <div className="max-w-2xl border-b border-border pb-8">
         <div className="inline-flex items-center gap-2 mb-2">
-          <Badge variant="outline" className="gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] border-border/80 text-muted-foreground">
+          <Badge variant="outline" className="gap-1.5 font-sans text-[11px] uppercase tracking-[0.18em] font-medium border-border/80 text-muted-foreground">
             <Building2 className="h-3 w-3 text-stone-300" />
             <span>Commercial Project Inquiries</span>
           </Badge>

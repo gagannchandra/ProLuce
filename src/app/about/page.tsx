@@ -43,7 +43,7 @@ export default function AboutPage() {
         
         {/* Header Section */}
         <div className="max-w-3xl space-y-4 border-b border-border pb-10">
-          <Badge variant="outline" className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground border-border/80">
+          <Badge variant="outline" className="font-sans text-[11px] uppercase tracking-[0.18em] font-medium text-muted-foreground border-border/80">
             Studio & Engineering Philosophy
           </Badge>
           <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-light tracking-tight text-foreground font-display leading-[1.06]">

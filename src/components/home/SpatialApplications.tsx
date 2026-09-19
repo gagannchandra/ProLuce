@@ -207,7 +207,7 @@ export default function SpatialApplications() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-card text-foreground text-xs font-mono uppercase tracking-widest mb-3 shadow-2xs">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-border bg-card text-foreground text-[11px] sm:text-xs font-sans uppercase tracking-[0.18em] font-medium mb-3 shadow-2xs">
               <Compass className="w-3.5 h-3.5 text-stone-400" />
               <span>Spatial Applications & Case Studies</span>
             </div>
@@ -219,8 +219,8 @@ export default function SpatialApplications() {
             </p>
           </div>
 
-          {/* Typology Navigation Buttons */}
-          <div className="flex flex-wrap gap-2 p-1.5 rounded-xl bg-card border border-border shadow-2xs">
+          {/* Typology Navigation Buttons (Scroll-snap on Mobile) */}
+          <div className="flex overflow-x-auto no-scrollbar scroll-snap-x gap-2 p-1.5 rounded-xl bg-card border border-border shadow-2xs">
             {PROJECTS.map((proj) => {
               const Icon = proj.icon;
               const isActive = proj.id === activeTab;
@@ -228,13 +228,13 @@ export default function SpatialApplications() {
                 <button
                   key={proj.id}
                   onClick={() => handleTabChange(proj.id)}
-                  className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-mono transition-all duration-200 cursor-pointer ${
+                  className={`shrink-0 snap-start flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-mono transition-all duration-200 cursor-pointer touch-manipulation ${
                     isActive
                       ? "bg-foreground text-background shadow-md font-medium"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted"
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5" />
+                  <Icon className="w-3.5 h-3.5 shrink-0" />
                   <span>{proj.title}</span>
                 </button>
               );
@@ -245,7 +245,7 @@ export default function SpatialApplications() {
         {/* Interactive Spatial Photography Stage */}
         <div className="relative rounded-2xl overflow-hidden border border-border bg-card shadow-2xl">
           {/* Main Visual Display */}
-          <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-[21/9] min-h-[480px]">
+          <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] min-h-[340px] sm:min-h-[480px]">
             <Image
               src={activeProject.imageSrc}
               alt={activeProject.title}
@@ -259,14 +259,14 @@ export default function SpatialApplications() {
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80 pointer-events-none" />
 
             {/* Location & Architecture Badge (Top Left) */}
-            <div className="absolute top-6 left-6 max-w-md z-10 pointer-events-none">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#f4f0e6] block mb-1 font-semibold">
+            <div className="absolute top-4 left-4 sm:top-6 sm:left-6 max-w-md z-10 pointer-events-none">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#f4f0e6] block mb-0.5 sm:mb-1 font-semibold">
                 {activeProject.location}
               </span>
-              <h3 className="text-xl sm:text-2xl font-light text-white drop-shadow-md">
+              <h3 className="text-lg sm:text-2xl font-light text-white drop-shadow-md">
                 {activeProject.title}
               </h3>
-              <p className="text-xs text-stone-200 mt-1 font-light drop-shadow line-clamp-2">
+              <p className="text-xs text-stone-200 mt-1 font-light drop-shadow line-clamp-2 hidden xs:block">
                 {activeProject.subtitle}
               </p>
             </div>
@@ -283,16 +283,16 @@ export default function SpatialApplications() {
                   <button
                     onClick={() => setActiveHotspotId(spot.id)}
                     aria-label={`Inspect ${spot.title}`}
-                    className="relative group flex items-center justify-center cursor-pointer"
+                    className="relative group flex items-center justify-center cursor-pointer touch-manipulation p-2"
                   >
                     {/* Pulsing Ripple rings */}
                     <span
-                      className={`absolute w-10 h-10 rounded-full animate-ping opacity-50 ${
+                      className={`absolute w-9 h-9 sm:w-10 sm:h-10 rounded-full animate-ping opacity-50 ${
                         isSelected ? "bg-[#f4f0e6]" : "bg-white/80"
                       }`}
                     />
                     <span
-                      className={`relative w-8 h-8 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-transform duration-300 group-hover:scale-110 shadow-lg ${
+                      className={`relative w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-transform duration-300 group-hover:scale-110 shadow-lg ${
                         isSelected
                           ? "bg-[#f4f0e6] text-zinc-950 ring-4 ring-[#f4f0e6]/40 font-semibold"
                           : "bg-black/80 text-white border border-white/40 hover:border-white"
@@ -301,8 +301,8 @@ export default function SpatialApplications() {
                       +
                     </span>
 
-                    {/* Small preview tag on hover */}
-                    <span className="absolute left-full ml-2 px-2 py-1 rounded bg-black/90 text-white border border-white/20 text-[10px] font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    {/* Small preview tag on hover (desktop only) */}
+                    <span className="hidden sm:block absolute left-full ml-2 px-2 py-1 rounded bg-black/90 text-white border border-white/20 text-[10px] font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                       {spot.title}
                     </span>
                   </button>
@@ -310,9 +310,9 @@ export default function SpatialApplications() {
               );
             })}
 
-            {/* Active Hotspot Deep-Dive Spec Card (Bottom Floating Island) */}
+            {/* Desktop Active Hotspot Deep-Dive Spec Card (Floating Inside Image) */}
             {currentHotspot && (
-              <div className="absolute bottom-6 left-6 right-6 sm:left-auto sm:right-6 sm:max-w-md z-20">
+              <div className="hidden sm:block absolute bottom-6 right-6 sm:max-w-md z-20">
                 <div className="bg-black/85 backdrop-blur-xl border border-white/15 p-5 rounded-xl shadow-2xl text-left text-white">
                   <div className="flex items-center justify-between gap-3 mb-2">
                     <Badge variant="outline" className="border-[#e6dfd1]/40 bg-[#f4f0e6]/15 text-[#f4f0e6] text-[10px] font-mono">
@@ -349,7 +349,7 @@ export default function SpatialApplications() {
 
                   <div className="flex items-center justify-between pt-1">
                     <span className="text-[10px] font-mono text-zinc-400">
-                      Click hotspot &apos;+&apos; to change fixture
+                      Click hotspot &apos;+&apos; to inspect
                     </span>
                     <Link
                       href={currentHotspot.href}
@@ -363,6 +363,57 @@ export default function SpatialApplications() {
               </div>
             )}
           </div>
+
+          {/* Mobile Hotspot Deep-Dive Spec Card (Positioned below image so photo is never covered on phones) */}
+          {currentHotspot && (
+            <div className="sm:hidden p-4 bg-card border-t border-border text-left">
+              <div className="flex items-center justify-between gap-3 mb-2">
+                <Badge variant="outline" className="border-border bg-muted text-foreground text-[10px] font-mono">
+                  {currentHotspot.category}
+                </Badge>
+                <span className="text-[10px] font-mono text-muted-foreground">
+                  HOTSPOT INSPECTION
+                </span>
+              </div>
+
+              <h4 className="text-base font-semibold text-foreground">
+                {currentHotspot.title}
+              </h4>
+
+              <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                {currentHotspot.notes}
+              </p>
+
+              {/* Optical Spec Metrics */}
+              <div className="grid grid-cols-3 gap-2 py-2.5 my-2.5 border-y border-border/80 font-mono text-[11px]">
+                <div>
+                  <span className="text-[9px] text-muted-foreground block uppercase">CCT</span>
+                  <span className="text-foreground font-semibold">{currentHotspot.cct}</span>
+                </div>
+                <div>
+                  <span className="text-[9px] text-muted-foreground block uppercase">Beam</span>
+                  <span className="text-foreground font-semibold">{currentHotspot.beam}</span>
+                </div>
+                <div>
+                  <span className="text-[9px] text-muted-foreground block uppercase">CRI</span>
+                  <span className="text-foreground font-semibold">{currentHotspot.cri}</span>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-1">
+                <span className="text-[10px] font-mono text-muted-foreground">
+                  Tap &apos;+&apos; pins on image
+                </span>
+                <Link
+                  href={currentHotspot.href}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-foreground text-background text-xs font-mono font-medium"
+                >
+                  <span>View Luminaire</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Bottom Project Architecture Notes */}

@@ -87,29 +87,31 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold text-sm text-foreground truncate">
-                      {product.model}
-                    </span>
-                    {product.subseries && (
-                      <span className="text-xs text-muted-foreground truncate hidden sm:inline">
-                        · {product.subseries}
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-1.5 min-w-0">
+                      <span className="font-semibold text-sm text-foreground truncate">
+                        {product.model}
                       </span>
-                    )}
-                    <Badge variant="outline" className="ml-auto font-mono text-[10px] uppercase rounded-full px-2.5">
+                      {product.subseries && (
+                        <span className="text-xs text-muted-foreground truncate hidden sm:inline">
+                          · {product.subseries}
+                        </span>
+                      )}
+                    </div>
+                    <Badge variant="outline" className="shrink-0 font-mono text-[10px] uppercase rounded-full px-2.5">
                       P.{product.catalogPage}
                     </Badge>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
-                    <span className="truncate">{product.category}</span>
-                    <span>•</span>
-                    <span className="font-medium">{product.power}</span>
-                    <span>•</span>
-                    <span className="font-mono text-[11px]">{product.ipRating}</span>
+                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-0.5 overflow-hidden whitespace-nowrap text-ellipsis">
+                    <span className="shrink-0">{product.category}</span>
+                    <span className="opacity-40">•</span>
+                    <span className="font-medium truncate max-w-[120px] sm:max-w-none">{product.power}</span>
+                    <span className="opacity-40">•</span>
+                    <span className="font-mono text-[11px] shrink-0">{product.ipRating}</span>
                     {product.cutout && (
                       <>
-                        <span>•</span>
-                        <span className="font-mono text-[11px]">{product.cutout}</span>
+                        <span className="opacity-40">•</span>
+                        <span className="font-mono text-[11px] truncate max-w-[100px] sm:max-w-none">{product.cutout}</span>
                       </>
                     )}
                   </div>

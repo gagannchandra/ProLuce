@@ -13,7 +13,7 @@ export default function NotFound() {
             <FileQuestion className="h-6 w-6" />
           </div>
 
-          <Badge variant="outline" className="font-mono text-[10px] uppercase tracking-widest mb-2">
+          <Badge variant="outline" className="font-sans text-[11px] uppercase tracking-[0.18em] font-medium text-muted-foreground mb-2">
             Error 404 · Unmapped Coordinate
           </Badge>
 
@@ -26,13 +26,13 @@ export default function NotFound() {
           </p>
 
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3 w-full">
-            <Button asChild variant="outline" size="sm" className="font-mono text-xs uppercase tracking-wider gap-2 rounded-full px-5">
+            <Button asChild variant="outline" size="sm" className="font-sans text-xs uppercase tracking-[0.14em] font-medium gap-2 rounded-full px-5 border-border/80 hover:bg-accent">
               <Link href="/">
                 <Home className="h-3.5 w-3.5" />
                 <span>Return to Studio</span>
               </Link>
             </Button>
-            <Button asChild size="sm" className="font-mono text-xs uppercase tracking-wider gap-2 rounded-full px-5">
+            <Button asChild size="sm" className="font-sans text-xs uppercase tracking-[0.14em] font-medium gap-2 rounded-full px-5 bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 font-bold border-none">
               <Link href="/catalogue">
                 <Compass className="h-3.5 w-3.5" />
                 <span>Browse Catalogue</span>

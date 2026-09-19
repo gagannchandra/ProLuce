@@ -279,26 +279,38 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
         }
         return a.catalogPage - b.catalogPage;
       });
-  }, [initialProducts, filters, debouncedSearch, sortBy]);
+  }, [filters, debouncedSearch, initialProducts, sortBy]);
+
+  const activeFilterCount =
+    filters.categories.length +
+    filters.environments.length +
+    filters.ccts.length +
+    filters.wattages.length +
+    filters.voltages.length +
+    filters.diameters.length +
+    filters.lengths.length +
+    filters.ipRatings.length +
+    filters.beamAngles.length +
+    (filters.search ? 1 : 0);
 
   return (
-    <div className="container-site py-10 md:py-16">
+    <div className="container-site py-8 sm:py-10 md:py-16">
       {/* Glassmorphism Header Title Block */}
-      <div className="relative mb-8 rounded-2xl border border-border/80 bg-card/60 backdrop-blur-md p-6 sm:p-8 overflow-hidden shadow-xs">
+      <div className="relative mb-6 sm:mb-8 rounded-3xl border border-border/80 bg-card/60 backdrop-blur-md p-5 sm:p-8 overflow-hidden shadow-xs">
         {/* Soft Ambient Light Beam Accent */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#f4f0e6]/5 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
         
-        <div className="relative z-10 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+        <div className="relative z-10 flex flex-col items-start justify-between gap-5 md:flex-row md:items-end">
           <div>
-            <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-[0.2em] text-muted-foreground">
+            <div className="flex items-center gap-2 text-[11px] sm:text-xs font-sans uppercase tracking-[0.18em] text-muted-foreground font-medium">
               <span className="flex items-center gap-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#f4f0e6] shadow-[0_0_6px_rgba(244,240,230,0.6)]" />
                 Pro-Luce
               </span>
-              <span>/</span>
+              <span className="opacity-40">/</span>
               <span className="text-foreground font-semibold">Architectural Specifier Catalogue</span>
             </div>
-            <h1 className="mt-2 text-3xl sm:text-4xl lg:text-[44px] font-light tracking-tight text-foreground font-display leading-[1.08]">
+            <h1 className="mt-2 text-2xl sm:text-4xl lg:text-[44px] font-light tracking-tight text-foreground font-display leading-[1.08]">
               Architectural Product Catalogue
             </h1>
             <p className="mt-2 text-xs md:text-sm text-muted-foreground max-w-2xl leading-relaxed font-sans font-light">
@@ -306,25 +318,34 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
             </p>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 w-full sm:w-auto justify-between sm:justify-end">
             <ViewModeToggle viewMode={viewMode} onViewModeChange={setViewMode} />
 
             {/* Mobile Sheet Filter Trigger */}
             <Sheet open={mobileFilterOpen} onOpenChange={setMobileFilterOpen}>
               <SheetTrigger asChild>
                 <Button
-                  variant="outline"
+                  variant={activeFilterCount > 0 ? "default" : "outline"}
                   size="sm"
-                  className="lg:hidden gap-1.5 font-mono text-xs rounded-full cursor-pointer"
+                  className={`lg:hidden gap-1.5 font-mono text-xs rounded-full cursor-pointer touch-manipulation ${
+                    activeFilterCount > 0
+                      ? "bg-[#f4f0e6] text-neutral-950 font-bold border-[#e6dfd1]"
+                      : ""
+                  }`}
                 >
                   <SlidersHorizontal className="h-3.5 w-3.5" />
                   <span>Filters</span>
+                  {activeFilterCount > 0 && (
+                    <span className="flex items-center justify-center h-4 min-w-4 px-1 rounded-full bg-neutral-950 text-[#f4f0e6] font-mono text-[9px] font-bold">
+                      {activeFilterCount}
+                    </span>
+                  )}
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[85vw] max-w-xs p-6 overflow-y-auto">
+              <SheetContent side="right" className="w-[88vw] max-w-sm p-6 overflow-y-auto">
                 <SheetHeader className="text-left pb-4 border-b border-border">
                   <SheetTitle className="font-display text-lg uppercase tracking-wider">
-                    Filters
+                    Filters &amp; Optics
                   </SheetTitle>
                 </SheetHeader>
                 <div className="py-4">
@@ -336,6 +357,8 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
                     onReset={handleResetAll}
                     categoryCounts={categoryCounts}
                     totalCount={initialProducts.length}
+                    onCloseMobile={() => setMobileFilterOpen(false)}
+                    filteredCount={filteredProducts.length}
                   />
                 </div>
               </SheetContent>
@@ -344,9 +367,9 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
         </div>
       </div>
 
-      {/* Quick Category Ribbon */}
-      <div className="mb-6 flex items-center justify-between gap-4 overflow-x-auto pb-2 border-b border-border/60 no-scrollbar">
-        <div className="flex items-center gap-2 shrink-0">
+      {/* Quick Category Ribbon & Sort Header */}
+      <div className="mb-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 pb-2 border-b border-border/60">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-snap-x pb-1 sm:pb-0">
           {QUICK_CATEGORIES.map((qc) => {
             const isAll = qc.value === "";
             const isSelected = isAll
@@ -364,7 +387,7 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
                     handleToggleFilter("categories", qc.value);
                   }
                 }}
-                className={`rounded-full px-4 py-1.5 text-xs font-mono whitespace-nowrap transition-all duration-200 cursor-pointer border ${
+                className={`shrink-0 snap-start rounded-full px-3.5 sm:px-4 py-1.5 text-xs font-mono whitespace-nowrap transition-all duration-200 cursor-pointer border touch-manipulation ${
                   isSelected
                     ? "filter-pill-selected"
                     : "filter-pill-unselected"
@@ -377,12 +400,12 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
         </div>
 
         {/* Sort Selector */}
-        <div className="hidden sm:flex items-center gap-2 shrink-0">
-          <span className="text-[11px] font-mono uppercase text-muted-foreground">
+        <div className="flex items-center justify-end gap-2 shrink-0 pt-1 sm:pt-0">
+          <span className="text-[10px] sm:text-[11px] font-mono uppercase text-muted-foreground">
             Sort:
           </span>
           <Select value={sortBy} onValueChange={(v) => setSortBy(v as typeof sortBy)}>
-            <SelectTrigger className="h-8 text-xs font-mono w-[180px] rounded-full border-border/80 bg-card/80 backdrop-blur-xs cursor-pointer">
+            <SelectTrigger className="h-8 text-[11px] sm:text-xs font-mono w-full sm:w-[180px] rounded-full border-border/80 bg-card/80 backdrop-blur-xs cursor-pointer touch-manipulation">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

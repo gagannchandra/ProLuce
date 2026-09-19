@@ -48,7 +48,7 @@ export function ThemeToggle({ className = "", showLabel = false }: ThemeTogglePr
             />
           </div>
           {showLabel && (
-            <span className="font-mono uppercase tracking-wider text-xs">
+            <span className="font-sans uppercase tracking-[0.14em] text-xs font-medium">
               {isDark ? "Light Mode" : "Dark Mode"}
             </span>
           )}

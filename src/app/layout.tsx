@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -7,6 +7,17 @@ import { siteConfig } from "@/lib/site";
 import ClientProviders from "@/components/ClientProviders";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Plus_Jakarta_Sans, Cormorant_Garamond, JetBrains_Mono, Italianno } from "next/font/google";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
+    { media: "(prefers-color-scheme: dark)", color: "#09090b" },
+  ],
+};
 
 const sansFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -96,8 +107,6 @@ export default function RootLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-        <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
       </head>
       <body className="flex min-h-full flex-col bg-background text-foreground font-sans selection:bg-[#f4f0e6]/25 selection:text-[#f4f0e6] transition-colors duration-200">
         <JsonLd

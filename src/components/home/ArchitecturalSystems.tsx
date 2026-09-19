@@ -137,7 +137,7 @@ export default function ArchitecturalSystems() {
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1 text-muted-foreground shadow-2xs">
               <span className="h-1.5 w-1.5 rounded-full bg-[#f4f0e6] dark:bg-[#f4f0e6] border border-amber-600/30" />
-              <span className="text-[11px] font-mono uppercase tracking-[0.2em] font-semibold text-foreground">
+              <span className="text-[11px] sm:text-xs font-sans uppercase tracking-[0.18em] font-medium text-foreground">
                 Architectural Taxonomy
               </span>
             </div>
@@ -170,11 +170,11 @@ export default function ArchitecturalSystems() {
             <Link
               key={system.id}
               href={system.href}
-              className="group relative flex flex-col justify-between rounded-3xl border border-border bg-card/80 p-7 sm:p-8 backdrop-blur-md transition-all duration-300 hover:border-[#e6dfd1] dark:hover:border-[#e6dfd1]/50 hover:bg-card hover:shadow-xl hover:shadow-black/5 dark:hover:shadow-black/40 hover:-translate-y-1"
+              className="group relative flex flex-col justify-between rounded-3xl border border-border bg-card/80 p-5 sm:p-7 lg:p-8 backdrop-blur-md transition-all duration-300 hover:border-[#e6dfd1] dark:hover:border-[#e6dfd1]/50 hover:bg-card hover:shadow-xl hover:shadow-black/5 dark:hover:shadow-black/40 hover:-translate-y-1 touch-manipulation"
             >
               {/* Card Top: Category Tag + Catalog Page Anchor */}
               <div>
-                <div className="flex items-center justify-between pb-4 border-b border-border/80">
+                <div className="flex items-center justify-between pb-3.5 sm:pb-4 border-b border-border/80">
                   <span className="text-[11px] font-mono uppercase tracking-widest text-foreground font-bold">
                     {system.categoryName}
                   </span>
@@ -184,7 +184,7 @@ export default function ArchitecturalSystems() {
                 </div>
 
                 {/* Product Renders & Visual Focus Area */}
-                <div className="relative h-44 w-full my-6 flex items-center justify-center overflow-hidden rounded-2xl bg-surface/80 dark:bg-zinc-950/60 border border-border/60 group-hover:border-border transition-colors">
+                <div className="relative h-36 sm:h-44 w-full my-4 sm:my-6 flex items-center justify-center overflow-hidden rounded-2xl bg-surface/80 dark:bg-zinc-950/60 border border-border/60 group-hover:border-border transition-colors">
                   {/* Subtle Light Halo */}
                   <div
                     className="absolute w-28 h-28 rounded-full blur-2xl opacity-20 pointer-events-none transition-transform duration-500 group-hover:scale-125"

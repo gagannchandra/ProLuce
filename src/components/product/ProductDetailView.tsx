@@ -28,6 +28,7 @@ import {
   Sliders,
 } from "lucide-react";
 import { BeamAngleIcon } from "@/components/ui/beam-angle-icon";
+import MobileProductVariantPicker from "@/components/mobile/MobileProductVariantPicker";
 
 interface ProductDetailViewProps {
   product: Product;
@@ -62,27 +63,25 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
   };
   const activeLightColor = cctColorMap[selectedCct] || "#ffe4c4";
 
-
-
   return (
-    <div className="space-y-12 pb-16">
+    <div className="space-y-8 sm:space-y-12 pb-28 sm:pb-16">
       {/* Top Breadcrumb & Action Bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border pb-6 no-print">
         <div>
-          <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-[0.18em] text-muted-foreground">
+          <div className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-sans uppercase tracking-[0.18em] text-muted-foreground font-medium flex-wrap">
             <Link href="/catalogue" className="hover:text-foreground transition-colors">Catalogue</Link>
-            <span>/</span>
+            <span className="opacity-40">/</span>
             <Link href={`/catalogue?category=${encodeURIComponent(product.category)}`} className="hover:text-foreground transition-colors">
               {product.category}
             </Link>
-            <span>/</span>
-            <span className="text-foreground font-semibold">{product.model}</span>
+            <span className="opacity-40">/</span>
+            <span className="text-foreground font-semibold truncate max-w-[160px] sm:max-w-none">{product.model}</span>
           </div>
 
-          <div className="mt-2 flex flex-wrap items-baseline gap-3">
+          <div className="mt-2 flex flex-wrap items-baseline gap-2.5 sm:gap-3">
             <h1
               style={{ viewTransitionName: `product-title-${product.slug}` } as React.CSSProperties}
-              className="text-3xl sm:text-4xl lg:text-[48px] font-light tracking-tight text-foreground font-display leading-[1.08]"
+              className="text-2xl sm:text-4xl lg:text-[48px] font-light tracking-tight text-foreground font-display leading-[1.08]"
             >
               {product.model}
             </h1>
@@ -97,12 +96,12 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5 shrink-0 flex-wrap">
+        <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 sm:gap-2.5 shrink-0">
           <Button
             variant="outline"
             size="sm"
             onClick={() => window.print()}
-            className="font-mono text-xs uppercase tracking-wider gap-1.5 rounded-full px-4"
+            className="font-mono text-xs uppercase tracking-wider gap-1.5 rounded-full px-3.5 h-10 sm:h-9 touch-manipulation cursor-pointer col-span-2 sm:col-auto"
           >
             <Printer className="h-3.5 w-3.5" />
             <span>Print Spec</span>
@@ -122,16 +121,20 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                 openDrawer();
               }
             }}
-            className="font-mono text-xs uppercase tracking-wider gap-1.5 rounded-full px-4"
+            className={`font-mono text-xs uppercase tracking-wider gap-1.5 rounded-full px-4 h-10 sm:h-9 transition-all touch-manipulation cursor-pointer ${
+              inSchedule
+                ? "bg-emerald-600 hover:bg-emerald-500 text-white font-semibold border-none"
+                : "border-border/90 text-foreground hover:bg-accent font-medium"
+            }`}
           >
-            {inSchedule ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Plus className="h-3.5 w-3.5" />}
-            <span>{inSchedule ? "In Schedule" : "Spec Schedule"}</span>
+            {inSchedule ? <Check className="h-3.5 w-3.5 text-white" /> : <Plus className="h-3.5 w-3.5" />}
+            <span>{inSchedule ? "In Schedule" : "Add Schedule"}</span>
           </Button>
 
           <Button
             size="sm"
             onClick={() => setIsQuoteOpen(true)}
-            className="font-mono text-xs uppercase tracking-wider gap-1.5 shadow-sm rounded-full px-5"
+            className="font-mono text-xs uppercase tracking-wider gap-1.5 shadow-sm rounded-full px-4 h-10 sm:h-9 touch-manipulation cursor-pointer"
           >
             <FileText className="h-3.5 w-3.5" />
             <span>Request RFQ</span>
@@ -442,8 +445,8 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
         <div className="lg:col-span-6 space-y-6">
           {/* Series Model Matrix */}
           {product.variants && product.variants.length > 0 && (
-            <Card className="p-6 shadow-xs space-y-4 border-border/80 bg-card/90 backdrop-blur-md rounded-3xl">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-3">
+            <Card className="p-4 sm:p-6 shadow-xs space-y-4 border-border/80 bg-card/90 backdrop-blur-md rounded-3xl">
+              <div className="hidden sm:flex sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-3">
                 <div>
                   <h3 className="text-xs font-bold uppercase tracking-wider text-foreground font-mono">
                     Series Model Matrix
@@ -460,7 +463,15 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                 )}
               </div>
 
-              <div className="overflow-x-auto">
+              {/* Mobile Variant Picker (< sm) */}
+              <MobileProductVariantPicker
+                variants={product.variants}
+                selectedVariant={selectedVariant}
+                onSelectVariant={(v) => setSelectedVariant(v)}
+              />
+
+              {/* Desktop Variant Table (>= sm) */}
+              <div className="hidden sm:block overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow className="border-b border-border text-muted-foreground font-mono uppercase text-[10px]">
@@ -787,41 +798,6 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
           </div>
         </div>
       )}
-
-      {/* Sticky Mobile Bottom Specifier Action Bar */}
-      <div className="fixed bottom-0 inset-x-0 z-30 border-t border-border bg-background/95 backdrop-blur-md p-3 sm:hidden flex items-center justify-between shadow-lg no-print">
-        <div>
-          <div className="text-xs font-bold text-foreground truncate max-w-[140px]">{product.model}</div>
-          <div className="text-[10px] font-mono text-muted-foreground">{product.power} · {product.ipRating}</div>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button
-            variant={inSchedule ? "default" : "outline"}
-            size="xs"
-            onClick={() => {
-              if (inSchedule) {
-                removeItem(product.id);
-              } else {
-                addItem(product, {
-                  selectedCct,
-                  selectedBeamAngle: selectedBeam,
-                });
-                openDrawer();
-              }
-            }}
-            className="font-mono text-[11px]"
-          >
-            {inSchedule ? "✓ In List" : "+ Schedule"}
-          </Button>
-          <Button
-            size="xs"
-            onClick={() => setIsQuoteOpen(true)}
-            className="font-mono text-[11px] uppercase tracking-wider"
-          >
-            RFQ
-          </Button>
-        </div>
-      </div>
 
       {/* Quote Dialog */}
       <QuoteModal

@@ -42,7 +42,7 @@ export default function SpecifierSuite() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-card text-foreground text-xs font-mono uppercase tracking-widest mb-3 shadow-2xs">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-border bg-card text-foreground text-[11px] sm:text-xs font-sans uppercase tracking-[0.18em] font-medium mb-3 shadow-2xs">
               <Cpu className="w-3.5 h-3.5 text-stone-400" />
               <span>Architectural Engineering Hub</span>
             </div>
@@ -66,11 +66,11 @@ export default function SpecifierSuite() {
         </div>
 
         {/* 3-Column Engineering Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 mb-12">
           {/* Card 1: Photometric Data Package */}
-          <div className="bg-card border border-border rounded-2xl p-7 flex flex-col justify-between hover:border-stone-400 transition-all group backdrop-blur-sm shadow-xl">
+          <div className="bg-card border border-border rounded-3xl p-5 sm:p-7 flex flex-col justify-between hover:border-stone-400 transition-all group backdrop-blur-sm shadow-xl">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-muted border border-border flex items-center justify-center text-foreground dark:text-[#f4f0e6] mb-6 group-hover:scale-105 transition-transform">
+              <div className="w-12 h-12 rounded-2xl bg-muted border border-border flex items-center justify-center text-foreground dark:text-[#f4f0e6] mb-5 sm:mb-6 group-hover:scale-105 transition-transform">
                 <FolderDown className="w-6 h-6" />
               </div>
 
@@ -87,7 +87,7 @@ export default function SpecifierSuite() {
                 Photometric Data Bank
               </h3>
 
-              <p className="text-xs text-muted-foreground leading-relaxed font-light mb-6">
+              <p className="text-xs text-muted-foreground leading-relaxed font-light mb-5">
                 Laboratory-certified IESNA LM-63 and EULUMDAT (.ldt) polar intensity files for DIALux evo, Relux Pro, and AGi32 simulations.
               </p>
 
@@ -110,7 +110,7 @@ export default function SpecifierSuite() {
             <Button
               onClick={() => triggerMockDownload("IES Photometric Archive")}
               variant="outline"
-              className="w-full border-border hover:border-stone-400 bg-card hover:bg-muted text-foreground font-mono text-xs uppercase tracking-wider py-4 flex items-center justify-center gap-2 cursor-pointer shadow-2xs"
+              className="w-full border-border hover:border-stone-400 bg-card hover:bg-muted text-foreground font-mono text-xs uppercase tracking-wider py-4 flex items-center justify-center gap-2 cursor-pointer shadow-2xs rounded-full touch-manipulation"
             >
               <Download className="w-3.5 h-3.5 text-stone-400" />
               <span>Download Master IES Archive</span>
@@ -118,9 +118,9 @@ export default function SpecifierSuite() {
           </div>
 
           {/* Card 2: BIM & Revit LOD 350 */}
-          <div className="bg-card border border-border rounded-2xl p-7 flex flex-col justify-between hover:border-stone-400 transition-all group backdrop-blur-sm shadow-xl">
+          <div className="bg-card border border-border rounded-3xl p-5 sm:p-7 flex flex-col justify-between hover:border-stone-400 transition-all group backdrop-blur-sm shadow-xl">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-muted border border-border flex items-center justify-center text-blue-500 dark:text-blue-400 mb-6 group-hover:scale-105 transition-transform">
+              <div className="w-12 h-12 rounded-2xl bg-muted border border-border flex items-center justify-center text-blue-500 dark:text-blue-400 mb-5 sm:mb-6 group-hover:scale-105 transition-transform">
                 <Box className="w-6 h-6" />
               </div>
 
@@ -137,7 +137,7 @@ export default function SpecifierSuite() {
                 Revit &amp; CAD Models
               </h3>
 
-              <p className="text-xs text-muted-foreground leading-relaxed font-light mb-6">
+              <p className="text-xs text-muted-foreground leading-relaxed font-light mb-5">
                 Native Autodesk Revit .RFA families with embedded electrical connector loads, thermal parameters, clearance envelopes, and 3D DWG blocks.
               </p>
 
@@ -160,7 +160,7 @@ export default function SpecifierSuite() {
             <Button
               onClick={() => triggerMockDownload("Revit LOD 350 BIM Library")}
               variant="outline"
-              className="w-full border-border hover:border-blue-500/50 bg-card hover:bg-muted text-foreground font-mono text-xs uppercase tracking-wider py-4 flex items-center justify-center gap-2 cursor-pointer shadow-2xs"
+              className="w-full border-border hover:border-blue-500/50 bg-card hover:bg-muted text-foreground font-mono text-xs uppercase tracking-wider py-4 flex items-center justify-center gap-2 cursor-pointer shadow-2xs rounded-full touch-manipulation"
             >
               <Download className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" />
               <span>Download Revit BIM Families</span>
@@ -168,9 +168,9 @@ export default function SpecifierSuite() {
           </div>
 
           {/* Card 3: Custom Extrusion & Milling */}
-          <div className="bg-card border border-border rounded-2xl p-7 flex flex-col justify-between hover:border-stone-400 transition-all group backdrop-blur-sm shadow-xl">
+          <div className="bg-card border border-border rounded-3xl p-5 sm:p-7 flex flex-col justify-between hover:border-stone-400 transition-all group backdrop-blur-sm shadow-xl">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-muted border border-border flex items-center justify-center text-emerald-500 dark:text-emerald-400 mb-6 group-hover:scale-105 transition-transform">
+              <div className="w-12 h-12 rounded-2xl bg-muted border border-border flex items-center justify-center text-emerald-500 dark:text-emerald-400 mb-5 sm:mb-6 group-hover:scale-105 transition-transform">
                 <Ruler className="w-6 h-6" />
               </div>
 
@@ -187,7 +187,7 @@ export default function SpecifierSuite() {
                 Custom Linear Milling
               </h3>
 
-              <p className="text-xs text-muted-foreground leading-relaxed font-light mb-6">
+              <p className="text-xs text-muted-foreground leading-relaxed font-light mb-5">
                 Millimeter-accurate bespoke aluminum profile cuts, 90° mitered corners, continuous diffuser rolls up to 50m, and pre-wired harness assemblies.
               </p>
 
@@ -210,7 +210,7 @@ export default function SpecifierSuite() {
             <Link href="/catalogue?category=Linear+Light" className="w-full">
               <Button
                 variant="outline"
-                className="w-full border-border hover:border-emerald-500/50 bg-card hover:bg-muted text-foreground font-mono text-xs uppercase tracking-wider py-4 flex items-center justify-center gap-2 cursor-pointer shadow-2xs"
+                className="w-full border-border hover:border-emerald-500/50 bg-card hover:bg-muted text-foreground font-mono text-xs uppercase tracking-wider py-4 flex items-center justify-center gap-2 cursor-pointer shadow-2xs rounded-full touch-manipulation"
               >
                 <span>Explore Linear Profiles</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -220,7 +220,7 @@ export default function SpecifierSuite() {
         </div>
 
         {/* Live Spec Schedule Banner / Callout */}
-        <div className="bg-card border border-border rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden shadow-2xl">
+        <div className="bg-card border border-border rounded-3xl p-5 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden shadow-2xl">
           <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-[#f4f0e6]/5 blur-3xl pointer-events-none" />
 
           <div className="flex items-center gap-5 z-10">

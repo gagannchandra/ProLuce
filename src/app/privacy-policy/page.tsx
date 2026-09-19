@@ -15,7 +15,7 @@ export default function PrivacyPolicyPage() {
     <div className="container-site max-w-4xl py-12 md:py-20">
       <div className="border-b border-border pb-8">
         <div className="inline-flex items-center gap-2 mb-2">
-          <Badge variant="outline" className="gap-1.5 font-mono text-[10px] uppercase tracking-widest">
+          <Badge variant="outline" className="gap-1.5 font-sans text-[11px] uppercase tracking-[0.18em] font-medium border-border/80 text-muted-foreground">
             <ShieldCheck className="h-3 w-3 text-emerald-500" />
             <span>Governance & Data Integrity</span>
           </Badge>

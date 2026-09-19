@@ -34,6 +34,8 @@ interface FilterSidebarProps {
   onReset: () => void;
   categoryCounts: Record<string, number>;
   totalCount: number;
+  onCloseMobile?: () => void;
+  filteredCount?: number;
 }
 
 const CATEGORIES: { label: string; value: ProductCategory }[] = [
@@ -108,6 +110,8 @@ export default function FilterSidebar({
   onReset,
   categoryCounts,
   totalCount,
+  onCloseMobile,
+  filteredCount,
 }: FilterSidebarProps) {
   const hasActiveFilters = Boolean(
     filters.categories.length > 0 ||
@@ -667,6 +671,27 @@ export default function FilterSidebar({
           </AccordionContent>
         </AccordionItem>
       </Accordion>
+
+      {/* Sticky Mobile Apply / Reset Bar */}
+      {onCloseMobile && (
+        <div className="sticky bottom-0 inset-x-0 pt-4 pb-2 mt-6 bg-card border-t border-border flex items-center gap-2">
+          <Button
+            onClick={onCloseMobile}
+            className="flex-1 font-mono text-xs uppercase tracking-wider rounded-full h-11 bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 font-bold shadow-md cursor-pointer touch-manipulation"
+          >
+            Apply Filters {filteredCount !== undefined ? `(${filteredCount} Fixtures)` : ""}
+          </Button>
+          {hasActiveFilters && (
+            <Button
+              variant="outline"
+              onClick={onReset}
+              className="font-mono text-xs uppercase tracking-wider rounded-full h-11 px-4 cursor-pointer touch-manipulation"
+            >
+              Reset
+            </Button>
+          )}
+        </div>
+      )}
     </aside>
   );
 }
