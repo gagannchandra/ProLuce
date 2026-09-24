@@ -99,7 +99,7 @@ export default function Header() {
                   size="sm"
                   onClick={() => setSearchOpen(true)}
                   aria-label="Search luminaires and specifications"
-                  className="rounded-full gap-2 px-3.5 h-9 sm:h-10 font-mono text-xs sm:text-[13px] text-foreground border-border/80 bg-background/80 hover:bg-accent"
+                  className="rounded-full gap-2 px-4 h-9 sm:h-10 font-sans text-xs sm:text-[13px] font-medium text-foreground border-border/80 bg-background/80 hover:bg-accent cursor-pointer shadow-2xs"
                 >
                   <Search className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground" />
                   <span className="hidden lg:inline">Search</span>
@@ -121,14 +121,14 @@ export default function Header() {
                   size="sm"
                   onClick={openDrawer}
                   aria-label="Open project luminaire schedule"
-                  className={`rounded-full gap-2 px-3.5 h-9 sm:h-10 font-mono text-xs sm:text-[13px] transition-all duration-200 ${
+                  className={`rounded-full gap-2 px-4 h-9 sm:h-10 font-sans text-xs sm:text-[13px] uppercase tracking-[0.12em] font-semibold transition-all duration-200 cursor-pointer ${
                     items.length > 0
-                      ? "bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 font-bold border border-[#e6dfd1] shadow-xs"
-                      : "border-border/80 bg-background/80 text-foreground hover:bg-accent"
+                      ? "bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 border border-[#e6dfd1] shadow-xs"
+                      : "border-border/80 bg-background/80 text-foreground hover:bg-accent shadow-2xs"
                   }`}
                 >
                   <FileSpreadsheet className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-current" />
-                  <span className="hidden sm:inline uppercase tracking-wider">
+                  <span className="hidden sm:inline">
                     Schedule
                   </span>
                   {items.length > 0 && (

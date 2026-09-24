@@ -92,21 +92,21 @@ export default function MobileCatalogCard({ product, onOpenQuote }: MobileCatalo
               addItem(product);
             }
           }}
-          className={`h-8 font-mono text-[11px] rounded-full px-3.5 transition-all touch-manipulation cursor-pointer ${
+          className={`h-8 font-sans text-[11px] uppercase tracking-[0.12em] font-medium rounded-full px-3.5 gap-1.5 transition-all touch-manipulation cursor-pointer ${
             inSchedule
               ? "bg-emerald-600 hover:bg-emerald-500 text-white font-semibold border-none shadow-xs"
-              : "border-border/90 text-foreground hover:bg-accent font-medium shadow-2xs"
+              : "border-border/90 text-foreground hover:bg-accent shadow-2xs"
           }`}
         >
           {inSchedule ? (
             <>
-              <Check className="mr-1 h-3 w-3" />
-              Scheduled
+              <Check className="h-3 w-3 stroke-[3]" />
+              <span>Scheduled</span>
             </>
           ) : (
             <>
-              <Plus className="mr-1 h-3 w-3" />
-              Schedule
+              <Plus className="h-3 w-3" />
+              <span>Schedule</span>
             </>
           )}
         </Button>
@@ -116,17 +116,17 @@ export default function MobileCatalogCard({ product, onOpenQuote }: MobileCatalo
             variant="outline"
             size="sm"
             onClick={() => onOpenQuote(product)}
-            className="h-8 font-mono text-[11px] uppercase tracking-wider rounded-full px-3 border-border hover:border-foreground/40 touch-manipulation cursor-pointer"
+            className="h-8 font-sans text-[11px] uppercase tracking-[0.12em] font-medium rounded-full px-3 gap-1.5 border-border hover:border-foreground/40 touch-manipulation cursor-pointer"
           >
-            <FileText className="mr-1 h-3 w-3 text-stone-300" />
-            RFQ
+            <FileText className="h-3 w-3 text-stone-300" />
+            <span>RFQ</span>
           </Button>
 
           <Button
             asChild
             variant="ghost"
             size="sm"
-            className="h-8 px-2.5 font-mono text-xs rounded-full text-foreground hover:bg-accent touch-manipulation"
+            className="h-8 px-2.5 font-sans text-xs rounded-full text-foreground hover:bg-accent touch-manipulation"
           >
             <Link href={`/products/${product.slug}`} aria-label={`View ${product.model} datasheet`}>
               <ChevronRight className="h-4 w-4" />

@@ -114,26 +114,27 @@ export default function AboutPage() {
               <div className="flex items-center gap-3 shrink-0 flex-wrap">
                 <Button
                   asChild
-                  className="bg-[#f4f0e6] text-neutral-950 hover:bg-[#eae4d5] font-mono text-xs uppercase tracking-wider px-6 h-11 shadow-sm rounded-full font-bold border-none cursor-pointer"
+                  className="bg-[#f4f0e6] text-neutral-950 hover:bg-[#eae4d5] font-sans text-xs uppercase tracking-[0.14em] px-6 h-11 shadow-sm rounded-full font-bold border-none cursor-pointer"
                 >
                   <a
                     href={siteConfig.catalogPdfUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     download="Pro-Luce-Catalogue.pdf"
+                    className="flex items-center gap-2"
                   >
-                    <Download className="mr-1.5 h-3.5 w-3.5" />
-                    Download PDF Spec
+                    <Download className="h-4 w-4" />
+                    <span>Download PDF Spec</span>
                   </a>
                 </Button>
                 <Button
                   asChild
                   variant="outline"
-                  className="border-border bg-card font-mono text-xs uppercase tracking-wider text-foreground hover:bg-muted h-11 rounded-full px-6 cursor-pointer shadow-2xs"
+                  className="border-border bg-card font-sans text-xs uppercase tracking-[0.14em] font-medium text-foreground hover:bg-muted h-11 rounded-full px-6 cursor-pointer shadow-2xs"
                 >
-                  <Link href="/catalogue">
+                  <Link href="/catalogue" className="flex items-center gap-2">
                     <span>Browse Catalogue</span>
-                    <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                    <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
               </div>

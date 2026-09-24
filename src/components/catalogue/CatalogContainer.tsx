@@ -455,10 +455,10 @@ export default function CatalogContainer({ initialProducts }: CatalogContainerPr
                   variant="outline"
                   size="sm"
                   onClick={handleResetAll}
-                  className="mt-2 font-mono text-xs uppercase cursor-pointer"
+                  className="mt-2 font-sans text-xs uppercase tracking-[0.14em] font-medium h-9 px-4 gap-2 rounded-full cursor-pointer hover:bg-accent"
                 >
-                  <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
-                  Reset all filters
+                  <RotateCcw className="h-3.5 w-3.5" />
+                  <span>Reset all filters</span>
                 </Button>
               </CardContent>
             </Card>

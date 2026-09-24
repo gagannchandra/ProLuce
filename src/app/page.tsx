@@ -2,8 +2,7 @@ import Hero from "@/components/Hero";
 import PhotometricLab from "@/components/home/PhotometricLab";
 import ArchitecturalSystems from "@/components/home/ArchitecturalSystems";
 import FlagshipShowcase from "@/components/home/FlagshipShowcase";
-import SpatialApplications from "@/components/home/SpatialApplications";
-import SpecifierSuite from "@/components/home/SpecifierSuite";
+import CatalogueDownloadBanner from "@/components/home/CatalogueDownloadBanner";
 import { products } from "@/lib/products";
 
 export default function HomePage() {
@@ -14,20 +13,17 @@ export default function HomePage() {
       {/* 1. Kinetic Hero with Video Intro & Luminaire Reveal */}
       <Hero product={heroProduct} />
 
-      {/* 2. Interactive Photometric Lab & Beam Optical Simulator */}
-      <PhotometricLab />
-
-      {/* 3. Architectural Systems Taxonomy & 6-Category Matrix */}
-      <ArchitecturalSystems />
-
-      {/* 4. Flagship Architectural Luminaire Masterworks Showcase */}
+      {/* 2. Flagship Architectural Luminaire Masterworks Showcase */}
       <FlagshipShowcase />
 
-      {/* 5. Spatial Applications & High-Resolution Project Photography with Hotspots */}
-      <SpatialApplications />
+      {/* 3. Interactive Photometric Lab & Beam Optical Simulator */}
+      <PhotometricLab />
 
-      {/* 6. Specifier, BIM LOD 350 & Engineering Schedule Suite */}
-      <SpecifierSuite />
+      {/* 4. Architectural Systems Taxonomy & 6-Category Matrix */}
+      <ArchitecturalSystems />
+
+      {/* 5. Tender Documentation & Complete Architectural Catalogue Download */}
+      <CatalogueDownloadBanner />
     </main>
   );
 }

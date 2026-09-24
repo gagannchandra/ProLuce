@@ -117,12 +117,13 @@ export default function ContactPage() {
             <p className="mt-1 text-xs text-muted-foreground font-mono leading-relaxed mb-4">
               119 pages of high-resolution datasheets, polar candlepower curves, and dimensioned CAD schematics.
             </p>
-            <Button asChild size="sm" className="w-full font-mono text-xs uppercase tracking-wider gap-2 rounded-full px-5">
+            <Button asChild size="sm" className="w-full font-sans text-xs uppercase tracking-[0.14em] font-medium h-10 rounded-full px-5 shadow-xs">
               <a
                 href={siteConfig.catalogPdfUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 download="Pro-Luce-Catalogue.pdf"
+                className="flex items-center justify-center gap-2"
               >
                 <Download className="h-3.5 w-3.5" />
                 <span>Download PDF (140MB)</span>

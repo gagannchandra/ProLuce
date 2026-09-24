@@ -533,7 +533,7 @@ export default function FilterSidebar({
                           : "filter-pill-unselected"
                       }`}
                     >
-                      {isSelected && <Check className="h-3 w-3 stroke-[3] text-zinc-950 mr-0.5 shrink-0" />}
+                      {isSelected && <Check className="h-3 w-3 stroke-[3] text-zinc-950 shrink-0" />}
                       <span className={isSelected ? "text-zinc-950 font-bold" : "text-foreground dark:text-zinc-200"}>{w.value}</span>
                     </button>
                   );
@@ -570,7 +570,7 @@ export default function FilterSidebar({
                           : "filter-pill-unselected"
                       }`}
                     >
-                      {isSelected && <Check className="h-3 w-3 stroke-[3] text-zinc-950 mr-0.5 shrink-0" />}
+                      {isSelected && <Check className="h-3 w-3 stroke-[3] text-zinc-950 shrink-0" />}
                       <span className={isSelected ? "text-zinc-950 font-bold" : "text-foreground dark:text-zinc-200"}>{v.label}</span>
                     </button>
                   );
@@ -624,7 +624,7 @@ export default function FilterSidebar({
                           : "filter-pill-unselected"
                       }`}
                     >
-                      {isSelected && <Check className="h-3 w-3 stroke-[3] text-zinc-950 mr-0.5 shrink-0" />}
+                      {isSelected && <Check className="h-3 w-3 stroke-[3] text-zinc-950 shrink-0" />}
                       <span className={isSelected ? "text-zinc-950 font-bold" : "text-foreground dark:text-zinc-200"}>{c.label}</span>
                     </button>
                   );
@@ -661,7 +661,7 @@ export default function FilterSidebar({
                           : "filter-pill-unselected"
                       }`}
                     >
-                      {isSelected && <Check className="h-3 w-3 stroke-[3] text-zinc-950 mr-0.5 shrink-0" />}
+                      {isSelected && <Check className="h-3 w-3 stroke-[3] text-zinc-950 shrink-0" />}
                       <span className={isSelected ? "text-zinc-950 font-bold" : "text-foreground dark:text-zinc-200"}>{l.label}</span>
                     </button>
                   );
@@ -677,7 +677,7 @@ export default function FilterSidebar({
         <div className="sticky bottom-0 inset-x-0 pt-4 pb-2 mt-6 bg-card border-t border-border flex items-center gap-2">
           <Button
             onClick={onCloseMobile}
-            className="flex-1 font-mono text-xs uppercase tracking-wider rounded-full h-11 bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 font-bold shadow-md cursor-pointer touch-manipulation"
+            className="flex-1 font-sans text-xs uppercase tracking-[0.14em] rounded-full h-11 bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 font-bold shadow-md cursor-pointer touch-manipulation border-none"
           >
             Apply Filters {filteredCount !== undefined ? `(${filteredCount} Fixtures)` : ""}
           </Button>
@@ -685,7 +685,7 @@ export default function FilterSidebar({
             <Button
               variant="outline"
               onClick={onReset}
-              className="font-mono text-xs uppercase tracking-wider rounded-full h-11 px-4 cursor-pointer touch-manipulation"
+              className="font-sans text-xs uppercase tracking-[0.14em] font-medium rounded-full h-11 px-5 cursor-pointer touch-manipulation border-border hover:bg-accent"
             >
               Reset
             </Button>

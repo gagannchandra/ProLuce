@@ -107,7 +107,7 @@ export default function ContactForm() {
 
           <Button
             type="submit"
-            className="mt-2 w-full sm:w-fit font-mono text-xs uppercase tracking-widest px-8 h-11 gap-2 shadow-sm rounded-full touch-manipulation cursor-pointer"
+            className="mt-2 w-full sm:w-fit font-sans text-xs uppercase tracking-[0.14em] font-semibold px-8 h-11 gap-2 shadow-sm rounded-full touch-manipulation cursor-pointer"
           >
             <Send className="h-3.5 w-3.5" />
             <span>Send Message</span>

@@ -572,4 +572,54 @@ body {
       rgba(0, 0, 0, 0.85) 100%
     );
   }
+
+  /* Architectural CCT Spectrum Slider */
+  .cct-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .cct-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2.5px solid #18181b;
+    box-shadow: 0 0 14px var(--cct-glow, rgba(255, 209, 153, 0.9)), 0 2px 5px rgba(0, 0, 0, 0.35);
+    cursor: grab;
+    transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s ease;
+  }
+
+  .cct-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+  }
+
+  .cct-slider::-webkit-slider-thumb:active {
+    cursor: grabbing;
+    transform: scale(0.95);
+  }
+
+  .cct-slider::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2.5px solid #18181b;
+    box-shadow: 0 0 14px var(--cct-glow, rgba(255, 209, 153, 0.9)), 0 2px 5px rgba(0, 0, 0, 0.35);
+    cursor: grab;
+    transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s ease;
+  }
+
+  .cct-slider::-moz-range-thumb:hover {
+    transform: scale(1.15);
+  }
+
+  .cct-slider::-moz-range-thumb:active {
+    cursor: grabbing;
+    transform: scale(0.95);
+  }
 }

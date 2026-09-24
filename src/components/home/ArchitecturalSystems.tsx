@@ -155,11 +155,11 @@ export default function ArchitecturalSystems() {
           <Button
             asChild
             variant="outline"
-            className="rounded-full border-border bg-card text-foreground hover:bg-muted hover:border-border font-mono text-xs uppercase tracking-wider h-10 px-6 shrink-0 shadow-2xs"
+            className="rounded-full border-border bg-card text-foreground hover:bg-muted hover:border-border font-sans text-xs uppercase tracking-[0.14em] font-medium h-10 px-6 shrink-0 shadow-2xs"
           >
-            <Link href="/catalogue">
+            <Link href="/catalogue" className="flex items-center gap-2">
               <span>View All 99 Fixtures</span>
-              <ArrowRight className="ml-2 h-3.5 w-3.5" />
+              <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </Button>
         </div>

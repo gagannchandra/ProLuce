@@ -53,10 +53,10 @@ export default function Newsletter() {
           />
           <Button
             type="submit"
-            className="shrink-0 font-mono text-xs sm:text-[13px] uppercase tracking-wider px-6 h-11 sm:h-10 rounded-full shadow-xs touch-manipulation cursor-pointer"
+            className="shrink-0 font-sans text-xs sm:text-[13px] uppercase tracking-[0.14em] font-semibold px-6 h-11 sm:h-10 rounded-full shadow-xs touch-manipulation cursor-pointer gap-2"
           >
-            <Mail className="mr-1.5 h-3.5 w-3.5" />
-            Subscribe
+            <Mail className="h-3.5 w-3.5" />
+            <span>Subscribe</span>
           </Button>
         </form>
       )}

@@ -101,7 +101,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
             variant="outline"
             size="sm"
             onClick={() => window.print()}
-            className="font-mono text-xs uppercase tracking-wider gap-1.5 rounded-full px-3.5 h-10 sm:h-9 touch-manipulation cursor-pointer col-span-2 sm:col-auto"
+            className="font-sans text-xs uppercase tracking-[0.14em] font-medium gap-2 rounded-full px-4 h-10 sm:h-9 touch-manipulation cursor-pointer col-span-2 sm:col-auto"
           >
             <Printer className="h-3.5 w-3.5" />
             <span>Print Spec</span>
@@ -121,20 +121,20 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                 openDrawer();
               }
             }}
-            className={`font-mono text-xs uppercase tracking-wider gap-1.5 rounded-full px-4 h-10 sm:h-9 transition-all touch-manipulation cursor-pointer ${
+            className={`font-sans text-xs uppercase tracking-[0.14em] gap-2 rounded-full px-4 h-10 sm:h-9 transition-all touch-manipulation cursor-pointer ${
               inSchedule
                 ? "bg-emerald-600 hover:bg-emerald-500 text-white font-semibold border-none"
                 : "border-border/90 text-foreground hover:bg-accent font-medium"
             }`}
           >
-            {inSchedule ? <Check className="h-3.5 w-3.5 text-white" /> : <Plus className="h-3.5 w-3.5" />}
+            {inSchedule ? <Check className="h-3.5 w-3.5 text-white stroke-[3]" /> : <Plus className="h-3.5 w-3.5" />}
             <span>{inSchedule ? "In Schedule" : "Add Schedule"}</span>
           </Button>
 
           <Button
             size="sm"
             onClick={() => setIsQuoteOpen(true)}
-            className="font-mono text-xs uppercase tracking-wider gap-1.5 shadow-sm rounded-full px-4 h-10 sm:h-9 touch-manipulation cursor-pointer"
+            className="font-sans text-xs uppercase tracking-[0.14em] font-medium gap-2 shadow-sm rounded-full px-4 h-10 sm:h-9 touch-manipulation cursor-pointer"
           >
             <FileText className="h-3.5 w-3.5" />
             <span>Request RFQ</span>
@@ -723,24 +723,25 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
               <div className="pt-2 flex flex-wrap gap-3">
                 <Button
                   onClick={() => setIsQuoteOpen(true)}
-                  className="rounded-full bg-white text-black hover:bg-neutral-200 font-mono text-xs uppercase tracking-wider shadow-sm px-6"
+                  className="rounded-full bg-white text-black hover:bg-neutral-200 font-sans text-xs uppercase tracking-[0.14em] font-semibold shadow-sm px-6 h-11 gap-2 flex items-center justify-center cursor-pointer"
                 >
-                  <FileText className="mr-1.5 h-3.5 w-3.5" />
-                  Request Project Quote
+                  <FileText className="h-4 w-4" />
+                  <span>Request Project Quote</span>
                 </Button>
                 <Button
                   asChild
                   variant="outline"
-                  className="rounded-full border-neutral-700 bg-black/50 font-mono text-xs uppercase tracking-wider text-neutral-300 hover:text-white px-6"
+                  className="rounded-full border-neutral-700 bg-black/50 font-sans text-xs uppercase tracking-[0.14em] font-medium text-neutral-300 hover:text-white px-6 h-11 cursor-pointer"
                 >
                   <a
                     href="/pdf/Pro-Luce-Catalogue.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     download="Pro-Luce-Catalogue.pdf"
+                    className="flex items-center justify-center gap-2"
                   >
-                    <Download className="mr-1.5 h-3.5 w-3.5" />
-                    Open Master Catalogue
+                    <Download className="h-4 w-4" />
+                    <span>Open Master Catalogue</span>
                   </a>
                 </Button>
               </div>
@@ -759,10 +760,10 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
               </h3>
               <p className="text-xs text-muted-foreground mt-0.5 font-light">Explore complementary luminaires from the collection</p>
             </div>
-            <Button asChild variant="ghost" className="font-mono text-xs uppercase tracking-wider text-foreground">
-              <Link href={`/catalogue?category=${encodeURIComponent(product.category)}`}>
-                View all {product.category}s
-                <ArrowRight className="ml-1 h-3.5 w-3.5" />
+            <Button asChild variant="ghost" className="font-sans text-xs uppercase tracking-[0.14em] font-medium text-foreground px-4 h-9">
+              <Link href={`/catalogue?category=${encodeURIComponent(product.category)}`} className="flex items-center gap-1.5">
+                <span>View all {product.category}s</span>
+                <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </Button>
           </div>

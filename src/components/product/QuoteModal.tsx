@@ -277,16 +277,16 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
                 type="button"
                 variant="ghost"
                 onClick={onClose}
-                className="font-mono text-xs uppercase rounded-full px-5 hover:bg-accent"
+                className="font-sans text-xs uppercase tracking-[0.14em] font-medium rounded-full px-5 h-10 hover:bg-accent cursor-pointer"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
-                className="font-mono text-xs uppercase tracking-wider px-6 shadow-sm gap-1.5 rounded-full bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 font-bold border-none"
+                className="font-sans text-xs uppercase tracking-[0.14em] font-bold px-6 h-10 shadow-sm gap-2 rounded-full bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 border-none cursor-pointer"
               >
                 <Send className="h-3.5 w-3.5" />
-                {isScheduleMode ? "Transmit Project RFQ" : "Submit Quote Request"}
+                <span>{isScheduleMode ? "Transmit Project RFQ" : "Submit Quote Request"}</span>
               </Button>
             </div>
           </form>

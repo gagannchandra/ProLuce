@@ -132,22 +132,22 @@ export default function ProductCard({ product, onOpenQuote }: ProductCardProps) 
                       addItem(product);
                     }
                   }}
-                  className={`font-mono text-[11px] h-8 px-3.5 rounded-full transition-all duration-200 touch-manipulation cursor-pointer ${
+                  className={`font-sans text-[11px] uppercase tracking-[0.12em] font-medium h-8 px-3.5 gap-1.5 rounded-full transition-all duration-200 touch-manipulation cursor-pointer ${
                     inSchedule
                       ? "bg-emerald-600 hover:bg-emerald-500 text-white font-semibold border-none shadow-xs"
-                      : "border-border/90 text-foreground hover:bg-accent font-medium shadow-2xs"
+                      : "border-border/90 text-foreground hover:bg-accent shadow-2xs"
                   }`}
                   aria-label={inSchedule ? `Remove ${product.model} from schedule` : `Add ${product.model} to schedule`}
                 >
                   {inSchedule ? (
                     <>
-                      <Check className="mr-1 h-3 w-3" />
-                      Scheduled
+                      <Check className="h-3 w-3 stroke-[3]" />
+                      <span>Scheduled</span>
                     </>
                   ) : (
                     <>
-                      <Plus className="mr-1 h-3 w-3" />
-                      Schedule
+                      <Plus className="h-3 w-3" />
+                      <span>Schedule</span>
                     </>
                   )}
                 </Button>
@@ -156,8 +156,8 @@ export default function ProductCard({ product, onOpenQuote }: ProductCardProps) 
             </Tooltip>
 
             <div className="flex items-center gap-1.5">
-              <Button asChild variant="ghost" size="sm" className="font-mono text-xs uppercase tracking-wider h-8 px-3 rounded-full text-foreground hover:bg-accent touch-manipulation">
-                <Link href={`/products/${product.slug}`} aria-label={`View specs for ${product.model}`}>
+              <Button asChild variant="ghost" size="sm" className="font-sans text-xs uppercase tracking-[0.12em] font-medium h-8 px-3 rounded-full text-foreground hover:bg-accent touch-manipulation">
+                <Link href={`/products/${product.slug}`} aria-label={`View specs for ${product.model}`} className="flex items-center gap-1">
                   <span className="hidden sm:inline">Spec</span>
                   <ArrowRight className="h-3.5 w-3.5 opacity-70 group-hover:translate-x-0.5 transition-transform" />
                 </Link>
@@ -168,10 +168,10 @@ export default function ProductCard({ product, onOpenQuote }: ProductCardProps) 
                   variant="outline"
                   size="sm"
                   onClick={() => onOpenQuote(product)}
-                  className="font-mono text-[11px] uppercase tracking-wider h-8 px-3 rounded-full border-border hover:border-foreground/30 touch-manipulation cursor-pointer"
+                  className="font-sans text-[11px] uppercase tracking-[0.12em] font-medium h-8 px-3 gap-1.5 rounded-full border-border hover:border-foreground/30 touch-manipulation cursor-pointer"
                 >
-                  <FileText className="mr-1 h-3 w-3 text-stone-300" />
-                  RFQ
+                  <FileText className="h-3 w-3 text-stone-300" />
+                  <span>RFQ</span>
                 </Button>
               )}
             </div>

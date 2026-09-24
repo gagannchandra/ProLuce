@@ -76,7 +76,7 @@ export default function SpecScheduleDrawer({ onRequestQuote }: SpecScheduleDrawe
               <p className="text-xs text-muted-foreground max-w-sm mt-1 mb-6 font-light">
                 Explore the architectural catalogue and click &ldquo;+ Schedule&rdquo; on any luminaire to construct your project specification list.
               </p>
-              <Button asChild size="sm" className="font-mono text-xs uppercase tracking-wider">
+              <Button asChild size="sm" className="font-sans text-xs uppercase tracking-[0.14em] font-medium h-9 px-5 rounded-full bg-foreground text-background hover:bg-foreground/90">
                 <Link href="/catalogue" onClick={closeDrawer}>
                   Browse Catalogue
                 </Link>
@@ -85,12 +85,12 @@ export default function SpecScheduleDrawer({ onRequestQuote }: SpecScheduleDrawe
           ) : (
             <div className="space-y-4">
               <div className="flex items-center justify-between text-xs text-muted-foreground pb-2 border-b border-border">
-                <span className="font-mono uppercase text-[11px]">Shortlisted Project Luminaires</span>
+                <span className="font-sans text-[11px] uppercase tracking-[0.14em] font-medium text-muted-foreground">Shortlisted Project Luminaires</span>
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="xs"
                   onClick={clearSchedule}
-                  className="text-destructive hover:text-destructive text-xs gap-1 font-mono"
+                  className="text-destructive hover:text-destructive text-[11px] gap-1.5 font-sans uppercase tracking-[0.1em] font-medium h-7 px-2.5 rounded-full border-destructive/30 hover:bg-destructive/10 cursor-pointer"
                 >
                   <Trash2 className="h-3 w-3" />
                   Clear
@@ -238,11 +238,11 @@ export default function SpecScheduleDrawer({ onRequestQuote }: SpecScheduleDrawe
                 closeDrawer();
                 onRequestQuote();
               }}
-              className="w-full font-mono text-xs uppercase tracking-wider h-11 justify-between shadow-sm rounded-full px-5 bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 font-bold border-none touch-manipulation cursor-pointer"
+              className="w-full font-sans text-xs uppercase tracking-[0.14em] font-bold h-11 justify-between shadow-sm rounded-full px-5 bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 border-none touch-manipulation cursor-pointer"
             >
               <span className="flex items-center gap-2">
                 <FileText className="h-4 w-4" />
-                Request Project Quotation
+                <span>Request Project Quotation</span>
               </span>
               <Badge className="font-mono text-[10px] rounded-full px-2.5 bg-neutral-950 text-[#f4f0e6] font-bold border-none">
                 {totalFixturesCount} units
@@ -253,10 +253,10 @@ export default function SpecScheduleDrawer({ onRequestQuote }: SpecScheduleDrawe
               variant="outline"
               size="sm"
               onClick={exportCsv}
-              className="w-full font-mono text-xs uppercase tracking-wider h-9 gap-1.5 rounded-full border-border hover:bg-accent touch-manipulation cursor-pointer"
+              className="w-full font-sans text-xs uppercase tracking-[0.14em] font-medium h-10 gap-2 rounded-full border-border hover:bg-accent touch-manipulation cursor-pointer shadow-2xs"
             >
               <Download className="h-3.5 w-3.5 text-stone-300" />
-              Download Spec Schedule (.CSV)
+              <span>Download Spec Schedule (.CSV)</span>
             </Button>
           </SheetFooter>
         )}

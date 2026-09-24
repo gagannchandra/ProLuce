@@ -125,21 +125,23 @@ export default function CatalogTable({ products, onOpenQuote }: CatalogTableProp
                     {p.inputVoltage.includes("48V") ? "DC 48V" : p.inputVoltage.includes("24V") ? "DC 24V" : "AC 220V"}
                   </TableCell>
 
-                  <TableCell className="py-2.5 px-4 text-right space-x-1.5 whitespace-nowrap">
-                    <Button asChild variant="ghost" size="xs" className="font-mono text-xs text-foreground">
-                      <Link href={`/products/${p.slug}`}>
-                        Specs
-                        <ArrowRight className="ml-1 h-3 w-3" />
-                      </Link>
-                    </Button>
-                    <Button
-                      size="xs"
-                      onClick={() => onOpenQuote(p)}
-                      className="font-mono text-[10px] uppercase font-semibold"
-                    >
-                      <FileText className="mr-1 h-3 w-3" />
-                      Quote
-                    </Button>
+                  <TableCell className="py-2.5 px-4 text-right whitespace-nowrap">
+                    <div className="inline-flex items-center justify-end gap-1.5">
+                      <Button asChild variant="ghost" size="xs" className="font-sans text-[11px] uppercase tracking-[0.12em] font-medium h-7 px-2.5 rounded-full text-foreground hover:bg-accent">
+                        <Link href={`/products/${p.slug}`} className="flex items-center gap-1">
+                          <span>Specs</span>
+                          <ArrowRight className="h-3 w-3 opacity-70" />
+                        </Link>
+                      </Button>
+                      <Button
+                        size="xs"
+                        onClick={() => onOpenQuote(p)}
+                        className="font-sans text-[10px] uppercase tracking-[0.12em] font-semibold h-7 px-2.5 gap-1 rounded-full"
+                      >
+                        <FileText className="h-3 w-3" />
+                        <span>Quote</span>
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

@@ -2,18 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { products } from "@/lib/products";
-import { useSpecSchedule } from "@/context/SpecScheduleContext";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Sliders,
   Sparkles,
-  Layers,
   ArrowRight,
   Check,
-  Plus,
   ShieldCheck,
   Eye,
 } from "lucide-react";
@@ -27,7 +23,8 @@ interface BeamSpec {
   application: string;
 }
 
-interface CctSpec {
+interface CctPreset {
+  key: string;
   kelvin: number;
   label: string;
   name: string;
@@ -73,8 +70,9 @@ const BEAMS: BeamSpec[] = [
   },
 ];
 
-const CCTS: CctSpec[] = [
+const CCT_PRESETS: CctPreset[] = [
   {
+    key: "2700k",
     kelvin: 2700,
     label: "2700K",
     name: "Warm Incandescent",
@@ -82,6 +80,7 @@ const CCTS: CctSpec[] = [
     description: "Intimate residential warmth, luxury hospitality & spa suites",
   },
   {
+    key: "3000k",
     kelvin: 3000,
     label: "3000K",
     name: "Soft Architectural",
@@ -89,6 +88,7 @@ const CCTS: CctSpec[] = [
     description: "Standard architectural warm white; museums, retail & galleries",
   },
   {
+    key: "4000k",
     kelvin: 4000,
     label: "4000K",
     name: "Neutral Daylight",
@@ -96,38 +96,90 @@ const CCTS: CctSpec[] = [
     description: "Crisp neutral white for modern offices, healthcare & studios",
   },
   {
+    key: "tunable",
     kelvin: 5000,
     label: "Tunable",
     name: "Circadian 2700–6500K",
-    hex: "#f4f0e6",
+    hex: "#eaf4ff",
     description: "Human-centric biodynamic lighting synchronized to solar cycle",
   },
 ];
 
+// Calibrated architectural color interpolation across 2700K - 6500K
+function getCctColor(kelvin: number): string {
+  const stops = [
+    { k: 2700, r: 255, g: 179, b: 102 }, // Warm incandescent
+    { k: 3000, r: 255, g: 209, b: 153 }, // Soft architectural
+    { k: 4000, r: 255, g: 240, b: 217 }, // Neutral daylight
+    { k: 5000, r: 234, g: 244, b: 255 }, // Crisp daylight
+    { k: 6500, r: 200, g: 228, b: 255 }, // Circadian sky daylight
+  ];
+
+  if (kelvin <= stops[0].k) return "#ffb366";
+  if (kelvin >= stops[stops.length - 1].k) return "#c8e4ff";
+
+  for (let i = 0; i < stops.length - 1; i++) {
+    const s1 = stops[i];
+    const s2 = stops[i + 1];
+    if (kelvin >= s1.k && kelvin <= s2.k) {
+      const factor = (kelvin - s1.k) / (s2.k - s1.k);
+      const r = Math.round(s1.r + factor * (s2.r - s1.r));
+      const g = Math.round(s1.g + factor * (s2.g - s1.g));
+      const b = Math.round(s1.b + factor * (s2.b - s1.b));
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+  }
+  return "#ffd199";
+}
+
+function getCctMeta(kelvin: number) {
+  if (kelvin === 2700) {
+    return {
+      label: "2700K",
+      name: "Warm Incandescent",
+      filterValue: "2700K",
+    };
+  }
+  if (kelvin === 3000) {
+    return {
+      label: "3000K",
+      name: "Soft Architectural",
+      filterValue: "3000K",
+    };
+  }
+  if (kelvin === 4000) {
+    return {
+      label: "4000K",
+      name: "Neutral Daylight",
+      filterValue: "4000K",
+    };
+  }
+  if (kelvin >= 5000) {
+    return {
+      label: `${kelvin}K`,
+      name: "Circadian Daylight",
+      filterValue: "Tunable",
+    };
+  }
+  return {
+    label: `${kelvin}K`,
+    name: "Tunable Architectural",
+    filterValue: `${kelvin}K`,
+  };
+}
+
 export default function PhotometricLab() {
   const [selectedBeam, setSelectedBeam] = useState<BeamSpec>(BEAMS[1]);
-  const [selectedCct, setSelectedCct] = useState<CctSpec>(CCTS[1]);
-  const [ceilingHeight, setCeilingHeight] = useState<number>(3.5);
-  const [isAddedToSchedule, setIsAddedToSchedule] = useState(false);
+  const [kelvin, setKelvin] = useState<number>(3000);
+  const ceilingHeight = 3.0;
 
-  const { addItem, openDrawer } = useSpecSchedule();
+  const currentCctColor = getCctColor(kelvin);
+  const currentCctMeta = getCctMeta(kelvin);
 
   // Trigonometric Optical Calculations
   const rad = (selectedBeam.angleNumber * Math.PI) / 360;
   const beamDiameter = (2 * ceilingHeight * Math.tan(rad)).toFixed(2);
   const floorLux = Math.round(selectedBeam.candela / (ceilingHeight * ceilingHeight));
-
-  const handleAddOpticToSchedule = () => {
-    const rona = products.find((p) => p.slug === "rona") || products[0];
-    addItem(rona, {
-      selectedCct: selectedCct.label,
-      selectedBeamAngle: selectedBeam.angle,
-      selectedFinish: "Matte Black",
-    });
-    setIsAddedToSchedule(true);
-    openDrawer();
-    setTimeout(() => setIsAddedToSchedule(false), 3000);
-  };
 
   return (
     <section
@@ -137,7 +189,7 @@ export default function PhotometricLab() {
       {/* Soft Ambient Light Glow */}
       <div
         className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full blur-[140px] pointer-events-none transition-colors duration-700 opacity-15"
-        style={{ background: selectedCct.hex }}
+        style={{ background: currentCctColor }}
       />
 
       <div className="container-site relative z-10">
@@ -219,7 +271,7 @@ export default function PhotometricLab() {
               </div>
             </Card>
 
-            {/* 2. Color Temperature (CCT) Tuner */}
+            {/* 2. Color Temperature (CCT) Tuner with Interactive Synced Slider */}
             <Card className="p-5 bg-card border-border backdrop-blur-md rounded-2xl shadow-xl">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground font-semibold flex items-center gap-2">
@@ -227,97 +279,153 @@ export default function PhotometricLab() {
                   Color Temperature (CCT)
                 </span>
                 <span className="text-xs font-mono font-bold text-foreground">
-                  {selectedCct.label}
+                  {currentCctMeta.label}
                 </span>
               </div>
 
+              {/* 4 Preset Buttons */}
               <div className="grid grid-cols-2 gap-2.5">
-                {CCTS.map((c) => {
-                  const isSelected = selectedCct.label === c.label;
+                {CCT_PRESETS.map((preset) => {
+                  const isSelected =
+                    preset.key === "tunable"
+                      ? kelvin !== 2700 && kelvin !== 3000 && kelvin !== 4000
+                      : kelvin === preset.kelvin;
+
+                  const dotColor =
+                    preset.key === "tunable" && isSelected
+                      ? currentCctColor
+                      : preset.hex;
+
                   return (
                     <button
-                      key={c.label}
+                      key={preset.key}
                       type="button"
-                      onClick={() => setSelectedCct(c)}
-                      className={`flex items-center gap-2.5 p-2.5 rounded-xl border text-left transition-all duration-200 cursor-pointer ${
+                      onClick={() => setKelvin(preset.kelvin)}
+                      className={`flex items-center gap-2.5 p-2.5 rounded-xl border text-left transition-all duration-200 cursor-pointer touch-manipulation ${
                         isSelected
                           ? "bg-[#f4f0e6] border-[#e6dfd1] text-zinc-950 font-bold shadow-xs"
                           : "bg-surface/80 dark:bg-zinc-800/60 border-border text-foreground hover:border-stone-400 hover:bg-muted"
                       }`}
                     >
                       <span
-                        className="h-3.5 w-3.5 rounded-full shrink-0 shadow-xs border border-black/30"
-                        style={{ background: c.hex }}
+                        className="h-3.5 w-3.5 rounded-full shrink-0 shadow-xs border border-black/30 transition-colors duration-200"
+                        style={{ background: dotColor }}
                       />
                       <div className="min-w-0 flex-1">
-                        <div className="text-xs font-mono font-bold leading-none">{c.label}</div>
-                        <div className={`text-[10px] truncate mt-0.5 ${isSelected ? "text-zinc-800" : "text-muted-foreground"}`}>{c.name}</div>
+                        <div className="text-xs font-mono font-bold leading-none">
+                          {preset.label}
+                        </div>
+                        <div
+                          className={`text-[10px] truncate mt-0.5 ${
+                            isSelected ? "text-zinc-800" : "text-muted-foreground"
+                          }`}
+                        >
+                          {preset.name}
+                        </div>
                       </div>
-                      {isSelected && <Check className="h-3 w-3 text-zinc-950 shrink-0 stroke-[3]" />}
+                      {isSelected && (
+                        <Check className="h-3 w-3 text-zinc-950 shrink-0 stroke-[3]" />
+                      )}
                     </button>
                   );
                 })}
               </div>
-            </Card>
 
-            {/* 3. Ceiling Mounting Height */}
-            <Card className="p-5 bg-card border-border backdrop-blur-md rounded-2xl shadow-xl">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground font-semibold flex items-center gap-2">
-                  <Layers className="h-3.5 w-3.5 text-stone-400" />
-                  Mounting Height (H)
-                </span>
-                <span className="text-xs font-mono font-bold text-foreground">
-                  {ceilingHeight.toFixed(1)} Meters
-                </span>
-              </div>
+              {/* Interactive Kelvin Spectrum Slider Synced with Buttons */}
+              <div
+                className="mt-4 pt-3.5 border-t border-border/80 space-y-2"
+                style={
+                  {
+                    "--cct-glow": currentCctColor,
+                  } as React.CSSProperties
+                }
+              >
+                <div className="flex items-center justify-between text-[11px] font-mono text-muted-foreground">
+                  <span className="flex items-center gap-1.5 font-medium">
+                    <span
+                      className="h-2 w-2 rounded-full border border-black/20 shadow-2xs transition-colors duration-200"
+                      style={{ background: currentCctColor }}
+                    />
+                    <span>Kelvin Spectrum</span>
+                  </span>
+                  <span className="text-foreground font-semibold font-mono">
+                    {kelvin}K · {currentCctMeta.name}
+                  </span>
+                </div>
 
-              <div className="grid grid-cols-3 gap-2">
-                {[2.5, 3.0, 3.5].map((h) => (
+                {/* Slider Input with Dynamic Continuous Color Track */}
+                <div className="relative py-1 flex items-center">
+                  <input
+                    type="range"
+                    min={2700}
+                    max={6500}
+                    step={25}
+                    value={kelvin}
+                    onChange={(e) => setKelvin(Number(e.target.value))}
+                    className="cct-slider w-full h-2 rounded-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
+                    style={{
+                      background:
+                        "linear-gradient(to right, #ff9e42 0%, #ffb366 10%, #ffd199 25%, #fff0d9 45%, #eaf4ff 75%, #c8e4ff 100%)",
+                    }}
+                    aria-label="Color Temperature in Kelvin"
+                  />
+                </div>
+
+                {/* Quick Snap Reference Markers */}
+                <div className="flex justify-between items-center text-[10px] font-mono text-muted-foreground px-0.5">
                   <button
-                    key={h}
                     type="button"
-                    onClick={() => setCeilingHeight(h)}
-                    className={`py-2 px-3 rounded-xl border font-mono text-xs transition-all cursor-pointer ${
-                      ceilingHeight === h
-                        ? "bg-[#f4f0e6] text-zinc-950 font-bold border-[#e6dfd1] shadow-md"
-                        : "bg-surface/80 dark:bg-zinc-800/60 border-border text-foreground hover:bg-muted"
+                    onClick={() => setKelvin(2700)}
+                    className={`hover:text-foreground transition-colors cursor-pointer touch-manipulation ${
+                      kelvin === 2700 ? "text-foreground font-bold" : ""
                     }`}
                   >
-                    {h.toFixed(1)}m Ceiling
+                    2700K
                   </button>
-                ))}
+                  <button
+                    type="button"
+                    onClick={() => setKelvin(3000)}
+                    className={`hover:text-foreground transition-colors cursor-pointer touch-manipulation ${
+                      kelvin === 3000 ? "text-foreground font-bold" : ""
+                    }`}
+                  >
+                    3000K
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setKelvin(4000)}
+                    className={`hover:text-foreground transition-colors cursor-pointer touch-manipulation ${
+                      kelvin === 4000 ? "text-foreground font-bold" : ""
+                    }`}
+                  >
+                    4000K
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setKelvin(6500)}
+                    className={`hover:text-foreground transition-colors cursor-pointer touch-manipulation ${
+                      kelvin === 6500 ? "text-foreground font-bold" : ""
+                    }`}
+                  >
+                    6500K
+                  </button>
+                </div>
               </div>
             </Card>
 
-            {/* Direct Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+            {/* Direct Action Button */}
+            <div className="pt-2">
               <Button
                 asChild
-                className="flex-1 rounded-full bg-[#f4f0e6] text-zinc-950 hover:bg-[#eae4d5] font-mono text-xs uppercase tracking-wider h-11 font-semibold shadow-md cursor-pointer"
+                className="w-full rounded-full bg-[#f4f0e6] text-zinc-950 hover:bg-[#eae4d5] font-sans text-xs uppercase tracking-[0.14em] font-semibold h-11 shadow-md cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99]"
               >
-                <Link href={`/catalogue?beam=${encodeURIComponent(selectedBeam.angle)}&cct=${encodeURIComponent(selectedCct.label)}`}>
+                <Link
+                  href={`/catalogue?beam=${encodeURIComponent(selectedBeam.angle)}&cct=${encodeURIComponent(currentCctMeta.filterValue)}`}
+                  className="flex items-center justify-center gap-2"
+                >
                   <span>Filter Catalogue for {selectedBeam.angle}</span>
-                  <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                  <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
-              </Button>
-
-              <Button
-                variant="outline"
-                onClick={handleAddOpticToSchedule}
-                className="rounded-full border-border bg-card text-foreground hover:bg-muted font-mono text-xs uppercase tracking-wider h-11 px-5 cursor-pointer shadow-2xs"
-              >
-                {isAddedToSchedule ? (
-                  <>
-                    <Check className="mr-1.5 h-3.5 w-3.5 text-emerald-500 stroke-[3]" />
-                    <span>Added to Schedule</span>
-                  </>
-                ) : (
-                  <>
-                    <Plus className="mr-1.5 h-3.5 w-3.5 text-stone-400" />
-                    <span>Add to Schedule</span>
-                  </>
-                )}
               </Button>
             </div>
 
@@ -330,7 +438,13 @@ export default function PhotometricLab() {
               {/* Studio Canvas HUD Top Bar */}
               <div className="w-full flex items-center justify-between border-b border-zinc-800/80 pb-4 mb-6">
                 <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-[#f4f0e6] animate-pulse shadow-[0_0_8px_rgba(244,240,230,0.8)]" />
+                  <span
+                    className="h-2 w-2 rounded-full animate-pulse transition-colors duration-300"
+                    style={{
+                      background: currentCctColor,
+                      boxShadow: `0 0 8px ${currentCctColor}`,
+                    }}
+                  />
                   <span className="text-xs font-mono uppercase tracking-wider text-zinc-300 font-semibold">
                     Optical Ray Simulator
                   </span>
@@ -353,17 +467,17 @@ export default function PhotometricLab() {
                   <defs>
                     {/* Beam Glow Radial Gradient */}
                     <radialGradient id="beamGradient" cx="50%" cy="0%" r="90%">
-                      <stop offset="0%" stopColor={selectedCct.hex} stopOpacity="0.85" />
-                      <stop offset="35%" stopColor={selectedCct.hex} stopOpacity="0.45" />
-                      <stop offset="70%" stopColor={selectedCct.hex} stopOpacity="0.15" />
-                      <stop offset="100%" stopColor={selectedCct.hex} stopOpacity="0.0" />
+                      <stop offset="0%" stopColor={currentCctColor} stopOpacity="0.85" />
+                      <stop offset="35%" stopColor={currentCctColor} stopOpacity="0.45" />
+                      <stop offset="70%" stopColor={currentCctColor} stopOpacity="0.15" />
+                      <stop offset="100%" stopColor={currentCctColor} stopOpacity="0.0" />
                     </radialGradient>
 
                     {/* Lens Point Flare */}
                     <radialGradient id="lensFlare" cx="50%" cy="50%" r="50%">
                       <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
-                      <stop offset="40%" stopColor={selectedCct.hex} stopOpacity="0.9" />
-                      <stop offset="100%" stopColor={selectedCct.hex} stopOpacity="0.0" />
+                      <stop offset="40%" stopColor={currentCctColor} stopOpacity="0.9" />
+                      <stop offset="100%" stopColor={currentCctColor} stopOpacity="0.0" />
                     </radialGradient>
                   </defs>
 
@@ -389,7 +503,7 @@ export default function PhotometricLab() {
                         <polygon
                           points={`${apexX},${apexY} ${leftX},${floorY} ${rightX},${floorY}`}
                           fill="url(#beamGradient)"
-                          className="transition-all duration-500 ease-out"
+                          className="transition-all duration-300 ease-out"
                         />
 
                         {/* Optical Edge Rays */}
@@ -398,20 +512,20 @@ export default function PhotometricLab() {
                           y1={apexY}
                           x2={leftX}
                           y2={floorY}
-                          stroke={selectedCct.hex}
+                          stroke={currentCctColor}
                           strokeWidth="1.5"
                           strokeOpacity="0.7"
-                          className="transition-all duration-500 ease-out"
+                          className="transition-all duration-300 ease-out"
                         />
                         <line
                           x1={apexX}
                           y1={apexY}
                           x2={rightX}
                           y2={floorY}
-                          stroke={selectedCct.hex}
+                          stroke={currentCctColor}
                           strokeWidth="1.5"
                           strokeOpacity="0.7"
-                          className="transition-all duration-500 ease-out"
+                          className="transition-all duration-300 ease-out"
                         />
 
                         {/* Floor Light Pool (Ellipse) */}
@@ -420,9 +534,9 @@ export default function PhotometricLab() {
                           cy={floorY}
                           rx={halfWidth}
                           ry="10"
-                          fill={selectedCct.hex}
+                          fill={currentCctColor}
                           fillOpacity="0.35"
-                          className="transition-all duration-500 ease-out"
+                          className="transition-all duration-300 ease-out"
                         />
 
                         {/* Dimension Arrow for Floor Beam Diameter */}

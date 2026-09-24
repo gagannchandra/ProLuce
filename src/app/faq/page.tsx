@@ -127,14 +127,14 @@ export default function FaqPage() {
             </p>
           </div>
           <div className="flex flex-wrap gap-3 shrink-0">
-            <Button asChild variant="outline" size="sm" className="font-mono text-xs uppercase tracking-wider gap-1.5 rounded-full px-4">
-              <a href={siteConfig.catalogPdfUrl} target="_blank" rel="noopener noreferrer">
+            <Button asChild variant="outline" size="sm" className="font-sans text-xs uppercase tracking-[0.14em] font-medium rounded-full px-4 h-9">
+              <a href={siteConfig.catalogPdfUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                 <Download className="h-3.5 w-3.5" />
                 <span>Datasheet PDF</span>
               </a>
             </Button>
-            <Button asChild size="sm" className="font-mono text-xs uppercase tracking-wider gap-1.5 rounded-full px-5">
-              <Link href="/contact">
+            <Button asChild size="sm" className="font-sans text-xs uppercase tracking-[0.14em] font-bold rounded-full px-5 h-9 bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 border-none shadow-xs">
+              <Link href="/contact" className="flex items-center gap-2">
                 <span>Studio Consultation</span>
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>

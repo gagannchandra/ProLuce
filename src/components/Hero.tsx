@@ -82,6 +82,7 @@ export default function Hero({ product }: HeroProps) {
                 onPlay={enforceSpeed}
                 onLoadedMetadata={enforceSpeed}
                 onEnded={() => setVideoEnded(true)}
+                onError={() => setVideoEnded(true)}
                 className="w-full h-full object-cover bg-black"
               >
                 <source src="/videos/hero.webm" type="video/webm" />
@@ -168,7 +169,7 @@ export default function Hero({ product }: HeroProps) {
             <Button
               asChild
               size="lg"
-              className="group h-11 sm:h-12 rounded-full bg-[#f4f0e6] text-zinc-950 hover:bg-[#eae4d5] font-mono text-xs uppercase tracking-wider px-6 sm:px-7 shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 font-semibold touch-manipulation"
+              className="group h-11 sm:h-12 rounded-full bg-[#f4f0e6] text-zinc-950 hover:bg-[#eae4d5] font-sans text-xs uppercase tracking-[0.14em] font-semibold px-6 sm:px-7 shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 touch-manipulation"
             >
               <Link href="/catalogue" className="flex items-center gap-2.5 sm:gap-3">
                 <span>Explore Catalogue</span>
@@ -183,20 +184,20 @@ export default function Hero({ product }: HeroProps) {
                 variant={inSchedule ? "secondary" : "outline"}
                 size="lg"
                 onClick={handleScheduleToggle}
-                className={`h-11 sm:h-12 rounded-full font-mono text-xs uppercase tracking-wider px-5 sm:px-7 border hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 backdrop-blur-md touch-manipulation ${
+                className={`h-11 sm:h-12 rounded-full font-sans text-xs uppercase tracking-[0.14em] font-semibold px-5 sm:px-7 border hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 backdrop-blur-md touch-manipulation gap-2 ${
                   inSchedule
-                    ? "bg-emerald-600 hover:bg-emerald-500 text-white font-medium border-emerald-500 shadow-md"
+                    ? "bg-emerald-600 hover:bg-emerald-500 text-white border-emerald-500 shadow-md"
                     : "bg-white/5 text-white border-white/20 hover:bg-white/15 hover:border-white/40"
                 }`}
               >
                 {inSchedule ? (
                   <>
-                    <Check className="mr-2 h-4 w-4 text-white stroke-[3]" />
+                    <Check className="h-4 w-4 text-white stroke-[3]" />
                     <span>In Spec Schedule</span>
                   </>
                 ) : (
                   <>
-                    <Plus className="mr-2 h-4 w-4 text-stone-300" />
+                    <Plus className="h-4 w-4 text-stone-300" />
                     <span>Add to Schedule</span>
                   </>
                 )}
@@ -206,9 +207,9 @@ export default function Hero({ product }: HeroProps) {
                 variant="outline"
                 size="lg"
                 onClick={() => setIsQuoteOpen(true)}
-                className="h-11 sm:h-12 rounded-full font-mono text-xs uppercase tracking-wider px-5 sm:px-7 border-white/20 bg-white/5 text-white hover:bg-white/15 hover:border-white/40 backdrop-blur-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 touch-manipulation"
+                className="h-11 sm:h-12 rounded-full font-sans text-xs uppercase tracking-[0.14em] font-semibold px-5 sm:px-7 border-white/20 bg-white/5 text-white hover:bg-white/15 hover:border-white/40 backdrop-blur-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 touch-manipulation gap-2"
               >
-                <FileText className="mr-2 h-4 w-4 text-stone-300" />
+                <FileText className="h-4 w-4 text-stone-300" />
                 <span>Request Project RFQ</span>
               </Button>
             )}
@@ -217,8 +218,14 @@ export default function Hero({ product }: HeroProps) {
         </div>
       </div>
 
-      {/* Tactile Stage Luminaire Optic Switcher (Bottom Right HUD) */}
-      <div className="flex absolute bottom-4 right-4 sm:bottom-8 sm:right-10 z-20 items-center">
+      {/* Tactile Stage Luminaire Optic Switcher (Bottom Right HUD) — Appears when hero video completes */}
+      <div
+        className={`flex absolute bottom-4 right-4 sm:bottom-8 sm:right-10 z-20 items-center transition-all duration-700 ease-out ${
+          videoEnded
+            ? "opacity-100 translate-y-0 pointer-events-auto"
+            : "opacity-0 translate-y-4 pointer-events-none"
+        }`}
+      >
         <button
           type="button"
           onClick={toggleLight}
