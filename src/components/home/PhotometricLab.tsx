@@ -97,22 +97,54 @@ const CCT_PRESETS: CctPreset[] = [
   },
   {
     key: "tunable",
-    kelvin: 5000,
+    kelvin: 6500,
     label: "Tunable",
     name: "Circadian 2700–6500K",
-    hex: "#eaf4ff",
+    hex: "#c8e4ff",
     description: "Human-centric biodynamic lighting synchronized to solar cycle",
   },
 ];
 
+// Piecewise mapping to ensure 100% visual and physical alignment between the slider thumb,
+// color gradient track, preset buttons, and scale reference labels (2700K=0%, 3000K=33.33%, 4000K=66.67%, 6500K=100%).
+function sliderPosToKelvin(pos: number): number {
+  if (pos <= 0) return 2700;
+  if (pos >= 100) return 6500;
+  let k: number;
+  if (pos <= 33.333) {
+    k = 2700 + (pos / 33.333) * (3000 - 2700);
+  } else if (pos <= 66.667) {
+    k = 3000 + ((pos - 33.333) / 33.334) * (4000 - 3000);
+  } else {
+    k = 4000 + ((pos - 66.667) / 33.333) * (6500 - 4000);
+  }
+  if (Math.abs(k - 2700) < 15) return 2700;
+  if (Math.abs(k - 3000) < 15) return 3000;
+  if (Math.abs(k - 4000) < 15) return 4000;
+  if (Math.abs(k - 6500) < 15) return 6500;
+  return Math.round(k / 25) * 25;
+}
+
+function kelvinToSliderPos(k: number): number {
+  if (k <= 2700) return 0;
+  if (k >= 6500) return 100;
+  if (k <= 3000) {
+    return ((k - 2700) / 300) * 33.333;
+  } else if (k <= 4000) {
+    return 33.333 + ((k - 3000) / 1000) * 33.334;
+  } else {
+    return 66.667 + ((k - 4000) / 2500) * 33.333;
+  }
+}
+
 // Calibrated architectural color interpolation across 2700K - 6500K
 function getCctColor(kelvin: number): string {
   const stops = [
-    { k: 2700, r: 255, g: 179, b: 102 }, // Warm incandescent
-    { k: 3000, r: 255, g: 209, b: 153 }, // Soft architectural
-    { k: 4000, r: 255, g: 240, b: 217 }, // Neutral daylight
-    { k: 5000, r: 234, g: 244, b: 255 }, // Crisp daylight
-    { k: 6500, r: 200, g: 228, b: 255 }, // Circadian sky daylight
+    { k: 2700, r: 255, g: 179, b: 102 }, // Warm incandescent #ffb366
+    { k: 3000, r: 255, g: 209, b: 153 }, // Soft architectural #ffd199
+    { k: 4000, r: 255, g: 240, b: 217 }, // Neutral daylight #fff0d9
+    { k: 5000, r: 234, g: 244, b: 255 }, // Crisp daylight #eaf4ff
+    { k: 6500, r: 200, g: 228, b: 255 }, // Circadian sky daylight #c8e4ff
   ];
 
   if (kelvin <= stops[0].k) return "#ffb366";
@@ -154,6 +186,13 @@ function getCctMeta(kelvin: number) {
       filterValue: "4000K",
     };
   }
+  if (kelvin === 6500) {
+    return {
+      label: "6500K",
+      name: "Circadian Daylight",
+      filterValue: "Tunable",
+    };
+  }
   if (kelvin >= 5000) {
     return {
       label: `${kelvin}K`,
@@ -164,7 +203,7 @@ function getCctMeta(kelvin: number) {
   return {
     label: `${kelvin}K`,
     name: "Tunable Architectural",
-    filterValue: `${kelvin}K`,
+    filterValue: "Tunable",
   };
 }
 
@@ -353,61 +392,65 @@ export default function PhotometricLab() {
                   </span>
                 </div>
 
-                {/* Slider Input with Dynamic Continuous Color Track */}
+                {/* Slider Input with Dynamic Continuous Color Track Synced to Scale */}
                 <div className="relative py-1 flex items-center">
                   <input
                     type="range"
-                    min={2700}
-                    max={6500}
-                    step={25}
-                    value={kelvin}
-                    onChange={(e) => setKelvin(Number(e.target.value))}
+                    min={0}
+                    max={100}
+                    step={0.5}
+                    value={kelvinToSliderPos(kelvin)}
+                    onChange={(e) => setKelvin(sliderPosToKelvin(Number(e.target.value)))}
                     className="cct-slider w-full h-2 rounded-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
                     style={{
                       background:
-                        "linear-gradient(to right, #ff9e42 0%, #ffb366 10%, #ffd199 25%, #fff0d9 45%, #eaf4ff 75%, #c8e4ff 100%)",
+                        "linear-gradient(to right, #ffb366 0%, #ffd199 33.33%, #fff0d9 66.67%, #c8e4ff 100%)",
                     }}
                     aria-label="Color Temperature in Kelvin"
                   />
                 </div>
 
-                {/* Quick Snap Reference Markers */}
-                <div className="flex justify-between items-center text-[10px] font-mono text-muted-foreground px-0.5">
+                {/* Quick Snap Reference Markers Perfectly Aligned to Scale */}
+                <div className="flex justify-between items-center text-[10px] font-mono text-muted-foreground px-0.5 pt-0.5">
                   <button
                     type="button"
                     onClick={() => setKelvin(2700)}
-                    className={`hover:text-foreground transition-colors cursor-pointer touch-manipulation ${
+                    className={`hover:text-foreground transition-colors cursor-pointer touch-manipulation flex flex-col items-center gap-0.5 ${
                       kelvin === 2700 ? "text-foreground font-bold" : ""
                     }`}
                   >
-                    2700K
+                    <span className={`w-0.5 rounded-full transition-all duration-200 ${kelvin === 2700 ? "h-1.5 bg-foreground" : "h-1 bg-muted-foreground/30"}`} />
+                    <span>2700K</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => setKelvin(3000)}
-                    className={`hover:text-foreground transition-colors cursor-pointer touch-manipulation ${
+                    className={`hover:text-foreground transition-colors cursor-pointer touch-manipulation flex flex-col items-center gap-0.5 ${
                       kelvin === 3000 ? "text-foreground font-bold" : ""
                     }`}
                   >
-                    3000K
+                    <span className={`w-0.5 rounded-full transition-all duration-200 ${kelvin === 3000 ? "h-1.5 bg-foreground" : "h-1 bg-muted-foreground/30"}`} />
+                    <span>3000K</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => setKelvin(4000)}
-                    className={`hover:text-foreground transition-colors cursor-pointer touch-manipulation ${
+                    className={`hover:text-foreground transition-colors cursor-pointer touch-manipulation flex flex-col items-center gap-0.5 ${
                       kelvin === 4000 ? "text-foreground font-bold" : ""
                     }`}
                   >
-                    4000K
+                    <span className={`w-0.5 rounded-full transition-all duration-200 ${kelvin === 4000 ? "h-1.5 bg-foreground" : "h-1 bg-muted-foreground/30"}`} />
+                    <span>4000K</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => setKelvin(6500)}
-                    className={`hover:text-foreground transition-colors cursor-pointer touch-manipulation ${
+                    className={`hover:text-foreground transition-colors cursor-pointer touch-manipulation flex flex-col items-center gap-0.5 ${
                       kelvin === 6500 ? "text-foreground font-bold" : ""
                     }`}
                   >
-                    6500K
+                    <span className={`w-0.5 rounded-full transition-all duration-200 ${kelvin === 6500 ? "h-1.5 bg-foreground" : "h-1 bg-muted-foreground/30"}`} />
+                    <span>6500K</span>
                   </button>
                 </div>
               </div>

@@ -198,11 +198,17 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                 onValueChange={(v) => setActiveMedia(v as "photo" | "diagram")}
                 className="w-full"
               >
-                <TabsList className="w-full grid grid-cols-2 h-11 rounded-full p-1 bg-muted/80 backdrop-blur-xs border border-border/60">
-                  <TabsTrigger value="photo" className="font-mono text-xs uppercase tracking-wider rounded-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs text-muted-foreground cursor-pointer">
+                <TabsList className="w-full grid grid-cols-2 h-11 rounded-full p-1 bg-muted/60 dark:bg-muted/40 backdrop-blur-xs border border-border/80 gap-1">
+                  <TabsTrigger
+                    value="photo"
+                    className="font-mono text-xs uppercase tracking-wider rounded-full text-foreground/70 hover:text-foreground data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:font-bold data-[state=active]:shadow-xs transition-all cursor-pointer"
+                  >
                     Fixture Photography
                   </TabsTrigger>
-                  <TabsTrigger value="diagram" className="font-mono text-xs uppercase tracking-wider rounded-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs text-muted-foreground cursor-pointer">
+                  <TabsTrigger
+                    value="diagram"
+                    className="font-mono text-xs uppercase tracking-wider rounded-full text-foreground/70 hover:text-foreground data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:font-bold data-[state=active]:shadow-xs transition-all cursor-pointer"
+                  >
                     Cutout & CAD Schematic
                   </TabsTrigger>
                 </TabsList>
@@ -763,17 +769,17 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
       {/* ─────────────────────────────────────────────────────────────
           SECTION 3: TECHNICAL SPECIFICATIONS & DOWNLOADS TABBED MATRIX (FULL-WIDTH)
           ───────────────────────────────────────────────────────────── */}
-      <section className="space-y-6 pt-8 border-t border-border">
+      <section className="space-y-6 pt-10 sm:pt-14 border-t border-border">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.16em] text-muted-foreground font-semibold mb-1">
+            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.16em] text-muted-foreground font-semibold mb-1.5">
               <Zap className="h-3.5 w-3.5 text-foreground" />
               <span>Datasheet & Standards</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-foreground font-display">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light tracking-tight text-foreground font-display leading-snug pt-1">
               Technical Engineering Specifications
             </h2>
-            <p className="text-xs text-muted-foreground mt-0.5 font-light">
+            <p className="text-xs sm:text-sm text-muted-foreground mt-1 font-light">
               Exhaustive optical, electrical, mechanical parameters, and certified compliance documentation.
             </p>
           </div>
@@ -786,17 +792,29 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
             onValueChange={(v) => setActiveSpecTab(v as typeof activeSpecTab)}
             className="w-full space-y-6"
           >
-            <TabsList className="w-full grid grid-cols-2 sm:grid-cols-4 h-auto p-1.5 bg-muted/80 rounded-full border border-border/60">
-              <TabsTrigger value="optical" className="font-mono text-xs uppercase tracking-wider py-2.5 rounded-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs text-muted-foreground cursor-pointer">
+            <TabsList className="w-full grid grid-cols-2 sm:grid-cols-4 h-auto p-1.5 bg-muted/60 dark:bg-muted/40 rounded-2xl sm:rounded-full border border-border/80 gap-1">
+              <TabsTrigger
+                value="optical"
+                className="font-mono text-xs uppercase tracking-wider py-2.5 rounded-xl sm:rounded-full text-foreground/70 hover:text-foreground hover:bg-background/40 data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:font-bold data-[state=active]:shadow-sm transition-all cursor-pointer"
+              >
                 Optics & Photometry
               </TabsTrigger>
-              <TabsTrigger value="electrical" className="font-mono text-xs uppercase tracking-wider py-2.5 rounded-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs text-muted-foreground cursor-pointer">
+              <TabsTrigger
+                value="electrical"
+                className="font-mono text-xs uppercase tracking-wider py-2.5 rounded-xl sm:rounded-full text-foreground/70 hover:text-foreground hover:bg-background/40 data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:font-bold data-[state=active]:shadow-sm transition-all cursor-pointer"
+              >
                 Electrical & Drivers
               </TabsTrigger>
-              <TabsTrigger value="mechanical" className="font-mono text-xs uppercase tracking-wider py-2.5 rounded-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs text-muted-foreground cursor-pointer">
+              <TabsTrigger
+                value="mechanical"
+                className="font-mono text-xs uppercase tracking-wider py-2.5 rounded-xl sm:rounded-full text-foreground/70 hover:text-foreground hover:bg-background/40 data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:font-bold data-[state=active]:shadow-sm transition-all cursor-pointer"
+              >
                 Mechanical & Construction
               </TabsTrigger>
-              <TabsTrigger value="downloads" className="font-mono text-xs uppercase tracking-wider py-2.5 rounded-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs text-muted-foreground cursor-pointer">
+              <TabsTrigger
+                value="downloads"
+                className="font-mono text-xs uppercase tracking-wider py-2.5 rounded-xl sm:rounded-full text-foreground/70 hover:text-foreground hover:bg-background/40 data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:font-bold data-[state=active]:shadow-sm transition-all cursor-pointer"
+              >
                 Downloads & CAD
               </TabsTrigger>
             </TabsList>
@@ -804,21 +822,21 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
             {/* Tab 1: Optical & Photometry (Symmetrical 5 vs 5 rows) */}
             <TabsContent value="optical" className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 text-xs">
-                <div className="divide-y divide-border/70">
+                <div className="divide-y divide-border/60">
                   <SpecRow
-                    label={selectedVariant ? `Power Rating (${selectedVariant.model})` : "Power Rating"}
+                    label={selectedVariant ? `Power Rating (${selectedVariant.model})` : "Power Consumption"}
                     value={selectedVariant ? selectedVariant.power : product.power}
                     isHighlight
                     isMono
                   />
                   <SpecRow
-                    label={selectedVariant ? `Luminous Output (${selectedVariant.model})` : "Luminous Flux"}
+                    label={selectedVariant ? `Luminous Output (${selectedVariant.model})` : "Luminous Flux Output"}
                     value={selectedVariant ? selectedVariant.lumens : (product.efficacy || product.lumens)}
                     isHighlight
                     isMono
                   />
                   <SpecRow
-                    label="Luminous Efficacy"
+                    label="System Luminous Efficacy"
                     value={product.efficacy || "100 Lm/W"}
                     isMono
                   />
@@ -828,79 +846,109 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                     isMono
                   />
                   <SpecRow
-                    label="Color Temperatures Available"
+                    label="Color Temperatures (CCT)"
                     value={product.cct.join(" · ")}
                   />
                 </div>
 
-                <div className="divide-y divide-border/70">
+                <div className="divide-y divide-border/60">
                   <SpecRow
                     label="Optical Beam Angles"
                     value={product.beamAngles.join(", ")}
                     isMono
                   />
                   <SpecRow
-                    label="Glare Control Standard"
-                    value={product.ugr ? `UGR < ${product.ugr}` : "UGR < 19 Shielded"}
+                    label="Glare Shielding Standard"
+                    value={product.ugr ? `UGR < ${product.ugr} Shielded` : "UGR < 19 Shielded"}
                     isHighlight
                     isMono
                   />
                   <SpecRow
                     label="Color Consistency (SDCM)"
-                    value={product.sdcm || "SDCM ≤ 3 (MacAdam Ellipse)"}
+                    value={product.sdcm || "SDCM ≤ 3 (MacAdam 3-Step)"}
                     isMono
                   />
                   <SpecRow
-                    label="Reflector Optics"
+                    label="Reflector Architecture"
                     value={product.optics || "Specular Aluminum Reflector"}
                   />
                   <SpecRow
-                    label="Operational Lifespan"
-                    value={product.lifeHours || "50,000 Hours (L80B10)"}
+                    label="Rated Lifespan Expectancy"
+                    value={product.lifeHours || "50,000 Hours (L80B10 @ 25°C)"}
                     isMono
                   />
                 </div>
               </div>
             </TabsContent>
 
-            {/* Tab 2: Electrical & Drivers (Symmetrical 4 vs 4 rows) */}
+            {/* Tab 2: Electrical & Drivers (Symmetrical 5 vs 5 rows) */}
             <TabsContent value="electrical" className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 text-xs">
-                <div className="divide-y divide-border/70">
-                  <SpecRow label="Input Voltage" value={product.inputVoltage} isHighlight isMono />
-                  <SpecRow label="Driver & Control Protocols" value={product.driverOptions.join(", ")} isHighlight />
-                  <SpecRow label="Power Factor" value="> 0.95 High-Efficiency" isMono />
-                  <SpecRow label="Frequency Range" value="50–60Hz" isMono />
+                <div className="divide-y divide-border/60">
+                  <SpecRow
+                    label="Input Voltage Range"
+                    value={product.inputVoltage || "AC 85–265V / 220–240V"}
+                    isHighlight
+                    isMono
+                  />
+                  <SpecRow
+                    label="Driver & Control Protocols"
+                    value={product.driverOptions.join(", ")}
+                    isHighlight
+                  />
+                  <SpecRow
+                    label="Power Factor (PF)"
+                    value="PF ≥ 0.95 (High-Efficiency)"
+                    isMono
+                  />
+                  <SpecRow
+                    label="Mains Frequency Range"
+                    value="50 / 60 Hz"
+                    isMono
+                  />
+                  <SpecRow
+                    label="Electrical Safety Class"
+                    value="Class I / Class II Protective Earth"
+                  />
                 </div>
 
-                <div className="divide-y divide-border/70">
+                <div className="divide-y divide-border/60">
                   <SpecRow
-                    label="Operating Ambient Temp (Ta)"
+                    label="Ambient Operating Temp (Ta)"
                     value={product.operatingTemp || "-20°C to +45°C"}
                     isMono
                   />
                   <SpecRow
-                    label="Glowing Wire Test"
+                    label="Glow Wire Flammability"
                     value={product.glowWireTest || "850°C Self-Extinguishing"}
                     isMono
                   />
                   <SpecRow
-                    label="Tested Standards & Compliance"
-                    value={product.standards || "CE, RoHS, EN 60598-1"}
+                    label="Certified Safety Standards"
+                    value={product.standards || "CE, RoHS, EN 60598-1, CB"}
                   />
                   <SpecRow
-                    label="Smart Control Option"
-                    value="Casambi / Tuya Wireless on request"
+                    label="Surge Protection Level"
+                    value="2.0 kV (L-N) / 4.0 kV (L-PE)"
+                    isMono
+                  />
+                  <SpecRow
+                    label="Wireless Mesh Protocol"
+                    value="Casambi / Tuya / BLE on request"
                   />
                 </div>
               </div>
             </TabsContent>
 
-            {/* Tab 3: Mechanical & Construction (Symmetrical 4 vs 4 rows) */}
+            {/* Tab 3: Mechanical & Construction (Symmetrical 5 vs 5 rows) */}
             <TabsContent value="mechanical" className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 text-xs">
-                <div className="divide-y divide-border/70">
-                  <SpecRow label="Installation / Mounting" value={product.installationMethod} isHighlight />
+                <div className="divide-y divide-border/60">
+                  <SpecRow
+                    label="Mounting & Installation"
+                    value={product.installationMethod}
+                    isHighlight
+                  />
                   <SpecRow
                     label={selectedVariant ? `Ceiling Cutout (${selectedVariant.model})` : "Ceiling Cutout Required"}
                     value={selectedVariant ? selectedVariant.cutout : (product.cutout || "Per model cut-out")}
@@ -908,21 +956,45 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                     isMono
                   />
                   <SpecRow
-                    label={selectedVariant ? `Dimensions (${selectedVariant.model})` : "Overall Profile Dimensions"}
+                    label={selectedVariant ? `Profile Dimensions (${selectedVariant.model})` : "Overall Profile Dimensions"}
                     value={selectedVariant ? selectedVariant.dimensions : product.dimensions}
                     isMono
                   />
                   <SpecRow
-                    label="Fixture Adjustability"
-                    value="Directional Accent / Fixed Deep Recessed"
+                    label="Optical Head Adjustability"
+                    value="Fixed Deep Recessed / Directional"
+                  />
+                  <SpecRow
+                    label="Approximate Net Weight"
+                    value="0.45 kg – 1.20 kg (luminaire body)"
+                    isMono
                   />
                 </div>
 
-                <div className="divide-y divide-border/70">
-                  <SpecRow label="Housing Construction" value={product.material} />
-                  <SpecRow label="Ingress Protection (IP Rating)" value={product.ipRating} isHighlight isMono />
-                  <SpecRow label="Standard Powder-Coat Finishes" value={product.finishes.join(" / ")} />
-                  <SpecRow label="Thermal Management" value="Passive Die-Cast Heat Sink Architecture" />
+                <div className="divide-y divide-border/60">
+                  <SpecRow
+                    label="Housing Construction Material"
+                    value={product.material}
+                  />
+                  <SpecRow
+                    label="Ingress Protection (IP Rating)"
+                    value={product.ipRating}
+                    isHighlight
+                    isMono
+                  />
+                  <SpecRow
+                    label="Standard Powder-Coat Finishes"
+                    value={product.finishes.join(" / ")}
+                  />
+                  <SpecRow
+                    label="Thermal Management"
+                    value="Passive Die-Cast Heat Sink Architecture"
+                  />
+                  <SpecRow
+                    label="Impact Resistance Standard"
+                    value="IK06 / IK08 Architectural Grade"
+                    isMono
+                  />
                 </div>
               </div>
             </TabsContent>
@@ -1139,11 +1211,11 @@ function SpecRow({
   isHighlight?: boolean;
 }) {
   return (
-    <div className="flex items-baseline justify-between py-2.5 border-b border-border/40 last:border-none">
-      <dt className="text-muted-foreground font-medium pr-4">{label}</dt>
+    <div className="group flex items-baseline justify-between py-3 sm:py-3.5 border-b border-border/60 last:border-none px-2.5 -mx-2.5 rounded-lg hover:bg-muted/40 transition-colors">
+      <dt className="text-foreground/75 font-medium pr-4 text-xs tracking-tight">{label}</dt>
       <dd
-        className={`text-right font-semibold ${
-          isHighlight ? "text-foreground font-bold" : "text-foreground/80"
+        className={`text-right ${
+          isHighlight ? "text-foreground font-bold text-xs sm:text-[13px]" : "text-foreground font-medium text-xs"
         } ${isMono ? "font-mono" : ""}`}
       >
         {value}
