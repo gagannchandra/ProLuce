@@ -118,7 +118,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
                   <select
                     value={selectedCct}
                     onChange={(e) => setSelectedCct(e.target.value)}
-                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background px-3 py-2 font-medium outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
+                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background text-foreground px-3 py-2 font-medium outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
                   >
                     {product.cct.map((c) => (
                       <option key={c} value={c}>{c}</option>
@@ -133,7 +133,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
                   <select
                     value={selectedFinish}
                     onChange={(e) => setSelectedFinish(e.target.value)}
-                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background px-3 py-2 font-medium outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
+                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background text-foreground px-3 py-2 font-medium outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
                   >
                     {product.finishes.map((f) => (
                       <option key={f} value={f}>{f}</option>
@@ -148,7 +148,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
                   <select
                     value={selectedDriver}
                     onChange={(e) => setSelectedDriver(e.target.value)}
-                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background px-3 py-2 font-medium outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
+                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background text-foreground px-3 py-2 font-medium outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
                   >
                     {product.driverOptions.map((d) => (
                       <option key={d} value={d}>{d}</option>
@@ -283,7 +283,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
               </Button>
               <Button
                 type="submit"
-                className="font-sans text-xs uppercase tracking-[0.14em] font-bold px-6 h-10 shadow-sm gap-2 rounded-full bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 border-none cursor-pointer"
+                className="font-sans text-xs uppercase tracking-[0.14em] font-bold px-6 h-10 shadow-sm gap-2 rounded-full bg-foreground text-background hover:bg-foreground/90 border-none cursor-pointer"
               >
                 <Send className="h-3.5 w-3.5" />
                 <span>{isScheduleMode ? "Transmit Project RFQ" : "Submit Quote Request"}</span>

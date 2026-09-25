@@ -40,7 +40,7 @@ export default function MobileProductVariantPicker({
               onClick={() => onSelectVariant(v)}
               className={`w-full text-left p-3.5 rounded-2xl border transition-all duration-200 touch-manipulation cursor-pointer ${
                 isSelected
-                  ? "bg-card border-[#e6dfd1] dark:border-[#e6dfd1]/80 shadow-md ring-1 ring-[#e6dfd1]/40"
+                  ? "bg-muted/80 border-foreground/30 shadow-md ring-1 ring-foreground/20"
                   : "bg-card/60 border-border hover:bg-card text-muted-foreground"
               }`}
             >
@@ -49,7 +49,7 @@ export default function MobileProductVariantPicker({
                   <div
                     className={`h-4 w-4 rounded-full flex items-center justify-center text-[9px] font-bold ${
                       isSelected
-                        ? "bg-[#f4f0e6] text-neutral-950 shadow-xs"
+                        ? "bg-foreground text-background shadow-xs"
                         : "border border-border bg-muted/60 text-transparent"
                     }`}
                   >
@@ -62,7 +62,7 @@ export default function MobileProductVariantPicker({
                 <Badge
                   variant={isSelected ? "default" : "outline"}
                   className={`font-mono text-[10px] ${
-                    isSelected ? "bg-[#f4f0e6] text-neutral-950 font-bold border-none" : "text-muted-foreground"
+                    isSelected ? "bg-foreground text-background font-bold border-none" : "text-muted-foreground"
                   }`}
                 >
                   {v.power}

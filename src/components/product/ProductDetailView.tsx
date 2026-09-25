@@ -32,7 +32,6 @@ import {
   ShieldCheck,
   Compass,
   ChevronRight,
-  Maximize2,
 } from "lucide-react";
 import { BeamAngleIcon } from "@/components/ui/beam-angle-icon";
 import MobileProductVariantPicker from "@/components/mobile/MobileProductVariantPicker";
@@ -79,7 +78,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
   const floorArea = (Math.PI * Math.pow(spotRadius, 2)).toFixed(2);
 
   return (
-    <div className="space-y-12 sm:space-y-16 pb-28 sm:pb-20 max-w-7xl mx-auto">
+    <div className="space-y-12 sm:space-y-16 pb-28 sm:pb-20 max-w-7xl mx-auto text-foreground">
       {/* ─────────────────────────────────────────────────────────────
           SECTION 1: HERO HEADER & PRODUCT CONFIGURATION STAGE (SYMMETRICAL)
           ───────────────────────────────────────────────────────────── */}
@@ -102,7 +101,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
               variant="outline"
               size="sm"
               onClick={() => window.print()}
-              className="font-sans text-xs uppercase tracking-[0.14em] font-medium gap-2 rounded-full px-4 h-9 touch-manipulation cursor-pointer"
+              className="font-sans text-xs uppercase tracking-[0.14em] font-medium gap-2 rounded-full px-4 h-9 touch-manipulation cursor-pointer border-border hover:bg-muted"
             >
               <Printer className="h-3.5 w-3.5" />
               <span>Print Spec</span>
@@ -125,7 +124,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
               className={`font-sans text-xs uppercase tracking-[0.14em] gap-2 rounded-full px-4 h-9 transition-all touch-manipulation cursor-pointer ${
                 inSchedule
                   ? "bg-emerald-600 hover:bg-emerald-500 text-white font-semibold border-none"
-                  : "border-border/90 text-foreground hover:bg-accent font-medium"
+                  : "border-border/90 text-foreground hover:bg-muted font-medium"
               }`}
             >
               {inSchedule ? <Check className="h-3.5 w-3.5 text-white stroke-[3]" /> : <Plus className="h-3.5 w-3.5" />}
@@ -149,7 +148,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
           <div className="lg:col-span-6 flex flex-col justify-between space-y-4">
             <Card
               style={{ viewTransitionName: `product-image-${product.slug}` } as React.CSSProperties}
-              className="relative aspect-square w-full rounded-3xl border border-border/80 bg-gradient-to-b from-card to-muted/20 p-8 flex items-center justify-center overflow-hidden shadow-xs transform-gpu"
+              className="relative aspect-square w-full rounded-3xl border border-border/80 bg-gradient-to-b from-card via-card to-muted/30 p-8 flex items-center justify-center overflow-hidden shadow-xs transform-gpu"
             >
               {/* Dynamic Ambient Kelvin Glow */}
               <div
@@ -167,26 +166,26 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-contain p-8 transition-all duration-500 hover:scale-105 transform-gpu"
+                className="object-contain p-8 transition-all duration-500 hover:scale-105 transform-gpu mix-blend-multiply dark:mix-blend-normal"
               />
 
               {/* Floating Architectural Badges */}
               <div className="absolute top-4 left-4 z-10 flex flex-wrap gap-2">
-                <Badge variant="secondary" className="font-mono text-[11px] font-bold tracking-wider shadow-2xs rounded-full px-3 py-1">
+                <Badge variant="secondary" className="font-mono text-[11px] font-bold tracking-wider shadow-2xs rounded-full px-3 py-1 bg-secondary text-secondary-foreground border border-border/50">
                   {product.ipRating}
                 </Badge>
-                <Badge variant="outline" className="font-mono text-[11px] tracking-wider shadow-2xs bg-background/90 backdrop-blur-md rounded-full px-3 py-1">
+                <Badge variant="outline" className="font-mono text-[11px] tracking-wider shadow-2xs bg-background/90 text-foreground backdrop-blur-md rounded-full px-3 py-1 border-border/80">
                   {product.environment}
                 </Badge>
                 {product.installationMethod && (
-                  <Badge variant="outline" className="font-mono text-[11px] tracking-wider shadow-2xs bg-background/90 backdrop-blur-md rounded-full px-3 py-1 hidden sm:inline-flex">
+                  <Badge variant="outline" className="font-mono text-[11px] tracking-wider shadow-2xs bg-background/90 text-foreground backdrop-blur-md rounded-full px-3 py-1 hidden sm:inline-flex border-border/80">
                     {product.installationMethod}
                   </Badge>
                 )}
               </div>
 
               <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2">
-                <Badge variant="outline" className="font-mono text-[11px] bg-background/90 backdrop-blur-md rounded-full px-3 py-1 text-muted-foreground">
+                <Badge variant="outline" className="font-mono text-[11px] bg-background/90 backdrop-blur-md rounded-full px-3 py-1 text-muted-foreground border-border/80">
                   Catalogue P.{product.catalogPage}
                 </Badge>
               </div>
@@ -199,11 +198,11 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                 onValueChange={(v) => setActiveMedia(v as "photo" | "diagram")}
                 className="w-full"
               >
-                <TabsList className="w-full grid grid-cols-2 h-11 rounded-full p-1 bg-muted/80 backdrop-blur-xs border border-border/50">
-                  <TabsTrigger value="photo" className="font-mono text-xs uppercase tracking-wider rounded-full data-[state=active]:shadow-xs cursor-pointer">
+                <TabsList className="w-full grid grid-cols-2 h-11 rounded-full p-1 bg-muted/80 backdrop-blur-xs border border-border/60">
+                  <TabsTrigger value="photo" className="font-mono text-xs uppercase tracking-wider rounded-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs text-muted-foreground cursor-pointer">
                     Fixture Photography
                   </TabsTrigger>
-                  <TabsTrigger value="diagram" className="font-mono text-xs uppercase tracking-wider rounded-full data-[state=active]:shadow-xs cursor-pointer">
+                  <TabsTrigger value="diagram" className="font-mono text-xs uppercase tracking-wider rounded-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs text-muted-foreground cursor-pointer">
                     Cutout & CAD Schematic
                   </TabsTrigger>
                 </TabsList>
@@ -228,7 +227,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                         src={img}
                         alt={`${product.model} angle ${idx + 1}`}
                         fill
-                        className="object-contain p-1.5"
+                        className="object-contain p-1.5 mix-blend-multiply dark:mix-blend-normal"
                       />
                     </button>
                   ))}
@@ -249,7 +248,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                   {product.subseries && (
                     <>
                       <span className="text-muted-foreground opacity-40">•</span>
-                      <Badge variant="outline" className="font-mono text-[11px] font-medium border-border px-2.5 py-0.5">
+                      <Badge variant="outline" className="font-mono text-[11px] font-medium border-border/80 px-2.5 py-0.5 text-foreground bg-muted/40">
                         {product.subseries}
                       </Badge>
                     </>
@@ -320,7 +319,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                       Series Model Matrix
                     </h3>
                     {selectedVariant && (
-                      <Badge variant="default" className="font-mono text-[11px] rounded-full px-2.5 py-0.5">
+                      <Badge variant="default" className="font-mono text-[11px] rounded-full px-2.5 py-0.5 bg-foreground text-background">
                         <span className="mr-1.5 h-1.5 w-1.5 rounded-full bg-emerald-400" />
                         {selectedVariant.model} · {selectedVariant.power}
                       </Badge>
@@ -355,15 +354,15 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                               key={v.model}
                               onClick={() => setSelectedVariant(v)}
                               className={`cursor-pointer transition-colors ${
-                                isSelected ? "bg-muted/60 font-semibold" : "hover:bg-muted/30"
+                                isSelected ? "bg-muted/70 font-semibold" : "hover:bg-muted/30"
                               }`}
                             >
                               <TableCell className="font-mono font-bold text-foreground">
                                 {v.model}
                               </TableCell>
-                              <TableCell className="font-mono">{v.power}</TableCell>
-                              <TableCell className="font-mono">{v.lumens}</TableCell>
-                              <TableCell className="font-mono">{v.dimensions}</TableCell>
+                              <TableCell className="font-mono text-foreground/90">{v.power}</TableCell>
+                              <TableCell className="font-mono text-foreground/90">{v.lumens}</TableCell>
+                              <TableCell className="font-mono text-foreground/90">{v.dimensions}</TableCell>
                               <TableCell className="font-mono text-foreground font-semibold">{v.cutout}</TableCell>
                               <TableCell className="text-right">
                                 <Button
@@ -373,7 +372,9 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                                     e.stopPropagation();
                                     setSelectedVariant(v);
                                   }}
-                                  className="font-mono text-[10px] uppercase tracking-wider rounded-full px-3"
+                                  className={`font-mono text-[10px] uppercase tracking-wider rounded-full px-3 ${
+                                    isSelected ? "bg-foreground text-background font-bold border-transparent" : "border-border text-foreground hover:bg-muted"
+                                  }`}
                                 >
                                   {isSelected ? "Active" : "Select"}
                                 </Button>
@@ -393,19 +394,19 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                     Engineering Quick Specifications
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                    <div className="p-3 rounded-2xl bg-muted/30 border border-border/40">
+                    <div className="p-3 rounded-2xl bg-muted/40 border border-border/50">
                       <span className="text-muted-foreground text-[10px] font-mono uppercase tracking-wider block">Mounting / Installation</span>
                       <span className="font-semibold text-foreground mt-0.5 block">{product.installationMethod}</span>
                     </div>
-                    <div className="p-3 rounded-2xl bg-muted/30 border border-border/40">
+                    <div className="p-3 rounded-2xl bg-muted/40 border border-border/50">
                       <span className="text-muted-foreground text-[10px] font-mono uppercase tracking-wider block">Housing Construction</span>
                       <span className="font-semibold text-foreground mt-0.5 block">{product.material}</span>
                     </div>
-                    <div className="p-3 rounded-2xl bg-muted/30 border border-border/40">
+                    <div className="p-3 rounded-2xl bg-muted/40 border border-border/50">
                       <span className="text-muted-foreground text-[10px] font-mono uppercase tracking-wider block">Standard Finishes</span>
                       <span className="font-semibold text-foreground mt-0.5 block">{product.finishes.join(" · ")}</span>
                     </div>
-                    <div className="p-3 rounded-2xl bg-muted/30 border border-border/40">
+                    <div className="p-3 rounded-2xl bg-muted/40 border border-border/50">
                       <span className="text-muted-foreground text-[10px] font-mono uppercase tracking-wider block">Driver Protocols</span>
                       <span className="font-semibold text-foreground mt-0.5 block">{product.driverOptions.join(", ")}</span>
                     </div>
@@ -482,26 +483,33 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                   <span className="font-semibold text-foreground font-sans uppercase tracking-wider text-[11px]">
                     Color Temperature (CCT):
                   </span>
-                  <Badge variant="outline" className="font-mono font-bold rounded-full px-3">
+                  <Badge variant="outline" className="font-mono font-bold rounded-full px-3 text-foreground border-border bg-muted/30">
                     {selectedCct}
                   </Badge>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {product.cct.map((c) => (
-                    <Button
-                      key={c}
-                      variant={selectedCct === c ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setSelectedCct(c)}
-                      className="gap-2 font-mono text-xs rounded-full px-3.5 transition-all cursor-pointer"
-                    >
-                      <span
-                        className="h-2.5 w-2.5 rounded-full inline-block border border-black/20 shrink-0 shadow-2xs"
-                        style={{ background: cctColorMap[c] || "#ffe4c4" }}
-                      />
-                      <span>{c}</span>
-                    </Button>
-                  ))}
+                  {product.cct.map((c) => {
+                    const isSelected = selectedCct === c;
+                    return (
+                      <Button
+                        key={c}
+                        variant={isSelected ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setSelectedCct(c)}
+                        className={`gap-2 font-mono text-xs rounded-full px-3.5 transition-all cursor-pointer ${
+                          isSelected
+                            ? "bg-foreground text-background font-semibold shadow-xs border-transparent"
+                            : "bg-card text-foreground hover:bg-muted border-border"
+                        }`}
+                      >
+                        <span
+                          className="h-2.5 w-2.5 rounded-full inline-block border border-black/20 shrink-0 shadow-2xs"
+                          style={{ background: cctColorMap[c] || "#ffe4c4" }}
+                        />
+                        <span>{c}</span>
+                      </Button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -512,7 +520,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                     <span className="font-semibold text-foreground font-sans uppercase tracking-wider text-[11px]">
                       Optical Beam Distribution:
                     </span>
-                    <Badge variant="outline" className="font-mono font-bold rounded-full px-3">
+                    <Badge variant="outline" className="font-mono font-bold rounded-full px-3 text-foreground border-border bg-muted/30">
                       {selectedBeam}
                     </Badge>
                   </div>
@@ -528,8 +536,8 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                           onClick={() => setSelectedBeam(b)}
                           className={`gap-2 font-mono text-xs rounded-full px-4 transition-all cursor-pointer ${
                             isSelected
-                              ? "bg-foreground text-background font-semibold shadow-xs"
-                              : ""
+                              ? "bg-foreground text-background font-semibold shadow-xs border-transparent"
+                              : "bg-card text-foreground hover:bg-muted border-border"
                           }`}
                         >
                           <BeamAngleIcon
@@ -551,22 +559,29 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                   <span className="font-semibold text-foreground font-sans uppercase tracking-wider text-[11px]">
                     Mounting Height Simulation:
                   </span>
-                  <Badge variant="outline" className="font-mono font-bold rounded-full px-3">
+                  <Badge variant="outline" className="font-mono font-bold rounded-full px-3 text-foreground border-border bg-muted/30">
                     {mountingHeight.toFixed(1)}m Ceiling
                   </Badge>
                 </div>
                 <div className="grid grid-cols-4 gap-2">
-                  {[2.4, 3.0, 3.5, 4.5].map((h) => (
-                    <Button
-                      key={h}
-                      variant={mountingHeight === h ? "default" : "outline"}
-                      size="xs"
-                      onClick={() => setMountingHeight(h)}
-                      className="font-mono text-xs rounded-full py-2 cursor-pointer"
-                    >
-                      {h.toFixed(1)}m
-                    </Button>
-                  ))}
+                  {[2.4, 3.0, 3.5, 4.5].map((h) => {
+                    const isSelected = mountingHeight === h;
+                    return (
+                      <Button
+                        key={h}
+                        variant={isSelected ? "default" : "outline"}
+                        size="xs"
+                        onClick={() => setMountingHeight(h)}
+                        className={`font-mono text-xs rounded-full py-2 cursor-pointer transition-all ${
+                          isSelected
+                            ? "bg-foreground text-background font-semibold shadow-xs border-transparent"
+                            : "bg-card text-foreground hover:bg-muted border-border"
+                        }`}
+                      >
+                        {h.toFixed(1)}m
+                      </Button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -577,19 +592,19 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                 Calculated Optical Telemetry
               </span>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                <div className="p-3 rounded-2xl bg-muted/40 border border-border/60 text-center">
+                <div className="p-3 rounded-2xl bg-muted/40 dark:bg-muted/20 border border-border/60 text-center">
                   <span className="text-[9px] font-mono uppercase text-muted-foreground block">Beam Spread</span>
                   <span className="text-xs font-mono font-bold text-foreground mt-0.5 block">{selectedBeam}</span>
                 </div>
-                <div className="p-3 rounded-2xl bg-muted/40 border border-border/60 text-center">
+                <div className="p-3 rounded-2xl bg-muted/40 dark:bg-muted/20 border border-border/60 text-center">
                   <span className="text-[9px] font-mono uppercase text-muted-foreground block">Spot Ø @ {mountingHeight.toFixed(1)}m</span>
                   <span className="text-xs font-mono font-bold text-foreground mt-0.5 block">≈ {spotDiameter}m</span>
                 </div>
-                <div className="p-3 rounded-2xl bg-muted/40 border border-border/60 text-center">
+                <div className="p-3 rounded-2xl bg-muted/40 dark:bg-muted/20 border border-border/60 text-center">
                   <span className="text-[9px] font-mono uppercase text-muted-foreground block">Coverage Area</span>
                   <span className="text-xs font-mono font-bold text-foreground mt-0.5 block">≈ {floorArea} m²</span>
                 </div>
-                <div className="p-3 rounded-2xl bg-muted/40 border border-border/60 text-center">
+                <div className="p-3 rounded-2xl bg-muted/40 dark:bg-muted/20 border border-border/60 text-center">
                   <span className="text-[9px] font-mono uppercase text-muted-foreground block">Glare Cutoff</span>
                   <span className="text-xs font-mono font-bold text-foreground mt-0.5 block">30° Shielded</span>
                 </div>
@@ -598,7 +613,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
           </Card>
 
           {/* Right Darkroom: High-Resolution Optical Vector Ray Tracer */}
-          <Card className="lg:col-span-6 relative rounded-3xl bg-zinc-950 border border-white/10 p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-2xl min-h-[460px]">
+          <Card className="lg:col-span-6 relative rounded-3xl bg-zinc-950 border border-white/10 dark:border-white/10 p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-2xl min-h-[460px]">
             {/* Ambient Kelvin Back-Glow */}
             <div
               className="absolute inset-0 pointer-events-none opacity-25 transition-all duration-700 blur-3xl"
@@ -771,17 +786,17 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
             onValueChange={(v) => setActiveSpecTab(v as typeof activeSpecTab)}
             className="w-full space-y-6"
           >
-            <TabsList className="w-full grid grid-cols-2 sm:grid-cols-4 h-auto p-1.5 bg-muted/80 rounded-full border border-border/50">
-              <TabsTrigger value="optical" className="font-mono text-xs uppercase tracking-wider py-2.5 rounded-full data-[state=active]:shadow-xs cursor-pointer">
+            <TabsList className="w-full grid grid-cols-2 sm:grid-cols-4 h-auto p-1.5 bg-muted/80 rounded-full border border-border/60">
+              <TabsTrigger value="optical" className="font-mono text-xs uppercase tracking-wider py-2.5 rounded-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs text-muted-foreground cursor-pointer">
                 Optics & Photometry
               </TabsTrigger>
-              <TabsTrigger value="electrical" className="font-mono text-xs uppercase tracking-wider py-2.5 rounded-full data-[state=active]:shadow-xs cursor-pointer">
+              <TabsTrigger value="electrical" className="font-mono text-xs uppercase tracking-wider py-2.5 rounded-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs text-muted-foreground cursor-pointer">
                 Electrical & Drivers
               </TabsTrigger>
-              <TabsTrigger value="mechanical" className="font-mono text-xs uppercase tracking-wider py-2.5 rounded-full data-[state=active]:shadow-xs cursor-pointer">
+              <TabsTrigger value="mechanical" className="font-mono text-xs uppercase tracking-wider py-2.5 rounded-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs text-muted-foreground cursor-pointer">
                 Mechanical & Construction
               </TabsTrigger>
-              <TabsTrigger value="downloads" className="font-mono text-xs uppercase tracking-wider py-2.5 rounded-full data-[state=active]:shadow-xs cursor-pointer">
+              <TabsTrigger value="downloads" className="font-mono text-xs uppercase tracking-wider py-2.5 rounded-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs text-muted-foreground cursor-pointer">
                 Downloads & CAD
               </TabsTrigger>
             </TabsList>
@@ -923,7 +938,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                   <Button
                     asChild
                     variant="default"
-                    className="h-auto p-4 justify-start gap-3.5 text-left rounded-2xl cursor-pointer"
+                    className="h-auto p-4 justify-start gap-3.5 text-left rounded-2xl cursor-pointer bg-foreground text-background hover:bg-foreground/90"
                   >
                     <a
                       href={product.datasheetPdf || "/pdf/Pro-Luce-Catalogue.pdf"}
@@ -944,7 +959,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                   <Button
                     asChild
                     variant="outline"
-                    className="h-auto p-4 justify-start gap-3.5 text-left rounded-2xl cursor-pointer"
+                    className="h-auto p-4 justify-start gap-3.5 text-left rounded-2xl cursor-pointer border-border bg-card text-foreground hover:bg-muted"
                   >
                     <a
                       href="/pdf/Pro-Luce-Catalogue.pdf"
@@ -952,7 +967,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                       rel="noopener noreferrer"
                       download="Pro-Luce-Catalogue.pdf"
                     >
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-foreground text-background font-mono text-xs font-bold shrink-0 shadow-2xs">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted text-foreground font-mono text-xs font-bold shrink-0 shadow-2xs">
                         PDF
                       </div>
                       <div>
@@ -965,7 +980,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                   <Button
                     variant="outline"
                     onClick={() => setIsQuoteOpen(true)}
-                    className="h-auto p-4 justify-start gap-3.5 text-left rounded-2xl cursor-pointer"
+                    className="h-auto p-4 justify-start gap-3.5 text-left rounded-2xl cursor-pointer border-border bg-card text-foreground hover:bg-muted"
                   >
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted text-foreground font-mono text-xs font-bold shrink-0 shadow-2xs">
                       IES
@@ -986,7 +1001,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
           SECTION 4: COMMERCIAL TRADE SPECIFICATION BANNER (SYMMETRIC & LUXURIOUS)
           ───────────────────────────────────────────────────────────── */}
       <section className="no-print">
-        <Card className="relative border-neutral-900 bg-neutral-950 p-8 sm:p-10 text-white shadow-2xl rounded-3xl overflow-hidden">
+        <Card className="relative border-neutral-900 dark:border-neutral-800 bg-neutral-950 p-8 sm:p-10 text-white shadow-2xl rounded-3xl overflow-hidden">
           {/* Ambient Warm Ray Accent */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#f4f0e6]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
           <div className="absolute bottom-0 left-0 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
@@ -1052,7 +1067,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
               </p>
             </div>
 
-            <Button asChild variant="ghost" className="font-sans text-xs uppercase tracking-[0.14em] font-medium text-foreground px-4 h-9 hidden sm:inline-flex">
+            <Button asChild variant="ghost" className="font-sans text-xs uppercase tracking-[0.14em] font-medium text-foreground px-4 h-9 hidden sm:inline-flex hover:bg-muted">
               <Link href={`/catalogue?category=${encodeURIComponent(product.category)}`} className="flex items-center gap-1.5">
                 <span>View all {product.category}s</span>
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -1068,23 +1083,23 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                 className="group block"
               >
                 <Card className="p-4 hover:border-foreground/60 hover:shadow-lg transition-all duration-300 h-full flex flex-col justify-between rounded-3xl bg-card border-border/80">
-                  <div className="relative aspect-square w-full rounded-2xl bg-surface overflow-hidden mb-3.5 flex items-center justify-center">
+                  <div className="relative aspect-square w-full rounded-2xl bg-muted/40 dark:bg-surface overflow-hidden mb-3.5 flex items-center justify-center p-3">
                     <Image
                       src={rel.images[0] || "/images/products/rona.png"}
                       alt={rel.model}
                       fill
                       sizes="(max-width: 768px) 50vw, 25vw"
-                      className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                      className="object-contain p-2 group-hover:scale-105 transition-transform duration-500 mix-blend-multiply dark:mix-blend-normal"
                     />
                     <div className="absolute top-2.5 left-2.5">
-                      <Badge variant="secondary" className="font-mono text-[9px] font-bold px-2 py-0.5 rounded-full bg-background/90 backdrop-blur-xs">
+                      <Badge variant="secondary" className="font-mono text-[9px] font-bold px-2 py-0.5 rounded-full bg-background/90 text-foreground backdrop-blur-xs border border-border/60">
                         {rel.ipRating}
                       </Badge>
                     </div>
                   </div>
                   <div className="space-y-1">
                     <div className="flex items-center justify-between gap-1">
-                      <span className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors truncate">
+                      <span className="text-xs font-semibold text-foreground group-hover:text-foreground transition-colors truncate">
                         {rel.model}
                       </span>
                       <span className="text-[10px] font-mono text-muted-foreground shrink-0">
@@ -1128,7 +1143,7 @@ function SpecRow({
       <dt className="text-muted-foreground font-medium pr-4">{label}</dt>
       <dd
         className={`text-right font-semibold ${
-          isHighlight ? "text-foreground font-bold" : "text-muted-foreground"
+          isHighlight ? "text-foreground font-bold" : "text-foreground/80"
         } ${isMono ? "font-mono" : ""}`}
       >
         {value}
@@ -1136,4 +1151,5 @@ function SpecRow({
     </div>
   );
 }
+
 
