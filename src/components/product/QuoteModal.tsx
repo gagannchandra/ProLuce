@@ -65,7 +65,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-6 sm:p-8 bg-background border-border shadow-2xl">
+      <DialogContent className="w-full sm:max-w-xl md:max-w-2xl max-h-[90vh] overflow-y-auto p-6 sm:p-8 bg-background border-border shadow-2xl rounded-3xl">
         <DialogHeader className="border-b border-border pb-4 text-left">
           <div className="flex items-center gap-2 text-xs font-mono uppercase text-muted-foreground">
             <span>{isScheduleMode ? "Project Schedule RFQ" : product?.category}</span>
@@ -110,7 +110,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
           <form onSubmit={handleSubmit} className="space-y-5 pt-2">
             {/* Product Variant Options (Single Item Mode) */}
             {!isScheduleMode && product && (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-muted/50 p-4 rounded-2xl border border-border/80">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 bg-muted/40 p-4 rounded-2xl border border-border/80">
                 <div>
                   <label className="block text-[11px] font-mono uppercase tracking-wider text-muted-foreground font-semibold mb-1.5">
                     CCT Color Temp
@@ -118,7 +118,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
                   <select
                     value={selectedCct}
                     onChange={(e) => setSelectedCct(e.target.value)}
-                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background text-foreground px-3 py-2 font-medium outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
+                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background text-foreground px-3 py-2.5 font-medium outline-none focus-visible:ring-2 focus-visible:ring-stone-400 cursor-pointer"
                   >
                     {product.cct.map((c) => (
                       <option key={c} value={c}>{c}</option>
@@ -133,7 +133,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
                   <select
                     value={selectedFinish}
                     onChange={(e) => setSelectedFinish(e.target.value)}
-                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background text-foreground px-3 py-2 font-medium outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
+                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background text-foreground px-3 py-2.5 font-medium outline-none focus-visible:ring-2 focus-visible:ring-stone-400 cursor-pointer"
                   >
                     {product.finishes.map((f) => (
                       <option key={f} value={f}>{f}</option>
@@ -148,7 +148,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
                   <select
                     value={selectedDriver}
                     onChange={(e) => setSelectedDriver(e.target.value)}
-                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background text-foreground px-3 py-2 font-medium outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
+                    className="w-full text-xs font-mono rounded-xl border border-border/80 bg-background text-foreground px-3 py-2.5 font-medium outline-none focus-visible:ring-2 focus-visible:ring-stone-400 cursor-pointer"
                   >
                     {product.driverOptions.map((d) => (
                       <option key={d} value={d}>{d}</option>
@@ -178,7 +178,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
             )}
 
             {/* Contact Information */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               <div>
                 <label className="block text-[11px] font-mono uppercase tracking-wider text-muted-foreground font-semibold mb-1.5">
                   Your Name *
@@ -188,7 +188,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Architect / Specifier Name"
-                  className="font-mono text-xs rounded-xl"
+                  className="font-mono text-xs rounded-xl h-10 px-3.5"
                 />
               </div>
 
@@ -201,7 +201,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
                   placeholder="Studio / Practice Name"
-                  className="font-mono text-xs rounded-xl"
+                  className="font-mono text-xs rounded-xl h-10 px-3.5"
                 />
               </div>
 
@@ -215,7 +215,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="specifier@firm.com"
-                  className="font-mono text-xs rounded-xl"
+                  className="font-mono text-xs rounded-xl h-10 px-3.5"
                 />
               </div>
 
@@ -228,12 +228,12 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+1 (555) 000-0000"
-                  className="font-mono text-xs rounded-xl"
+                  className="font-mono text-xs rounded-xl h-10 px-3.5"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               <div>
                 <label className="block text-[11px] font-mono uppercase tracking-wider text-muted-foreground font-semibold mb-1.5">
                   Project Name / Site
@@ -242,7 +242,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
                   value={projectName}
                   onChange={(e) => setProjectName(e.target.value)}
                   placeholder="e.g., Zurich Luxury Villa"
-                  className="font-mono text-xs rounded-xl"
+                  className="font-mono text-xs rounded-xl h-10 px-3.5"
                 />
               </div>
 
@@ -254,7 +254,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                   placeholder="e.g., 25 units"
-                  className="font-mono text-xs rounded-xl"
+                  className="font-mono text-xs rounded-xl h-10 px-3.5"
                 />
               </div>
             </div>
@@ -268,7 +268,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="Specify special mounting accessories, emergency battery packs, wireless mesh protocols, or custom mitered lengths..."
-                className="font-mono text-xs rounded-xl resize-none"
+                className="font-mono text-xs rounded-xl resize-none p-3"
               />
             </div>
 
@@ -283,7 +283,7 @@ export default function QuoteModal({ product, isOpen, onClose, isScheduleMode = 
               </Button>
               <Button
                 type="submit"
-                className="font-sans text-xs uppercase tracking-[0.14em] font-bold px-6 h-10 shadow-sm gap-2 rounded-full bg-foreground text-background hover:bg-foreground/90 border-none cursor-pointer"
+                className="font-sans text-xs uppercase tracking-[0.14em] font-bold px-6 h-10 shadow-xs gap-2 rounded-full bg-[#f4f0e6] text-neutral-950 hover:bg-[#eae4d5] hover:border-[#ded6c3] border border-[#e6dfd1] cursor-pointer transition-all"
               >
                 <Send className="h-3.5 w-3.5" />
                 <span>{isScheduleMode ? "Transmit Project RFQ" : "Submit Quote Request"}</span>

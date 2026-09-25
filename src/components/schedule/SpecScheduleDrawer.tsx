@@ -76,7 +76,7 @@ export default function SpecScheduleDrawer({ onRequestQuote }: SpecScheduleDrawe
               <p className="text-xs text-muted-foreground max-w-sm mt-1 mb-6 font-light">
                 Explore the architectural catalogue and click &ldquo;+ Schedule&rdquo; on any luminaire to construct your project specification list.
               </p>
-              <Button asChild size="sm" className="font-sans text-xs uppercase tracking-[0.14em] font-medium h-9 px-5 rounded-full bg-foreground text-background hover:bg-foreground/90">
+              <Button asChild size="sm" className="font-sans text-xs uppercase tracking-[0.14em] font-bold h-10 px-6 rounded-full bg-[#f4f0e6] text-neutral-950 border border-[#e6dfd1] hover:bg-[#eae4d5] hover:border-[#ded6c3] shadow-xs">
                 <Link href="/catalogue" onClick={closeDrawer}>
                   Browse Catalogue
                 </Link>
@@ -238,7 +238,7 @@ export default function SpecScheduleDrawer({ onRequestQuote }: SpecScheduleDrawe
                 closeDrawer();
                 onRequestQuote();
               }}
-              className="w-full font-sans text-xs uppercase tracking-[0.14em] font-bold h-11 justify-between shadow-sm rounded-full px-5 bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 border-none touch-manipulation cursor-pointer"
+              className="w-full font-sans text-xs uppercase tracking-[0.14em] font-bold h-11 justify-between shadow-xs rounded-full px-5 bg-[#f4f0e6] hover:bg-[#eae4d5] hover:border-[#ded6c3] border border-[#e6dfd1] text-neutral-950 touch-manipulation cursor-pointer transition-all"
             >
               <span className="flex items-center gap-2">
                 <FileText className="h-4 w-4" />

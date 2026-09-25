@@ -114,7 +114,7 @@ export default function AboutPage() {
               <div className="flex items-center gap-3 shrink-0 flex-wrap">
                 <Button
                   asChild
-                  className="bg-[#f4f0e6] text-neutral-950 hover:bg-[#eae4d5] font-sans text-xs uppercase tracking-[0.14em] px-6 h-11 shadow-sm rounded-full font-bold border-none cursor-pointer"
+                  className="bg-[#f4f0e6] text-neutral-950 hover:bg-[#eae4d5] hover:border-[#ded6c3] border border-[#e6dfd1] font-sans text-xs uppercase tracking-[0.14em] px-6 h-11 shadow-xs rounded-full font-bold cursor-pointer transition-all"
                 >
                   <a
                     href={siteConfig.catalogPdfUrl}

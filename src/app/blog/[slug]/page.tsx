@@ -131,7 +131,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               <span>Back to Journal</span>
             </Link>
           </Button>
-          <Button asChild size="sm" className="font-sans text-xs uppercase tracking-[0.14em] font-medium rounded-full px-5 bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 font-bold border-none">
+          <Button asChild size="sm" className="font-sans text-xs uppercase tracking-[0.14em] font-bold rounded-full px-5 bg-[#f4f0e6] hover:bg-[#eae4d5] hover:border-[#ded6c3] border border-[#e6dfd1] text-neutral-950 shadow-xs cursor-pointer transition-all">
             <Link href="/catalogue">
               Explore Luminaires
             </Link>

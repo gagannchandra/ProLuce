@@ -108,7 +108,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className="flex min-h-full flex-col bg-background text-foreground font-sans selection:bg-[#f4f0e6]/25 selection:text-[#f4f0e6] transition-colors duration-200">
+      <body className="flex min-h-full flex-col bg-background text-foreground font-sans selection:bg-neutral-900 selection:text-[#f4f0e6] dark:selection:bg-[#f4f0e6] dark:selection:text-neutral-950 transition-colors duration-200">
         <JsonLd
           data={{
             "@context": "https://schema.org",

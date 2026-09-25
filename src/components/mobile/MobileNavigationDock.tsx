@@ -65,7 +65,7 @@ export default function MobileNavigationDock() {
             aria-current={pathname === "/" ? "page" : undefined}
             className={`flex-1 flex flex-col items-center justify-center py-2 px-1 rounded-full transition-all touch-manipulation cursor-pointer ${
               pathname === "/"
-                ? "bg-foreground text-background shadow-xs font-semibold"
+                ? "bg-[#f4f0e6] text-neutral-950 font-bold border border-[#e6dfd1] shadow-xs"
                 : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
             }`}
           >
@@ -80,7 +80,7 @@ export default function MobileNavigationDock() {
             aria-current={isLinkActive("/catalogue") ? "page" : undefined}
             className={`flex-1 flex flex-col items-center justify-center py-2 px-1 rounded-full transition-all touch-manipulation cursor-pointer ${
               isLinkActive("/catalogue")
-                ? "bg-foreground text-background shadow-xs font-semibold"
+                ? "bg-[#f4f0e6] text-neutral-950 font-bold border border-[#e6dfd1] shadow-xs"
                 : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
             }`}
           >
@@ -128,7 +128,7 @@ export default function MobileNavigationDock() {
             aria-current={isLinkActive("/contact") ? "page" : undefined}
             className={`flex-1 flex flex-col items-center justify-center py-2 px-1 rounded-full transition-all touch-manipulation cursor-pointer ${
               isLinkActive("/contact")
-                ? "bg-foreground text-background shadow-xs font-semibold"
+                ? "bg-[#f4f0e6] text-neutral-950 font-bold border border-[#e6dfd1] shadow-xs"
                 : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
             }`}
           >

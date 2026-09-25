@@ -146,19 +146,19 @@ export default function FlagshipShowcase() {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1.5 bg-card/80 p-1 rounded-lg border border-border text-xs font-mono">
+                <div className="flex items-center gap-1 bg-card/80 p-1 rounded-full border border-border text-xs font-mono">
                   <button
                     onClick={() => setShowDiagram(false)}
-                    className={`px-2.5 py-1 rounded transition-colors cursor-pointer ${
-                      !showDiagram ? "bg-muted text-foreground font-medium" : "text-muted-foreground hover:text-foreground"
+                    className={`px-3 py-1 rounded-full transition-all cursor-pointer ${
+                      !showDiagram ? "bg-[#f4f0e6] text-neutral-950 font-bold border border-[#e6dfd1] shadow-xs" : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     3D Render
                   </button>
                   <button
                     onClick={() => setShowDiagram(true)}
-                    className={`px-2.5 py-1 rounded transition-colors flex items-center gap-1.5 cursor-pointer ${
-                      showDiagram ? "bg-muted text-foreground font-medium" : "text-muted-foreground hover:text-foreground"
+                    className={`px-3 py-1 rounded-full transition-all flex items-center gap-1.5 cursor-pointer ${
+                      showDiagram ? "bg-[#f4f0e6] text-neutral-950 font-bold border border-[#e6dfd1] shadow-xs" : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     <SlidersHorizontal className="w-3 h-3" />
@@ -315,7 +315,7 @@ export default function FlagshipShowcase() {
                             onClick={() => setSelectedFinish(f)}
                             className={`px-2.5 py-1 text-xs font-mono rounded-md border transition-all cursor-pointer ${
                               selectedFinish === f
-                                ? "bg-foreground text-background font-semibold border-foreground"
+                                ? "bg-[#f4f0e6] text-zinc-950 font-bold border-[#e6dfd1] shadow-xs"
                                 : "bg-card border-border text-muted-foreground hover:border-border hover:text-foreground"
                             }`}
                           >

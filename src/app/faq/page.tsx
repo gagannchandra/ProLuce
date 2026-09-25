@@ -133,7 +133,7 @@ export default function FaqPage() {
                 <span>Datasheet PDF</span>
               </a>
             </Button>
-            <Button asChild size="sm" className="font-sans text-xs uppercase tracking-[0.14em] font-bold rounded-full px-5 h-9 bg-[#f4f0e6] hover:bg-[#eae4d5] text-neutral-950 border-none shadow-xs">
+            <Button asChild size="sm" className="font-sans text-xs uppercase tracking-[0.14em] font-bold rounded-full px-5 h-9 bg-[#f4f0e6] hover:bg-[#eae4d5] hover:border-[#ded6c3] text-neutral-950 border border-[#e6dfd1] shadow-xs cursor-pointer transition-all">
               <Link href="/contact" className="flex items-center gap-2">
                 <span>Studio Consultation</span>
                 <ArrowRight className="h-3.5 w-3.5" />

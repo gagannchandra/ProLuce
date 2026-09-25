@@ -9,9 +9,9 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-xs shadow-primary/20 hover:bg-primary/90 hover:shadow-md hover:shadow-primary/25 active:bg-primary/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]",
+          "bg-[#f4f0e6] text-neutral-950 font-semibold border border-[#e6dfd1] shadow-xs hover:bg-[#eae4d5] hover:border-[#ded6c3] active:bg-[#dfd7c3] dark:bg-[#f4f0e6] dark:text-neutral-950 dark:border-[#e6dfd1] dark:hover:bg-[#eae4d5]",
         outline:
-          "border-border/80 bg-background/80 backdrop-blur-xs hover:border-foreground/40 hover:bg-accent hover:text-foreground aria-expanded:bg-accent aria-expanded:text-foreground shadow-2xs dark:border-border/60 dark:bg-background/40 dark:hover:bg-accent/80",
+          "border-border/80 bg-background/80 backdrop-blur-xs text-foreground hover:border-[#e6dfd1] hover:bg-[#f4f0e6] hover:text-neutral-950 aria-expanded:bg-[#f4f0e6] aria-expanded:text-neutral-950 shadow-2xs dark:border-border/60 dark:bg-background/40 dark:hover:bg-[#f4f0e6] dark:hover:text-neutral-950 dark:hover:border-[#e6dfd1]",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-2xs aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
         ghost:

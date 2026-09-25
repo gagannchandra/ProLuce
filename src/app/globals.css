@@ -51,8 +51,8 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.16 0 0);
-  --primary-foreground: oklch(0.96 0.01 90);
+  --primary: #f4f0e6;
+  --primary-foreground: #09090b;
   --secondary: oklch(0.95 0.005 90);
   --secondary-foreground: oklch(0.18 0 0);
   --muted-foreground: oklch(0.48 0 0);
@@ -360,8 +360,8 @@ body {
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.16 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.95 0.01 90);
-  --primary-foreground: oklch(0.145 0 0);
+  --primary: #f4f0e6;
+  --primary-foreground: #09090b;
   --secondary: oklch(0.22 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.20 0 0);
@@ -394,8 +394,11 @@ body {
   * {
     @apply border-border outline-ring/50;
   }
+  ::selection {
+    @apply bg-neutral-900 text-[#f4f0e6] dark:bg-[#f4f0e6] dark:text-neutral-950;
+  }
   body {
-    @apply bg-background text-foreground antialiased selection:bg-[#f4f0e6]/25 selection:text-neutral-900 dark:selection:text-[#f4f0e6];
+    @apply bg-background text-foreground antialiased selection:bg-neutral-900 selection:text-[#f4f0e6] dark:selection:bg-[#f4f0e6] dark:selection:text-neutral-950;
   }
   html {
     @apply font-sans scroll-smooth;

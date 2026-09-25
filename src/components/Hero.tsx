@@ -187,7 +187,7 @@ export default function Hero({ product }: HeroProps) {
                 className={`h-11 sm:h-12 rounded-full font-sans text-xs uppercase tracking-[0.14em] font-semibold px-5 sm:px-7 border hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 backdrop-blur-md touch-manipulation gap-2 ${
                   inSchedule
                     ? "bg-emerald-600 hover:bg-emerald-500 text-white border-emerald-500 shadow-md"
-                    : "bg-white/5 text-white border-white/20 hover:bg-white/15 hover:border-white/40"
+                    : "bg-white/5 text-white border-[#e6dfd1]/30 hover:bg-[#f4f0e6] hover:text-neutral-950 hover:border-[#e6dfd1]"
                 }`}
               >
                 {inSchedule ? (
@@ -207,7 +207,7 @@ export default function Hero({ product }: HeroProps) {
                 variant="outline"
                 size="lg"
                 onClick={() => setIsQuoteOpen(true)}
-                className="h-11 sm:h-12 rounded-full font-sans text-xs uppercase tracking-[0.14em] font-semibold px-5 sm:px-7 border-white/20 bg-white/5 text-white hover:bg-white/15 hover:border-white/40 backdrop-blur-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 touch-manipulation gap-2"
+                className="h-11 sm:h-12 rounded-full font-sans text-xs uppercase tracking-[0.14em] font-semibold px-5 sm:px-7 border-[#e6dfd1]/30 bg-white/5 text-white hover:bg-[#f4f0e6] hover:text-neutral-950 hover:border-[#e6dfd1] backdrop-blur-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 touch-manipulation gap-2 shadow-xs"
               >
                 <FileText className="h-4 w-4 text-stone-300" />
                 <span>Request Project RFQ</span>

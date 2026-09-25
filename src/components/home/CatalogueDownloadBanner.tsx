@@ -33,7 +33,7 @@ export default function CatalogueDownloadBanner() {
           <div className="relative z-10 flex flex-wrap items-center gap-3 sm:gap-4 shrink-0">
             <Button
               asChild
-              className="rounded-full bg-[#f4f0e6] text-zinc-950 hover:bg-[#eae4d5] font-mono text-xs uppercase tracking-wider font-semibold h-11 sm:h-12 px-5 sm:px-7 shadow-md cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98] touch-manipulation"
+              className="rounded-full bg-[#f4f0e6] text-zinc-950 hover:bg-[#eae4d5] hover:border-[#ded6c3] border border-[#e6dfd1] font-mono text-xs uppercase tracking-wider font-semibold h-11 sm:h-12 px-5 sm:px-7 shadow-md cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98] touch-manipulation"
             >
               <a
                 href="/pdf/Pro-Luce-Catalogue.pdf"

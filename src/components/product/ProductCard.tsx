@@ -66,7 +66,7 @@ export default function ProductCard({ product, onOpenQuote }: ProductCardProps) 
           {/* Schematics Peek Indicator on hover */}
           {product.dimensionDiagram && (
             <div className="absolute bottom-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hidden sm:block">
-              <Badge variant="secondary" className="font-mono text-[9px] bg-foreground text-background gap-1 rounded-full px-2.5 py-0.5 shadow-sm">
+              <Badge variant="secondary" className="font-mono text-[9px] bg-[#f4f0e6] text-neutral-950 border border-[#e6dfd1] font-bold gap-1 rounded-full px-2.5 py-0.5 shadow-sm">
                 <Layers className="h-3 w-3" />
                 <span>CAD View</span>
               </Badge>
