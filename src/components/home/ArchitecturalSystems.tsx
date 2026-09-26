@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 interface SystemCard {
   id: string;
@@ -35,7 +35,7 @@ const SYSTEMS: SystemCard[] = [
     beamAngles: ["15°", "24°", "36°", "60°"],
     imageSrc: "/images/products/rona.png",
     href: "/catalogue?category=Spot+Light",
-    accent: "#f4f0e6",
+    accent: "#c8b88a",
   },
   {
     id: "linear",
@@ -69,7 +69,7 @@ const SYSTEMS: SystemCard[] = [
     beamAngles: ["24°", "36°", "120°"],
     imageSrc: "/images/products/artis.png",
     href: "/catalogue?category=Magnetic+Series",
-    accent: "#e5a93c",
+    accent: "#d4973a",
   },
   {
     id: "pendants",
@@ -86,7 +86,7 @@ const SYSTEMS: SystemCard[] = [
     beamAngles: ["60° Direct", "120° Indirect"],
     imageSrc: "/images/products/c44-pendant.png",
     href: "/catalogue?category=Pendant+Light",
-    accent: "#f4f0e6",
+    accent: "#c8b88a",
   },
   {
     id: "track",
@@ -108,7 +108,7 @@ const SYSTEMS: SystemCard[] = [
   {
     id: "exterior",
     categoryName: "Outdoor Light",
-    title: "IP67 / IP68 Inground & Façade Grazers",
+    title: "IP67/IP68 Inground & Façade Grazers",
     subtitle: "Marine-grade 316L stainless steel optical fixtures engineered for severe weather and drive-over loads.",
     pageRange: "P.71 – P.99",
     specs: [
@@ -127,39 +127,42 @@ const SYSTEMS: SystemCard[] = [
 export default function ArchitecturalSystems() {
   return (
     <section
-      className="relative w-full py-20 lg:py-28 bg-background text-foreground overflow-hidden border-b border-border transition-colors duration-300"
+      className="relative w-full py-20 lg:py-28 bg-background text-foreground overflow-hidden border-b border-border/50 transition-colors duration-300"
       aria-labelledby="systems-title"
     >
       <div className="container-site relative z-10">
-        
-        {/* Section Header Block */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-border">
+
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-10 sm:pb-12 border-b border-border/50">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1 text-muted-foreground shadow-2xs">
-              <span className="flex items-center gap-0.5" aria-hidden="true">
-                <span className="h-2 w-1 rounded-[1px] bg-[#008C45]" />
-                <span className="h-2 w-1 rounded-[1px] bg-neutral-300 dark:bg-neutral-500" />
-                <span className="h-2 w-1 rounded-[1px] bg-[#CD212A]" />
+            {/* Eyebrow — tricolore dots + editorial label */}
+            <div className="inline-flex items-center gap-2.5 mb-4">
+              <span className="flex items-center gap-[3px]" aria-hidden="true">
+                <span className="h-[9px] w-[4px] rounded-sm bg-[#008C45]" />
+                <span className="h-[9px] w-[4px] rounded-sm bg-foreground/25 dark:bg-foreground/30" />
+                <span className="h-[9px] w-[4px] rounded-sm bg-[#CD212A]" />
               </span>
-              <span className="text-[11px] sm:text-xs font-sans uppercase tracking-[0.18em] font-medium text-foreground">
+              <span className="text-[11.5px] font-sans tracking-[0.10em] uppercase font-medium text-muted-foreground">
                 Architectural Taxonomy
               </span>
             </div>
+
             <h2
               id="systems-title"
-              className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-light font-display tracking-tight text-foreground"
+              className="text-3xl sm:text-4xl lg:text-[52px] font-light font-display tracking-tight text-foreground leading-[1.08] text-balance"
             >
               Master Engineering Systems
             </h2>
-            <p className="mt-2 text-sm text-muted-foreground max-w-xl font-sans font-light leading-relaxed">
-              6 modular architectural families engineered for seamless spatial integration, optical precision, and standardized DIN mounting interfaces.
+            <p className="mt-3 text-[14px] sm:text-[15px] text-muted-foreground max-w-lg font-sans font-light leading-[1.75] text-pretty">
+              6 modular architectural families engineered for seamless spatial integration,
+              optical precision, and standardized DIN mounting interfaces.
             </p>
           </div>
 
           <Button
             asChild
             variant="outline"
-            className="rounded-full border-border bg-card text-foreground hover:bg-muted hover:border-border font-sans text-xs uppercase tracking-[0.14em] font-medium h-10 px-6 shrink-0 shadow-2xs"
+            className="rounded-full border-border/60 bg-transparent text-foreground hover:bg-accent/70 font-sans text-[12.5px] tracking-[0.06em] uppercase font-medium h-10 px-6 shrink-0 transition-colors"
           >
             <Link href="/catalogue" className="flex items-center gap-2">
               <span>View All 99 Fixtures</span>
@@ -168,30 +171,44 @@ export default function ArchitecturalSystems() {
           </Button>
         </div>
 
-        {/* 6-Card High-Contrast Architectural Spec Matrix */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mt-12">
+        {/* 6-Card Spec Matrix */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mt-10 sm:mt-12">
           {SYSTEMS.map((system) => (
             <Link
               key={system.id}
               href={system.href}
-              className="group relative flex flex-col justify-between rounded-3xl border border-border bg-card/80 p-5 sm:p-7 lg:p-8 backdrop-blur-md transition-all duration-300 hover:border-[#e6dfd1] dark:hover:border-[#e6dfd1]/50 hover:bg-card hover:shadow-xl hover:shadow-black/5 dark:hover:shadow-black/40 hover:-translate-y-1 touch-manipulation"
+              className={`
+                group relative flex flex-col justify-between
+                rounded-2xl border border-border/60
+                bg-card
+                p-5 sm:p-6 lg:p-7
+                transition-all duration-280
+                hover:border-border
+                hover:shadow-md
+                dark:hover:shadow-[0_8px_32px_-8px_rgba(0,0,0,0.5)]
+                hover:-translate-y-[2px]
+                touch-manipulation
+              `}
             >
-              {/* Card Top: Category Tag + Catalog Page Anchor */}
+              {/* Card Top: Category tag + page anchor */}
               <div>
-                <div className="flex items-center justify-between pb-3.5 sm:pb-4 border-b border-border/80">
-                  <span className="text-[11px] font-mono uppercase tracking-widest text-foreground font-bold">
+                <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-border/50">
+                  <span className="text-[11px] font-sans tracking-[0.10em] uppercase text-foreground font-semibold">
                     {system.categoryName}
                   </span>
-                  <Badge variant="outline" className="font-mono text-[10px] text-muted-foreground border-border px-2 py-0.5">
+                  <Badge
+                    variant="outline"
+                    className="font-mono text-[10px] text-muted-foreground border-border/60 px-2 py-0.5 rounded-md"
+                  >
                     {system.pageRange}
                   </Badge>
                 </div>
 
-                {/* Product Renders & Visual Focus Area */}
-                <div className="relative h-36 sm:h-44 w-full my-4 sm:my-6 flex items-center justify-center overflow-hidden rounded-2xl bg-surface/80 border border-border/60 group-hover:border-border transition-colors">
-                  {/* Subtle Light Halo */}
+                {/* Product render — warm surface, ambient halo */}
+                <div className="relative h-36 sm:h-44 w-full my-5 sm:my-6 flex items-center justify-center overflow-hidden rounded-xl bg-surface dark:bg-surface-elevated border border-border/40 group-hover:border-border/70 transition-colors">
+                  {/* Accent halo */}
                   <div
-                    className="absolute w-28 h-28 rounded-full blur-2xl opacity-20 pointer-events-none transition-transform duration-500 group-hover:scale-125"
+                    className="absolute w-24 h-24 rounded-full blur-[48px] opacity-25 pointer-events-none transition-all duration-500 group-hover:scale-130 group-hover:opacity-35"
                     style={{ background: system.accent }}
                   />
                   <Image
@@ -199,45 +216,49 @@ export default function ArchitecturalSystems() {
                     alt={system.title}
                     width={180}
                     height={140}
-                    className="object-contain p-2 max-h-36 transition-transform duration-500 group-hover:scale-105"
+                    className="object-contain p-3 max-h-36 transition-transform duration-500 group-hover:scale-[1.04]"
                   />
                 </div>
 
-                {/* Title & Description */}
-                <h3 className="text-xl font-display font-medium text-foreground group-hover:text-stone-600 dark:group-hover:text-[#f4f0e6] transition-colors">
+                {/* Title & description */}
+                <h3 className="text-[18px] sm:text-[19px] font-display font-medium text-foreground leading-snug text-balance group-hover:text-foreground/90 transition-colors">
                   {system.title}
                 </h3>
-                <p className="mt-2 text-xs text-muted-foreground leading-relaxed font-sans font-light">
+                <p className="mt-2 text-[12.5px] text-muted-foreground leading-[1.7] font-sans font-light text-pretty">
                   {system.subtitle}
                 </p>
 
-                {/* Technical Specs List */}
-                <div className="grid grid-cols-2 gap-2.5 mt-6 pt-5 border-t border-border/80 text-[11px] font-mono">
+                {/* Technical specs — 2×2 grid */}
+                <div className="grid grid-cols-2 gap-x-4 gap-y-3 mt-5 pt-4 border-t border-border/50">
                   {system.specs.map((s) => (
-                    <div key={s.label} className="flex flex-col">
-                      <span className="text-muted-foreground uppercase text-[9px] tracking-wider">{s.label}</span>
-                      <span className="text-foreground font-medium truncate">{s.value}</span>
+                    <div key={s.label} className="flex flex-col gap-0.5">
+                      <span className="text-[9.5px] font-sans uppercase tracking-[0.09em] text-muted-foreground/70 font-medium">
+                        {s.label}
+                      </span>
+                      <span className="text-[12px] font-mono text-foreground font-medium truncate">
+                        {s.value}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Card Bottom: Beam Options & Explore Action */}
-              <div className="mt-6 pt-4 border-t border-border/80 flex items-center justify-between">
-                <div className="flex items-center gap-1.5 flex-wrap">
+              {/* Card Bottom */}
+              <div className="mt-5 pt-4 border-t border-border/50 flex items-center justify-between">
+                <div className="flex items-center gap-1 flex-wrap">
                   {system.beamAngles.map((b) => (
                     <span
                       key={b}
-                      className="px-2 py-0.5 rounded-md bg-muted text-[10px] font-mono text-muted-foreground font-semibold border border-border/60"
+                      className="px-2 py-0.5 rounded-md bg-muted/60 dark:bg-muted/40 text-[10px] font-mono text-muted-foreground font-medium border border-border/40"
                     >
                       {b}
                     </span>
                   ))}
                 </div>
 
-                <span className="inline-flex items-center text-xs font-mono font-semibold text-foreground dark:text-[#f4f0e6] group-hover:underline gap-1">
+                <span className="inline-flex items-center gap-1 text-[12px] font-sans font-semibold text-foreground/70 group-hover:text-foreground transition-colors">
                   Explore
-                  <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                 </span>
               </div>
             </Link>

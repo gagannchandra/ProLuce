@@ -3,35 +3,37 @@ import { footerNav, siteConfig } from "@/lib/site";
 import BrandLogo from "@/components/BrandLogo";
 import Newsletter from "@/components/Newsletter";
 import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
 
 export default function Footer() {
   return (
-    <footer className="mt-20 sm:mt-24 border-t border-border bg-surface pb-28 md:pb-0">
-      <div className="container-site py-12 sm:py-16">
+    <footer className="mt-16 sm:mt-20 border-t border-border/60 bg-surface pb-28 md:pb-0">
+      <div className="container-site pt-12 sm:pt-16 pb-8 sm:pb-12">
         <Newsletter />
 
-        <div className="mt-12 sm:mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 sm:gap-10">
+        <div className="mt-12 sm:mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10 sm:gap-12">
+          {/* Brand Column */}
           <div className="sm:col-span-2">
             <Link
               href="/"
-              className="inline-block outline-none focus-visible:ring-2 focus-visible:ring-stone-400 rounded-sm"
+              className="inline-block outline-none focus-visible:ring-2 focus-visible:ring-ring/40 rounded-sm"
               aria-label={`${siteConfig.name} Home`}
             >
-              <BrandLogo size="lg" align="center" theme="auto" />
+              <BrandLogo size="lg" align="left" theme="auto" />
             </Link>
-            <p className="mt-4 max-w-sm text-xs sm:text-[13.5px] text-muted-foreground leading-relaxed font-sans font-light">
+            <p className="mt-4 max-w-sm text-[13px] text-muted-foreground leading-[1.7] font-sans font-light text-pretty">
               {siteConfig.description}
             </p>
-            <div className="mt-4 flex items-center gap-2">
-              <Badge variant="outline" className="font-mono text-[11px] sm:text-xs gap-1.5 border-border bg-card/80 text-muted-foreground py-0.5 px-2.5 shadow-2xs">
-                <span className="flex items-center gap-0.5" aria-hidden="true">
-                  <span className="h-2 w-1.5 rounded-[1px] bg-[#008C45]" />
-                  <span className="h-2 w-1.5 rounded-[1px] bg-neutral-100 dark:bg-[#f4f0e6]" />
-                  <span className="h-2 w-1.5 rounded-[1px] bg-[#CD212A]" />
-                </span>
-                Firenze &bull; Sesto Fiorentino, Italia
-              </Badge>
+
+            {/* Location — editorial badge treatment */}
+            <div className="mt-5 inline-flex items-center gap-2">
+              <span className="flex items-center gap-0.5 shrink-0" aria-hidden="true">
+                <span className="h-[10px] w-[5px] rounded-[1.5px] bg-[#008C45]" />
+                <span className="h-[10px] w-[5px] rounded-[1.5px] bg-foreground/30 dark:bg-[#f0ece0]/40" />
+                <span className="h-[10px] w-[5px] rounded-[1.5px] bg-[#CD212A]" />
+              </span>
+              <span className="text-[12px] font-sans text-muted-foreground tracking-[0.03em]">
+                Firenze · Sesto Fiorentino, Italia
+              </span>
             </div>
           </div>
 
@@ -40,18 +42,21 @@ export default function Footer() {
           <FooterColumn title="Studio & Company" links={footerNav.company} />
         </div>
 
-        <Separator className="mt-10 sm:mt-12 mb-6 bg-border" />
+        <Separator className="mt-10 sm:mt-12 mb-6 bg-border/70" />
 
-        <div className="flex flex-col items-center justify-between gap-4 text-xs sm:text-[13px] text-muted-foreground lg:flex-row font-mono">
-          <p className="text-center sm:text-left">
-            &copy; {new Date().getFullYear()} {siteConfig.name} &bull; {siteConfig.tagline}. All rights reserved.
+        {/* Bottom bar — human typography, not pure monospace */}
+        <div className="flex flex-col items-center justify-between gap-3 sm:gap-4 text-[12px] text-muted-foreground lg:flex-row">
+          <p className="text-center sm:text-left tracking-[0.02em]">
+            &copy; {new Date().getFullYear()} {siteConfig.name} &mdash; {siteConfig.tagline}
           </p>
-          <div className="flex flex-wrap items-center justify-center lg:justify-end gap-x-6 gap-y-2 text-center lg:text-right">
-            <span>{siteConfig.contact.address}</span>
+          <div className="flex flex-wrap items-center justify-center lg:justify-end gap-x-5 gap-y-2 text-center">
+            <span className="tracking-[0.01em]">{siteConfig.contact.address}</span>
+            <span className="text-border/80">·</span>
             <span>{siteConfig.contact.phone}</span>
+            <span className="text-border/80">·</span>
             <a
               href={`mailto:${siteConfig.contact.email}`}
-              className="hover:text-foreground transition-colors underline-offset-4 hover:underline font-medium text-foreground"
+              className="hover:text-foreground transition-colors underline-offset-3 hover:underline font-medium text-foreground/70"
             >
               {siteConfig.contact.email}
             </a>
@@ -65,11 +70,18 @@ export default function Footer() {
 function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
   return (
     <div>
-      <h3 className="text-xs sm:text-[13px] font-mono font-semibold uppercase tracking-wider text-foreground">{title}</h3>
-      <ul className="mt-3.5 flex flex-col gap-2.5">
+      {/* Column header — subtle rule instead of all-caps tracking */}
+      <h3 className="text-[11.5px] font-sans font-semibold text-foreground/80 tracking-[0.08em] uppercase">
+        {title}
+      </h3>
+      <div className="mt-1 mb-3.5 h-px w-6 bg-foreground/15" aria-hidden="true" />
+      <ul className="flex flex-col gap-2.5">
         {links.map((link) => (
           <li key={`${link.label}-${link.href}`}>
-            <Link href={link.href} className="text-xs sm:text-[13px] text-muted-foreground hover:text-foreground transition-colors font-light">
+            <Link
+              href={link.href}
+              className="text-[13px] text-muted-foreground hover:text-foreground transition-colors font-light tracking-[0.01em] underline-offset-3 hover:underline"
+            >
               {link.label}
             </Link>
           </li>

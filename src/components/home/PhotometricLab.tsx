@@ -233,30 +233,34 @@ export default function PhotometricLab() {
 
       <div className="container-site relative z-10">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-border">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-10 sm:pb-12 border-b border-border/50">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1 text-foreground shadow-2xs">
-              <Sparkles className="h-3.5 w-3.5 text-stone-400" />
-              <span className="text-[11px] sm:text-xs font-sans uppercase tracking-[0.18em] font-medium">
+            <div className="inline-flex items-center gap-2.5 mb-4">
+              <span className="flex items-center gap-[3px]" aria-hidden="true">
+                <span className="h-[9px] w-[4px] rounded-sm bg-[#f0ece0]/70 dark:bg-[#f0ece0]/50" />
+                <span className="h-[9px] w-[4px] rounded-sm bg-[#008C45]/60" />
+                <span className="h-[9px] w-[4px] rounded-sm bg-[#CD212A]/60" />
+              </span>
+              <span className="text-[11.5px] font-sans tracking-[0.10em] uppercase font-medium text-muted-foreground">
                 Pro-Luce Optical Engineering
               </span>
             </div>
             <h2
               id="photometric-lab-title"
-              className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-light font-display tracking-tight text-foreground"
+              className="text-3xl sm:text-[40px] lg:text-[52px] font-light font-display tracking-tight text-foreground leading-[1.08] text-balance"
             >
               Interactive Photometric Lab
             </h2>
-            <p className="mt-2 text-sm text-muted-foreground max-w-xl font-sans font-light leading-relaxed">
+            <p className="mt-3 text-[14px] sm:text-[15px] text-muted-foreground max-w-xl font-sans font-light leading-[1.75] text-pretty">
               Explore the physics of our optical engine: real-time TIR beam distribution, 30° anti-glare shielding angle, and calculated floor illuminance.
             </p>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0">
-            <Badge variant="outline" className="font-mono text-xs text-foreground border-border px-3 py-1 bg-card shadow-2xs">
+          <div className="flex items-center gap-2 shrink-0">
+            <Badge variant="outline" className="font-mono text-[11px] text-muted-foreground border-border/60 px-2.5 py-1 bg-card/80 rounded-lg">
               CRI Ra ≥ 90 (R9 &gt; 50)
             </Badge>
-            <Badge variant="outline" className="font-mono text-xs text-foreground border-border px-3 py-1 bg-card shadow-2xs">
+            <Badge variant="outline" className="font-mono text-[11px] text-muted-foreground border-border/60 px-2.5 py-1 bg-card/80 rounded-lg">
               SDCM &lt; 2-Step
             </Badge>
           </div>
@@ -266,16 +270,16 @@ export default function PhotometricLab() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mt-12 items-start">
           
           {/* Left Column: Interactive Parametric Controls */}
-          <div className="lg:col-span-5 space-y-6">
+          <div className="lg:col-span-5 space-y-5">
             
             {/* 1. Beam Angle Selector */}
-            <Card className="p-4 sm:p-5 bg-card border-border backdrop-blur-md rounded-2xl shadow-xl">
+            <Card className="p-4 sm:p-5 bg-card border-border/60 rounded-2xl shadow-sm dark:shadow-[0_4px_24px_-4px_rgba(0,0,0,0.5)]">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground font-semibold flex items-center gap-1.5">
-                  <Sliders className="h-3.5 w-3.5 text-stone-400 shrink-0" />
+                <span className="text-[11px] font-sans tracking-[0.09em] uppercase text-muted-foreground font-semibold flex items-center gap-1.5">
+                  <Sliders className="h-3.5 w-3.5 text-muted-foreground/60 shrink-0" />
                   <span className="truncate">Optical Distribution</span>
                 </span>
-                <span className="text-xs font-mono font-bold text-foreground shrink-0">
+                <span className="text-[12px] font-mono font-bold text-foreground shrink-0">
                   {selectedBeam.angle} · {selectedBeam.label}
                 </span>
               </div>
@@ -290,8 +294,8 @@ export default function PhotometricLab() {
                       onClick={() => setSelectedBeam(b)}
                       className={`flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-xl border font-mono transition-all duration-200 cursor-pointer touch-manipulation ${
                         isSelected
-                          ? "bg-[#f4f0e6] border-[#e6dfd1] text-zinc-950 font-bold shadow-md scale-[1.02]"
-                          : "bg-surface/80 border-border text-foreground hover:border-stone-400 hover:bg-muted"
+                          ? "bg-[#f0ece0] border-[#ddd6c6] text-zinc-950 font-bold shadow-sm scale-[1.02]"
+                          : "bg-surface/80 dark:bg-surface border-border/60 text-foreground hover:border-border hover:bg-muted/60"
                       }`}
                     >
                       <BeamAngleIcon
@@ -305,7 +309,7 @@ export default function PhotometricLab() {
                 })}
               </div>
 
-              <div className="mt-3.5 pt-2.5 border-t border-border/80 text-xs text-muted-foreground leading-relaxed font-sans">
+              <div className="mt-3.5 pt-2.5 border-t border-border/50 text-[12.5px] text-muted-foreground leading-[1.65] font-sans">
                 <strong className="text-foreground font-medium">Application:</strong> {selectedBeam.application}
               </div>
             </Card>

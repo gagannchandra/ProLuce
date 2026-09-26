@@ -19,34 +19,34 @@ export default function BrandLogo({
 
   const sizeConfig = {
     sm: {
-      title: "text-lg sm:text-xl tracking-[0.22em]",
-      tagline: "text-[13px] sm:text-sm",
-      barWidth: "w-3.5 sm:w-4",
-      barHeight: "h-[1.5px]",
+      title: "text-[17px] sm:text-[19px] tracking-[0.17em]",
+      tagline: "text-[12.5px] sm:text-[13.5px]",
+      barWidth: "w-3 sm:w-3.5",
+      barHeight: "h-[1px]",
       gap: "gap-1.5",
       spacing: "mt-0.5",
     },
     md: {
-      title: "text-xl sm:text-[23px] tracking-[0.22em]",
-      tagline: "text-[15px] sm:text-[17px] md:text-[18px]",
-      barWidth: "w-4 sm:w-6",
-      barHeight: "h-[1.5px]",
+      title: "text-[19px] sm:text-[22px] tracking-[0.17em]",
+      tagline: "text-[14px] sm:text-[16px] md:text-[17px]",
+      barWidth: "w-3.5 sm:w-5",
+      barHeight: "h-[1px]",
       gap: "gap-2",
       spacing: "mt-0.5",
     },
     lg: {
-      title: "text-2xl sm:text-[28px] tracking-[0.24em]",
-      tagline: "text-base sm:text-[18px] md:text-[19px]",
-      barWidth: "w-6 sm:w-8",
-      barHeight: "h-[2px]",
+      title: "text-[22px] sm:text-[26px] tracking-[0.18em]",
+      tagline: "text-[14.5px] sm:text-[17px] md:text-[18px]",
+      barWidth: "w-5 sm:w-7",
+      barHeight: "h-[1.5px]",
       gap: "gap-2.5",
       spacing: "mt-1",
     },
     xl: {
-      title: "text-3xl sm:text-4xl tracking-[0.25em]",
-      tagline: "text-lg sm:text-[22px]",
-      barWidth: "w-8 sm:w-11",
-      barHeight: "h-[2px]",
+      title: "text-[28px] sm:text-[34px] tracking-[0.19em]",
+      tagline: "text-[17px] sm:text-[20px]",
+      barWidth: "w-7 sm:w-10",
+      barHeight: "h-[1.5px]",
       gap: "gap-3",
       spacing: "mt-1.5",
     },
@@ -54,54 +54,55 @@ export default function BrandLogo({
 
   const titleColor =
     theme === "dark"
-      ? "text-[#fbfaf7] group-hover:text-[#fbfaf7]"
+      ? "text-[#f5f3ee]"
       : theme === "light"
-      ? "text-neutral-900 group-hover:text-neutral-900"
-      : "text-foreground group-hover:text-foreground";
+      ? "text-neutral-900"
+      : "text-foreground";
 
   const taglineColor =
     theme === "dark"
-      ? "text-[#d1d8cf] group-hover:text-[#fbfaf7]"
+      ? "text-[#b8c4b4]/90"
       : theme === "light"
-      ? "text-neutral-600 group-hover:text-neutral-900"
-      : "text-muted-foreground group-hover:text-foreground";
+      ? "text-neutral-500"
+      : "text-muted-foreground";
 
   return (
     <div
-      className={`inline-flex flex-col select-none group transition-opacity duration-200 hover:opacity-95 ${
+      className={`inline-flex flex-col select-none transition-opacity duration-200 hover:opacity-90 ${
         isLeft ? "items-start text-left" : "items-center justify-center text-center"
       } ${className}`}
     >
-      {/* Brand Title: PRO-LUCE */}
+      {/* Logotype — refined tracking */}
       <span
-        className={`font-display uppercase font-semibold leading-none ${titleColor} tracking-[0.22em] transition-colors ${sizeConfig.title}`}
+        className={`font-display uppercase font-semibold leading-none ${titleColor} transition-colors ${sizeConfig.title}`}
+        style={{ fontFeatureSettings: '"kern" 1, "liga" 1' }}
       >
         {siteConfig.name}
       </span>
 
-      {/* Italian Flag Themed Tagline: Green Line + Script Tagline + Red Line */}
+      {/* Tagline with Italian tricolore accent lines */}
       {showTagline && (
         <div
           className={`flex items-center ${
             isLeft ? "justify-start" : "justify-center"
           } ${sizeConfig.gap} ${sizeConfig.spacing}`}
         >
-          {/* Italian Green Bar */}
+          {/* Verde */}
           <span
-            className={`bg-[#008C45] rounded-full shrink-0 ${sizeConfig.barHeight} ${sizeConfig.barWidth} transition-all duration-300 group-hover:opacity-90`}
+            className={`bg-[#008C45] rounded-full shrink-0 opacity-90 ${sizeConfig.barHeight} ${sizeConfig.barWidth}`}
             aria-hidden="true"
           />
 
-          {/* Script Tagline */}
+          {/* Script tagline */}
           <span
             className={`font-script font-normal ${taglineColor} transition-colors leading-none whitespace-nowrap ${sizeConfig.tagline}`}
           >
             {siteConfig.tagline}
           </span>
 
-          {/* Italian Red Bar */}
+          {/* Rosso */}
           <span
-            className={`bg-[#CD212A] rounded-full shrink-0 ${sizeConfig.barHeight} ${sizeConfig.barWidth} transition-all duration-300 group-hover:opacity-90`}
+            className={`bg-[#CD212A] rounded-full shrink-0 opacity-90 ${sizeConfig.barHeight} ${sizeConfig.barWidth}`}
             aria-hidden="true"
           />
         </div>
