@@ -1195,20 +1195,23 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
           SECTION 4: COMMERCIAL TRADE SPECIFICATION BANNER (SYMMETRIC & LUXURIOUS)
           ───────────────────────────────────────────────────────────── */}
       <section className="no-print">
-        <Card className="relative border-neutral-900 dark:border-neutral-800 bg-neutral-950 p-8 sm:p-10 text-white shadow-2xl rounded-3xl overflow-hidden">
+        <Card className="relative border border-border bg-card p-8 sm:p-10 text-foreground shadow-lg rounded-3xl overflow-hidden backdrop-blur-md">
           {/* Ambient Warm Ray Accent */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#f4f0e6]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#f4f0e6]/40 dark:bg-white/5 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-stone-200/50 dark:bg-white/5 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
 
           <CardContent className="relative z-10 p-0 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
             <div className="space-y-2 max-w-2xl">
-              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.18em] text-[#f4f0e6]/80 font-medium">
-                <span>Architectural Lighting Specification</span>
+              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 dark:bg-zinc-800/60 px-3 py-1 text-foreground shadow-2xs">
+                <FileText className="h-3 w-3 text-stone-400 shrink-0" />
+                <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.18em] font-medium text-muted-foreground">
+                  Architectural Lighting Specification
+                </span>
               </div>
-              <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-normal tracking-tight text-white">
+              <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-normal tracking-tight text-foreground">
                 Ready to specify {product.model} for your project?
               </h3>
-              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-light">
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed font-sans font-light">
                 Connect with our commercial project engineering team for formal trade pricing, tailored photometric schedules, custom RAL finishes, and lead times.
               </p>
             </div>
@@ -1224,7 +1227,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
               <Button
                 asChild
                 variant="outline"
-                className="rounded-full border-[#e6dfd1]/40 bg-white/5 font-sans text-xs uppercase tracking-[0.14em] font-semibold text-[#f4f0e6] hover:bg-[#f4f0e6] hover:text-neutral-950 hover:border-[#e6dfd1] px-7 h-12 cursor-pointer transition-all shadow-xs backdrop-blur-xs hover:scale-[1.02] active:scale-[0.98]"
+                className="rounded-full border-border bg-card text-foreground hover:bg-muted font-sans text-xs uppercase tracking-[0.14em] font-semibold px-7 h-12 cursor-pointer transition-all shadow-2xs hover:scale-[1.02] active:scale-[0.98]"
               >
                 <a
                   href="/pdf/Pro-Luce-Catalogue.pdf"
