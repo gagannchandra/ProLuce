@@ -240,7 +240,7 @@ export default function FilterSidebar({
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-2">
                     {isSelected && <Check className="h-3.5 w-3.5 shrink-0 stroke-[3] text-zinc-950" />}
-                    <span className={`truncate text-xs ${isSelected ? "font-bold text-zinc-950" : "font-normal text-foreground dark:text-zinc-200"}`}>{cat.label}</span>
+                    <span className={`truncate text-xs ${isSelected ? "font-bold text-zinc-950" : "font-normal text-foreground"}`}>{cat.label}</span>
                   </div>
                   <span className={`text-[10px] font-mono shrink-0 ${isSelected ? "text-zinc-950 font-bold" : "text-muted-foreground"}`}>
                     ({count})
@@ -300,7 +300,7 @@ export default function FilterSidebar({
                     />
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between">
-                        <span className={`text-[11px] font-bold font-mono leading-none ${isSelected ? "text-zinc-950" : "text-foreground dark:text-zinc-100"}`}>{c.label}</span>
+                        <span className={`text-[11px] font-bold font-mono leading-none ${isSelected ? "text-zinc-950" : "text-foreground"}`}>{c.label}</span>
                         {isSelected && <Check className="h-3 w-3 stroke-[3] text-zinc-950 ml-1 shrink-0" />}
                       </div>
                       <div className={`text-[9px] truncate mt-0.5 ${isSelected ? "text-zinc-800 font-medium" : "text-muted-foreground"}`}>
@@ -358,7 +358,7 @@ export default function FilterSidebar({
                     }`}
                   >
                     {isSelected && <Check className="h-3 w-3 stroke-[3] text-zinc-950 shrink-0" />}
-                    <span className={isSelected ? "text-zinc-950 font-bold" : "text-foreground dark:text-zinc-200"}>{ip}</span>
+                    <span className={isSelected ? "text-zinc-950 font-bold" : "text-foreground"}>{ip}</span>
                   </button>
                 );
               })}
@@ -415,7 +415,7 @@ export default function FilterSidebar({
                       isSelected={isSelected}
                       className="h-4 w-4 shrink-0"
                     />
-                    <span className={`flex-1 text-left ${isSelected ? "text-zinc-950 font-bold" : "text-foreground dark:text-zinc-200"}`}>{b}</span>
+                    <span className={`flex-1 text-left ${isSelected ? "text-zinc-950 font-bold" : "text-foreground"}`}>{b}</span>
                     {isSelected && <Check className="h-3 w-3 stroke-[3] text-zinc-950 shrink-0" />}
                   </button>
                 );
@@ -481,7 +481,7 @@ export default function FilterSidebar({
                 >
                   <div className="flex items-center gap-2">
                     {isSelected && <Check className="h-3.5 w-3.5 stroke-[3] text-zinc-950 shrink-0" />}
-                    <span className={`text-xs ${isSelected ? "text-zinc-950 font-bold" : "text-foreground dark:text-zinc-200 font-normal"}`}>{env.label}</span>
+                    <span className={`text-xs ${isSelected ? "text-zinc-950 font-bold" : "text-foreground font-normal"}`}>{env.label}</span>
                   </div>
                 </button>
               );
@@ -534,7 +534,7 @@ export default function FilterSidebar({
                       }`}
                     >
                       {isSelected && <Check className="h-3 w-3 stroke-[3] text-zinc-950 shrink-0" />}
-                      <span className={isSelected ? "text-zinc-950 font-bold" : "text-foreground dark:text-zinc-200"}>{w.value}</span>
+                      <span className={isSelected ? "text-zinc-950 font-bold" : "text-foreground"}>{w.value}</span>
                     </button>
                   );
                 })}
@@ -571,7 +571,7 @@ export default function FilterSidebar({
                       }`}
                     >
                       {isSelected && <Check className="h-3 w-3 stroke-[3] text-zinc-950 shrink-0" />}
-                      <span className={isSelected ? "text-zinc-950 font-bold" : "text-foreground dark:text-zinc-200"}>{v.label}</span>
+                      <span className={isSelected ? "text-zinc-950 font-bold" : "text-foreground"}>{v.label}</span>
                     </button>
                   );
                 })}
@@ -625,7 +625,7 @@ export default function FilterSidebar({
                       }`}
                     >
                       {isSelected && <Check className="h-3 w-3 stroke-[3] text-zinc-950 shrink-0" />}
-                      <span className={isSelected ? "text-zinc-950 font-bold" : "text-foreground dark:text-zinc-200"}>{c.label}</span>
+                      <span className={isSelected ? "text-zinc-950 font-bold" : "text-foreground"}>{c.label}</span>
                     </button>
                   );
                 })}
@@ -662,7 +662,7 @@ export default function FilterSidebar({
                       }`}
                     >
                       {isSelected && <Check className="h-3 w-3 stroke-[3] text-zinc-950 shrink-0" />}
-                      <span className={isSelected ? "text-zinc-950 font-bold" : "text-foreground dark:text-zinc-200"}>{l.label}</span>
+                      <span className={isSelected ? "text-zinc-950 font-bold" : "text-foreground"}>{l.label}</span>
                     </button>
                   );
                 })}

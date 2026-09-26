@@ -27,7 +27,7 @@ export default function Footer() {
               <Badge variant="outline" className="font-mono text-[11px] sm:text-xs gap-1.5 border-border bg-card/80 text-muted-foreground py-0.5 px-2.5 shadow-2xs">
                 <span className="flex items-center gap-0.5" aria-hidden="true">
                   <span className="h-2 w-1.5 rounded-[1px] bg-[#008C45]" />
-                  <span className="h-2 w-1.5 rounded-[1px] bg-neutral-200 dark:bg-neutral-600" />
+                  <span className="h-2 w-1.5 rounded-[1px] bg-neutral-100 dark:bg-[#f4f0e6]" />
                   <span className="h-2 w-1.5 rounded-[1px] bg-[#CD212A]" />
                 </span>
                 Firenze &bull; Sesto Fiorentino, Italia

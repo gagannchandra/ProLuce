@@ -130,7 +130,6 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
   const [selectedBeam, setSelectedBeam] = useState<string>(product.beamAngles[0] || "24°");
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(product.variants?.[0] || null);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
-  const mountingHeight = 3.0;
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
 
   const { isInSchedule, addItem, removeItem, openDrawer } = useSpecSchedule();
@@ -264,7 +263,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                 onValueChange={(v) => setActiveMedia(v as "photo" | "diagram")}
                 className="w-auto"
               >
-                <TabsList className="h-8 sm:h-9 rounded-full p-1 bg-background/85 dark:bg-zinc-950/85 backdrop-blur-md border border-border/90 dark:border-white/15 shadow-xs gap-1 flex items-center">
+                <TabsList className="h-8 sm:h-9 rounded-full p-1 bg-background/85 backdrop-blur-md border border-border/90 shadow-xs gap-1 flex items-center">
                   <TabsTrigger
                     value="photo"
                     className="h-full font-mono text-[10px] sm:text-xs uppercase tracking-wider rounded-full px-3 sm:px-3.5 text-muted-foreground hover:text-foreground hover:bg-[#f4f0e6]/40 data-[state=active]:bg-[#f4f0e6] data-[state=active]:text-neutral-950 data-[state=active]:border data-[state=active]:border-[#e6dfd1] data-[state=active]:shadow-xs data-[state=active]:font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap"
@@ -285,7 +284,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
 
             {/* Gallery Thumbnails Strip (Bottom-Left Floating Glass Dock) */}
             {activeMedia === "photo" && product.images.length > 1 && (
-              <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 flex items-center gap-2 bg-background/85 dark:bg-zinc-950/85 backdrop-blur-md p-1 sm:p-1.5 rounded-2xl border border-border/90 dark:border-white/15 shadow-sm max-w-[calc(100%-140px)] overflow-x-auto no-scrollbar">
+              <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 flex items-center gap-2 bg-background/85 backdrop-blur-md p-1 sm:p-1.5 rounded-2xl border border-border/90 shadow-sm max-w-[calc(100%-140px)] overflow-x-auto no-scrollbar">
                 <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider pl-1.5 pr-0.5 hidden sm:inline-block">Views:</span>
                 {product.images.map((img, idx) => (
                   <button
@@ -588,7 +587,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                         className={`flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-xl border font-mono transition-all duration-200 cursor-pointer touch-manipulation ${
                           isSelected
                             ? "bg-[#f4f0e6] border-[#e6dfd1] text-zinc-950 font-bold shadow-md scale-[1.02]"
-                            : "bg-surface/80 dark:bg-zinc-800/60 border-border text-foreground hover:border-stone-400 hover:bg-muted"
+                            : "bg-surface/80 border-border text-foreground hover:border-stone-400 hover:bg-muted"
                         }`}
                       >
                         <BeamAngleIcon
@@ -633,7 +632,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                       className={`flex items-center gap-2.5 p-2.5 rounded-xl border text-left transition-all duration-200 cursor-pointer touch-manipulation ${
                         isSelected
                           ? "bg-[#f4f0e6] border-[#e6dfd1] text-zinc-950 font-bold shadow-xs"
-                          : "bg-surface/80 dark:bg-zinc-800/60 border-border text-foreground hover:border-stone-400 hover:bg-muted"
+                          : "bg-surface/80 border-border text-foreground hover:border-stone-400 hover:bg-muted"
                       }`}
                     >
                       <span
@@ -712,10 +711,10 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
 
           {/* Right Column: Real-Time Optical Stage (SVG Light Cone Simulation) */}
           <div className="lg:col-span-7">
-            <div className="relative rounded-3xl border border-zinc-800 bg-zinc-900/90 overflow-hidden shadow-2xl p-6 sm:p-7 flex flex-col items-center backdrop-blur-md">
+            <div className="relative rounded-3xl border border-border bg-card/90 overflow-hidden shadow-2xl p-6 sm:p-7 flex flex-col items-center backdrop-blur-md">
               
               {/* Studio Canvas HUD Top Bar */}
-              <div className="w-full flex items-center justify-between border-b border-zinc-800/80 pb-3.5 mb-4">
+              <div className="w-full flex items-center justify-between border-b border-border/80 pb-3.5 mb-4">
                 <div className="flex items-center gap-2">
                   <span
                     className="h-2 w-2 rounded-full animate-pulse transition-colors duration-300"
@@ -724,13 +723,13 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                       boxShadow: `0 0 8px ${currentCctColor}`,
                     }}
                   />
-                  <span className="text-xs font-mono uppercase tracking-wider text-zinc-300 font-semibold">
+                  <span className="text-xs font-mono uppercase tracking-wider text-foreground font-semibold">
                     Optical Ray Simulator
                   </span>
                 </div>
-                <div className="flex items-center gap-4 text-xs font-mono text-zinc-400">
+                <div className="flex items-center gap-4 text-xs font-mono text-muted-foreground">
                   <span>CBCP: <strong className="text-[#f4f0e6] font-semibold">{selectedBeamSpec.candela.toLocaleString()} cd</strong></span>
-                  <span>Cutoff: <strong className="text-zinc-100 font-semibold">30° Shielded</strong></span>
+                  <span>Cutoff: <strong className="text-foreground font-semibold">30° Shielded</strong></span>
                 </div>
               </div>
 
@@ -845,34 +844,34 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
               </div>
 
               {/* Real-time Photometric Metrics Summary Bar (3 tiles) */}
-              <div className="w-full grid grid-cols-3 gap-2 sm:gap-3 mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-zinc-800">
-                <div className="text-center p-2 sm:p-3 rounded-xl bg-zinc-950/70 border border-zinc-800/80">
-                  <div className="text-[9px] sm:text-[10px] font-mono uppercase text-zinc-400">Calculated Lux</div>
+              <div className="w-full grid grid-cols-3 gap-2 sm:gap-3 mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-border">
+                <div className="text-center p-2 sm:p-3 rounded-xl bg-surface/80 border border-border">
+                  <div className="text-[9px] sm:text-[10px] font-mono uppercase text-muted-foreground">Calculated Lux</div>
                   <div className="text-sm sm:text-lg md:text-xl font-mono font-bold text-[#f4f0e6] mt-0.5">
                     {floorLux.toLocaleString()} lx
                   </div>
-                  <div className="text-[8px] sm:text-[9px] text-zinc-400 font-mono hidden xs:block">Floor Center</div>
+                  <div className="text-[8px] sm:text-[9px] text-muted-foreground font-mono hidden xs:block">Floor Center</div>
                 </div>
 
-                <div className="text-center p-2 sm:p-3 rounded-xl bg-zinc-950/70 border border-zinc-800/80">
-                  <div className="text-[9px] sm:text-[10px] font-mono uppercase text-zinc-400">Beam Spread</div>
-                  <div className="text-sm sm:text-lg md:text-xl font-mono font-bold text-zinc-100 mt-0.5">
+                <div className="text-center p-2 sm:p-3 rounded-xl bg-surface/80 border border-border">
+                  <div className="text-[9px] sm:text-[10px] font-mono uppercase text-muted-foreground">Beam Spread</div>
+                  <div className="text-sm sm:text-lg md:text-xl font-mono font-bold text-foreground mt-0.5">
                     Ø {beamDiameter}m
                   </div>
-                  <div className="text-[8px] sm:text-[9px] text-zinc-400 font-mono hidden xs:block">at {ceilingHeight.toFixed(1)}m H</div>
+                  <div className="text-[8px] sm:text-[9px] text-muted-foreground font-mono hidden xs:block">at {ceilingHeight.toFixed(1)}m H</div>
                 </div>
 
-                <div className="text-center p-2 sm:p-3 rounded-xl bg-zinc-950/70 border border-zinc-800/80">
-                  <div className="text-[9px] sm:text-[10px] font-mono uppercase text-zinc-400">Glare Rating</div>
+                <div className="text-center p-2 sm:p-3 rounded-xl bg-surface/80 border border-border">
+                  <div className="text-[9px] sm:text-[10px] font-mono uppercase text-muted-foreground">Glare Rating</div>
                   <div className="text-sm sm:text-lg md:text-xl font-mono font-bold text-emerald-400 mt-0.5">
                     UGR {product.ugr || "< 19"}
                   </div>
-                  <div className="text-[8px] sm:text-[9px] text-zinc-400 font-mono hidden xs:block">Dark-Light</div>
+                  <div className="text-[8px] sm:text-[9px] text-muted-foreground font-mono hidden xs:block">Dark-Light</div>
                 </div>
               </div>
 
               {/* Engineering Standard Validation Footer */}
-              <div className="w-full flex flex-col xs:flex-row items-center justify-between gap-2 text-[10px] sm:text-[11px] font-mono text-zinc-400 mt-4 px-1 text-center xs:text-left">
+              <div className="w-full flex flex-col xs:flex-row items-center justify-between gap-2 text-[10px] sm:text-[11px] font-mono text-muted-foreground mt-4 px-1 text-center xs:text-left">
                 <span className="flex items-center gap-1">
                   <ShieldCheck className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
                   IEC 62722 Photometric Validated
@@ -1197,12 +1196,12 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
       <section className="no-print">
         <Card className="relative border border-border bg-card p-8 sm:p-10 text-foreground shadow-lg rounded-3xl overflow-hidden backdrop-blur-md">
           {/* Ambient Warm Ray Accent */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#f4f0e6]/40 dark:bg-white/5 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-stone-200/50 dark:bg-white/5 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#f4f0e6]/40 dark:bg-[#008C45]/8 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-stone-200/50 dark:bg-[#CD212A]/6 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
 
           <CardContent className="relative z-10 p-0 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
             <div className="space-y-2 max-w-2xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 dark:bg-zinc-800/60 px-3 py-1 text-foreground shadow-2xs">
+              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-3 py-1 text-foreground shadow-2xs">
                 <FileText className="h-3 w-3 text-stone-400 shrink-0" />
                 <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.18em] font-medium text-muted-foreground">
                   Architectural Lighting Specification

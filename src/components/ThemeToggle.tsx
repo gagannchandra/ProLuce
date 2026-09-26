@@ -42,7 +42,7 @@ export function ThemeToggle({ className = "", showLabel = false }: ThemeTogglePr
             <Moon
               className={`h-4 w-4 transition-all duration-300 ${
                 isDark
-                  ? "scale-100 rotate-0 opacity-100 text-stone-200"
+                  ? "scale-100 rotate-0 opacity-100 text-[#f4f0e6]"
                   : "scale-0 -rotate-90 opacity-0 absolute"
               }`}
             />

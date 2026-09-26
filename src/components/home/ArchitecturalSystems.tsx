@@ -52,7 +52,7 @@ const SYSTEMS: SystemCard[] = [
     beamAngles: ["120° Diffuse"],
     imageSrc: "/images/products/lena-50-linear.png",
     href: "/catalogue?category=Linear+Light",
-    accent: "#60a5fa",
+    accent: "#008C45",
   },
   {
     id: "magnetic",
@@ -69,7 +69,7 @@ const SYSTEMS: SystemCard[] = [
     beamAngles: ["24°", "36°", "120°"],
     imageSrc: "/images/products/artis.png",
     href: "/catalogue?category=Magnetic+Series",
-    accent: "#f4f0e6",
+    accent: "#e5a93c",
   },
   {
     id: "pendants",
@@ -86,7 +86,7 @@ const SYSTEMS: SystemCard[] = [
     beamAngles: ["60° Direct", "120° Indirect"],
     imageSrc: "/images/products/c44-pendant.png",
     href: "/catalogue?category=Pendant+Light",
-    accent: "#a78bfa",
+    accent: "#f4f0e6",
   },
   {
     id: "track",
@@ -103,7 +103,7 @@ const SYSTEMS: SystemCard[] = [
     beamAngles: ["15°", "24°", "38°", "50°"],
     imageSrc: "/images/products/1911.png",
     href: "/catalogue?category=Track+Light",
-    accent: "#34d399",
+    accent: "#008C45",
   },
   {
     id: "exterior",
@@ -120,7 +120,7 @@ const SYSTEMS: SystemCard[] = [
     beamAngles: ["10° Graze", "25°", "45° Asym"],
     imageSrc: "/images/products/coastal.png",
     href: "/catalogue?category=Outdoor+Light",
-    accent: "#38bdf8",
+    accent: "#CD212A",
   },
 ];
 
@@ -136,7 +136,11 @@ export default function ArchitecturalSystems() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-border">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1 text-muted-foreground shadow-2xs">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#f4f0e6] dark:bg-[#f4f0e6] border border-amber-600/30" />
+              <span className="flex items-center gap-0.5" aria-hidden="true">
+                <span className="h-2 w-1 rounded-[1px] bg-[#008C45]" />
+                <span className="h-2 w-1 rounded-[1px] bg-neutral-300 dark:bg-neutral-500" />
+                <span className="h-2 w-1 rounded-[1px] bg-[#CD212A]" />
+              </span>
               <span className="text-[11px] sm:text-xs font-sans uppercase tracking-[0.18em] font-medium text-foreground">
                 Architectural Taxonomy
               </span>
@@ -184,7 +188,7 @@ export default function ArchitecturalSystems() {
                 </div>
 
                 {/* Product Renders & Visual Focus Area */}
-                <div className="relative h-36 sm:h-44 w-full my-4 sm:my-6 flex items-center justify-center overflow-hidden rounded-2xl bg-surface/80 dark:bg-zinc-950/60 border border-border/60 group-hover:border-border transition-colors">
+                <div className="relative h-36 sm:h-44 w-full my-4 sm:my-6 flex items-center justify-center overflow-hidden rounded-2xl bg-surface/80 border border-border/60 group-hover:border-border transition-colors">
                   {/* Subtle Light Halo */}
                   <div
                     className="absolute w-28 h-28 rounded-full blur-2xl opacity-20 pointer-events-none transition-transform duration-500 group-hover:scale-125"

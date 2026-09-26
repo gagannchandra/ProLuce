@@ -61,9 +61,10 @@ export default function FlagshipShowcase() {
 
   return (
     <section className="relative bg-background text-foreground py-24 sm:py-32 border-t border-border overflow-hidden transition-colors duration-300">
-      {/* Subtle architectural ambient background */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-[#f4f0e6]/10 dark:bg-[#f4f0e6]/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[140px] pointer-events-none" />
+      {/* Subtle architectural ambient background — Italian Tricolore atmospheric diffusion */}
+      <div className="absolute top-1/2 left-1/6 -translate-y-1/2 w-[600px] h-[600px] bg-[#008C45]/5 dark:bg-[#008C45]/8 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-[#f4f0e6]/10 dark:bg-[#f4f0e6]/5 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/6 w-[500px] h-[500px] bg-[#CD212A]/4 dark:bg-[#CD212A]/6 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -134,7 +135,7 @@ export default function FlagshipShowcase() {
         {currentProduct && (
           <div className="bg-card border border-border rounded-3xl overflow-hidden backdrop-blur-md grid grid-cols-1 lg:grid-cols-12 shadow-2xl">
             {/* Left: Product Visual / Dimensional Diagram Canvas */}
-            <div className="lg:col-span-6 p-4 sm:p-6 lg:p-10 flex flex-col justify-between relative bg-surface/80 dark:bg-zinc-950/70 border-b lg:border-b-0 lg:border-r border-border">
+            <div className="lg:col-span-6 p-4 sm:p-6 lg:p-10 flex flex-col justify-between relative bg-surface/80 border-b lg:border-b-0 lg:border-r border-border">
               {/* Top Bar inside image stage */}
               <div className="flex items-center justify-between z-10">
                 <div className="flex items-center gap-2">
@@ -183,7 +184,7 @@ export default function FlagshipShowcase() {
                     />
                   </div>
                 ) : (
-                  <div className="relative w-full h-full flex flex-col items-center justify-center bg-zinc-950/80 rounded-xl p-4 border border-border/80">
+                  <div className="relative w-full h-full flex flex-col items-center justify-center bg-surface/90 rounded-xl p-4 border border-border/80">
                     {currentProduct.dimensionDiagram ? (
                       <div className="relative w-full h-full">
                         <Image
@@ -195,13 +196,13 @@ export default function FlagshipShowcase() {
                       </div>
                     ) : (
                       <div className="text-center p-6 space-y-3">
-                        <div className="w-12 h-12 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center mx-auto text-stone-300">
+                        <div className="w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center mx-auto text-stone-300">
                           <Maximize2 className="w-5 h-5" />
                         </div>
-                        <div className="text-zinc-300 font-mono text-sm font-medium">
+                        <div className="text-foreground font-mono text-sm font-medium">
                           Mechanical Dimensions
                         </div>
-                        <div className="text-xs text-zinc-500 font-mono">
+                        <div className="text-xs text-muted-foreground font-mono">
                           Dimensions: {currentProduct.dimensions}
                           {currentProduct.cutout && ` · Cutout: ${currentProduct.cutout}`}
                         </div>
@@ -328,7 +329,7 @@ export default function FlagshipShowcase() {
                 </div>
 
                 {/* Technical Specification Matrix */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 rounded-xl bg-surface/80 dark:bg-zinc-950/60 border border-border mb-6 font-mono text-xs">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 rounded-xl bg-surface/80 border border-border mb-6 font-mono text-xs">
                   <div>
                     <span className="text-[10px] text-muted-foreground block uppercase">Power</span>
                     <span className="text-foreground font-medium">{currentProduct.power}</span>

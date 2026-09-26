@@ -54,14 +54,14 @@ export default function BrandLogo({
 
   const titleColor =
     theme === "dark"
-      ? "text-white group-hover:text-white"
+      ? "text-[#fbfaf7] group-hover:text-[#fbfaf7]"
       : theme === "light"
       ? "text-neutral-900 group-hover:text-neutral-900"
       : "text-foreground group-hover:text-foreground";
 
   const taglineColor =
     theme === "dark"
-      ? "text-neutral-300 group-hover:text-white"
+      ? "text-[#d1d8cf] group-hover:text-[#fbfaf7]"
       : theme === "light"
       ? "text-neutral-600 group-hover:text-neutral-900"
       : "text-muted-foreground group-hover:text-foreground";

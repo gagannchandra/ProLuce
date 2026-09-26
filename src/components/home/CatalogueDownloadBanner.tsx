@@ -11,11 +11,11 @@ export default function CatalogueDownloadBanner() {
       <div className="container-site">
         <div className="relative rounded-2xl sm:rounded-3xl border border-border bg-card p-6 sm:p-8 lg:p-10 shadow-lg backdrop-blur-md flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 lg:gap-10 overflow-hidden">
           {/* Subtle Ambient Light Glow */}
-          <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[#f4f0e6]/20 blur-3xl pointer-events-none -z-0 dark:bg-white/5" />
+          <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[#f4f0e6]/20 blur-3xl pointer-events-none -z-0 dark:bg-[#008C45]/8" />
 
           {/* Left Text Content */}
           <div className="relative z-10 max-w-2xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 dark:bg-zinc-800/60 px-3 py-1 text-foreground shadow-2xs">
+            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-3 py-1 text-foreground shadow-2xs">
               <FileText className="h-3 w-3 text-stone-400 shrink-0" />
               <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.18em] font-medium text-muted-foreground">
                 Tender Documentation
