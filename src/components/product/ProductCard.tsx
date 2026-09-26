@@ -87,7 +87,7 @@ export default function ProductCard({ product, onOpenQuote }: ProductCardProps) 
             <Link href={`/products/${product.slug}`} className="block mt-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 rounded-xs touch-manipulation">
               <h3
                 style={{ viewTransitionName: `product-title-${product.slug}` } as React.CSSProperties}
-                className="font-display text-xl font-normal tracking-tight text-foreground group-hover:text-primary dark:group-hover:text-[#f4f0e6] transition-colors duration-200"
+                className="font-display text-xl font-normal tracking-tight text-foreground group-hover:text-stone-600 dark:group-hover:text-[#f4f0e6] transition-colors duration-200"
               >
                 {product.model}
               </h3>

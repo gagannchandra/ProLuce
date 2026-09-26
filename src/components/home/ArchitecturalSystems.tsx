@@ -200,7 +200,7 @@ export default function ArchitecturalSystems() {
                 </div>
 
                 {/* Title & Description */}
-                <h3 className="text-xl font-display font-medium text-foreground group-hover:text-primary dark:group-hover:text-[#f4f0e6] transition-colors">
+                <h3 className="text-xl font-display font-medium text-foreground group-hover:text-stone-600 dark:group-hover:text-[#f4f0e6] transition-colors">
                   {system.title}
                 </h3>
                 <p className="mt-2 text-xs text-muted-foreground leading-relaxed font-sans font-light">

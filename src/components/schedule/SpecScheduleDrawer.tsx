@@ -125,7 +125,7 @@ export default function SpecScheduleDrawer({ onRequestQuote }: SpecScheduleDrawe
                             <Link
                               href={`/products/${p.slug}`}
                               onClick={closeDrawer}
-                              className="font-display text-base font-semibold text-foreground hover:text-primary transition-colors"
+                              className="font-display text-base font-semibold text-foreground hover:text-stone-600 dark:hover:text-[#f4f0e6] transition-colors"
                             >
                               {p.model}
                             </Link>
